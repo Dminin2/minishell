@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/15 21:24:08 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/08/15 17:22:00 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef TYPES_H
+# define TYPES_H
 
-int	main(void)
+typedef enum e_status
 {
-	char	*line;
+	SUCCESS,
+	ERR_MALLOC
+}	t_status;
 
-	while (1)
-	{
-		line = get_command_line();
-		if (!line)
-			break ;
-		free(line);
-	}
-	return (0);
-}
+#endif

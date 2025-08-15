@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/15 21:24:08 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/08/14 23:50:28 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/08/16 00:53:02 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+char	*get_command_line(void)
 {
 	char	*line;
 
-	while (1)
-	{
-		line = get_command_line();
-		if (!line)
-			break ;
-		free(line);
-	}
-	return (0);
+	line = readline("minishell$ ");
+	if (line)
+		add_history(line);
+	return (line);
 }
