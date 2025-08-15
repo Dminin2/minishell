@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:50:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/15 21:23:15 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/08/16 00:53:02 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*get_command_line(void)
 {
 	char	*line;
 
-	line = readline("minishell>");
+	line = readline("minishell$ ");
 	if (line)
 		add_history(line);
 	return (line);
