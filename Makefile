@@ -1,9 +1,17 @@
 NAME = minishell
 
 SRCS_DIR = srcs
-SRCS = main.c
-
 OBJS_DIR = objs
+
+READLINE_DIR = readline
+
+SRCS_MAIN = main.c
+SRCS_READLINE = $(READLINE_DIR)/readline.c
+
+
+SRCS = $(SRCS_MAIN) \
+$(SRCS_READLINE)
+
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
 INCLUDES = includes
@@ -16,10 +24,11 @@ RM_DIR = rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -lreadline -o $(NAME)
 
 $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)
+	mkdir -p $(OBJS_DIR)/$(READLINE_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	$(CC) $(CFLAGS) -I$(INCLUDES) -c $< -o $@
