@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/19 16:34:24 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/04/26 15:11:52 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/04/28 16:01:41 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#include "libft.h"
 
-typedef struct s_cmd
+char	*ft_strrchr(const char *s, int c)
 {
-	char	*path;
-	char	**args;
-}			t_cmd;
+	char	*last;
+	int		i;
 
-typedef enum e_status
-{
-	SUCCESS,
-	ERR_SYSTEM,
-	ERR_CMD_NOT_FOUND,
-	ERR_NOT_VALID_PATH
-}			t_status;
-
-#endif
+	last = NULL;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			last = &((char *)s)[i];
+		i++;
+	}
+	if (!(char)c)
+		return (&((char *)s)[i]);
+	return (last);
+}

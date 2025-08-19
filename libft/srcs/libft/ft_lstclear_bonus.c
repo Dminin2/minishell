@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/19 16:34:24 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/04/27 23:52:19 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/04/28 16:10:21 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#include "libft.h"
 
-typedef struct s_cmd
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	char	*path;
-	char	**args;
-}			t_cmd;
+	t_list	*temp;
 
-typedef enum e_status
-{
-	SUCCESS,
-	ERR_SYSTEM,
-	ERR_CMD_NOT_FOUND,
-	ERR_NOT_VALID_PATH
-}			t_status;
-
-#endif
+	if (!lst || !*lst || !del)
+		return ;
+	while (*lst)
+	{
+		temp = (*lst)->next;
+		del((*lst)->content);
+		free(*lst);
+		*lst = temp;
+	}
+	*lst = NULL;
+}

@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/19 16:34:24 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/04/25 18:03:39 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/04/28 16:00:18 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#include "libft.h"
 
-typedef struct s_cmd
+size_t	ft_strlen(const char *s)
 {
-	char	*path;
-	char	**args;
-}			t_cmd;
+	size_t	len;
 
-typedef enum e_status
-{
-	SUCCESS,
-	ERR_SYSTEM,
-	ERR_CMD_NOT_FOUND,
-	ERR_NOT_VALID_PATH
-}			t_status;
-
-#endif
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
+}

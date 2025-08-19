@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/19 16:34:24 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/08/16 16:17:00 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/08/18 09:09:25 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#include "minishell.h"
 
-typedef struct s_cmd
+void	free_args(char **args)
 {
-	char	*path;
-	char	**args;
-}			t_cmd;
+	int	i;
 
-typedef enum e_status
+	i = 0;
+	if (args)
+	{
+		while (args[i])
+		{
+			free(args[i]);
+			i++;
+		}
+		free(args);
+	}
+}
+
+void	free_cmd(t_cmd *cmd)
 {
-	SUCCESS,
-	ERR_SYSTEM,
-	ERR_CMD_NOT_FOUND,
-	ERR_NOT_VALID_PATH
-}			t_status;
-
-#endif
+	if (cmd)
+	{
+		if (cmd->args)
+			free_args(cmd->args);
+		if (cmd->path)
+			free(cmd->path);
+		free(cmd);
+	}
+}

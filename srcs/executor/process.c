@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/19 16:34:24 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/08/18 09:35:37 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#include "minishell.h"
 
-typedef struct s_cmd
+void	wait_child(pid_t pid)
 {
-	char	*path;
-	char	**args;
-}			t_cmd;
+	int	status;
 
-typedef enum e_status
+	waitpid(pid, &status, 0);
+}
+
+void	child_process(t_cmd *cmd, char **envp)
 {
-	SUCCESS,
-	ERR_SYSTEM,
-	ERR_CMD_NOT_FOUND,
-	ERR_NOT_VALID_PATH
-}			t_status;
+	pid_t	pid;
 
-#endif
+	pid = fork();
+	if (pid < 0)
+		exit_error(cmd, "fork", ERR_SYSTEM, EXIT_FAILURE);
+	else if (pid == 0)
+		execute(cmd, envp);
+	else
+		wait_child(pid);
+}

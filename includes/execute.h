@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/19 16:34:24 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/08/19 16:35:49 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#ifndef EXECUTE_H
+# define EXECUTE_H
 
-typedef struct s_cmd
-{
-	char	*path;
-	char	**args;
-}			t_cmd;
+# include "types.h"
 
-typedef enum e_status
-{
-	SUCCESS,
-	ERR_SYSTEM,
-	ERR_CMD_NOT_FOUND,
-	ERR_NOT_VALID_PATH
-}			t_status;
+void		execute(t_cmd *cmd, char **envp);
+void		child_process(t_cmd *cmd, char **envp);
+
+t_status	resolve_command_path(t_cmd *cmd, char **envp);
 
 #endif

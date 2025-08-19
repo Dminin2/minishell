@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/19 16:34:24 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/08/18 09:36:51 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#ifndef UTILS_H
+# define UTILS_H
 
-typedef struct s_cmd
-{
-	char	*path;
-	char	**args;
-}			t_cmd;
+# include "types.h"
 
-typedef enum e_status
-{
-	SUCCESS,
-	ERR_SYSTEM,
-	ERR_CMD_NOT_FOUND,
-	ERR_NOT_VALID_PATH
-}			t_status;
+void	free_args(char **args);
+void	free_cmd(t_cmd *cmd);
+
+void	exit_error(t_cmd *cmd, char *context, t_status status, int exit_status);
 
 #endif
