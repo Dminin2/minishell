@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/18 20:44:57 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/08/19 16:34:24 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ typedef struct s_cmd
 typedef enum e_status
 {
 	SUCCESS,
-	ERR_SYSTEM
+	ERR_SYSTEM,
+	ERR_CMD_NOT_FOUND,
+	ERR_NOT_VALID_PATH
 }			t_status;
 
 #endif
