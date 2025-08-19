@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/19 16:24:04 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/08/19 17:39:34 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,9 @@ int	has_content(char *line)
 void	parse(t_cmd *cmd, char *line)
 {
 	if (!has_content(line))
-	{
 		cmd->args = ft_split(line, 'A');
-		if (cmd->args[0])
-			cmd->path = ft_strdup(cmd->args[0]);
-		else
-			cmd->path = NULL;
-	}
 	else
-	{
 		cmd->args = ft_split(line, ' ');
-		cmd->path = ft_strdup(cmd->args[0]);
-	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -55,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 		line = get_command_line();
 		if (!line)
 			break ;
-		cmd = malloc(sizeof(t_cmd));
+		cmd = ft_calloc(sizeof(t_cmd), 1);
 		if (!cmd)
 			exit_error(cmd, "malloc", ERR_SYSTEM, EXIT_FAILURE);
 		parse(cmd, line);
