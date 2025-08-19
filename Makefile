@@ -10,7 +10,8 @@ UTILS_DIR = utils
 SRCS_MAIN = main.c
 SRCS_READLINE = $(READLINE_DIR)/readline.c
 SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
-	$(EXECUTOR_DIR)/process.c
+	$(EXECUTOR_DIR)/process.c \
+	$(EXECUTOR_DIR)/path.c
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c
 
