@@ -1,0 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/16 16:17:00 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/08/18 09:09:25 by aomatsud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+void	free_args(char **args)
+{
+	int	i;
+
+	i = 0;
+	if (args)
+	{
+		while (args[i])
+		{
+			free(args[i]);
+			i++;
+		}
+		free(args);
+	}
+}
+
+void	free_cmd(t_cmd *cmd)
+{
+	if (cmd)
+	{
+		if (cmd->args)
+			free_args(cmd->args);
+		if (cmd->path)
+			free(cmd->path);
+		free(cmd);
+	}
+}
