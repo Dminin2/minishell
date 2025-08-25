@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/25 19:35:01 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/08/25 20:32:00 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,6 @@ int	is_metacharacter(char c)
 		return (1);
 	else
 		return (0);
-}
-
-t_tok_types	search_tok_types(t_lexer *lex)
-{
-	if (ft_strncmp(&(lex->line[lex->pos]), "<<", 2) == 0)
-		return (TK_HEREDOC);
-	else if (ft_strncmp(&(lex->line[lex->pos]), ">>", 2) == 0)
-		return (TK_APPEND);
-	else if (ft_strncmp(&(lex->line[lex->pos]), "<", 1) == 0)
-		return (TK_REDIR_IN);
-	else if (ft_strncmp(&(lex->line[lex->pos]), ">", 1) == 0)
-		return (TK_REDIR_OUT);
-	else
-		return (TK_PIPE);
 }
 
 t_status	handle_operator(t_lexer *lex, t_list **head)
@@ -101,18 +87,18 @@ t_status	handle_word(t_lexer *lex, t_list **head)
 		return (ERR_SYSTEM);
 	while (lex->line[lex->pos] && !isspace(lex->line[lex->pos]))
 	{
-		if (lex->line[lex->pos] == 39)
+		if (lex->line[lex->pos] == '\'')
 		{
 			lex->pos++;
-			while (lex->line[lex->pos] && lex->line[lex->pos] != 39)
+			while (lex->line[lex->pos] && lex->line[lex->pos] != '\'')
 				lex->pos++;
 			if (!lex->line[lex->pos])
 				return (ERR_SYNTAX);
 		}
-		else if (lex->line[lex->pos] == 34)
+		else if (lex->line[lex->pos] == '\"')
 		{
 			lex->pos++;
-			while (lex->line[lex->pos] && lex->line[lex->pos] != 34)
+			while (lex->line[lex->pos] && lex->line[lex->pos] != '\"')
 				lex->pos++;
 			if (!lex->line[lex->pos])
 				return (ERR_SYNTAX);
