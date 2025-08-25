@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/23 18:49:01 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/08/25 22:14:09 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,6 @@ void	parse(t_cmd *cmd, char *line)
 		cmd->args = ft_split(line, ' ');
 }
 
-void	print_lst(t_list *lst)
-{
-	t_token	*tok;
-
-	while (lst)
-	{
-		tok = lst->content;
-		if (tok->value)
-			printf("%s\n", tok->value);
-		else
-			printf("%d\n", tok->type);
-		lst = lst->next;
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -70,8 +55,7 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 		if (!lst)
 			continue ;
-		print_lst(lst);
-		ft_lstclear(&lst, (void (*)(void *))free_token);
+		ft_lstclear(&lst, &free_token_wrapper);
 		child_process(cmd, envp);
 		free_args(cmd->args);
 		free(cmd);
