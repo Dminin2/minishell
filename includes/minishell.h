@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/18 09:05:07 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/08/23 14:22:44 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include "execute.h"
-# include "libft.h"
+# include "lexer.h"
 # include "readline.h"
 # include "types.h"
 # include "utils.h"
