@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/19 17:39:34 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/08/23 18:49:01 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,26 @@ void	parse(t_cmd *cmd, char *line)
 		cmd->args = ft_split(line, ' ');
 }
 
+void	print_lst(t_list *lst)
+{
+	t_token	*tok;
+
+	while (lst)
+	{
+		tok = lst->content;
+		if (tok->value)
+			printf("%s\n", tok->value);
+		else
+			printf("%d\n", tok->type);
+		lst = lst->next;
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_cmd	*cmd;
+	t_list	*lst;
 
 	(void)argc;
 	(void)argv;
@@ -49,8 +65,13 @@ int	main(int argc, char **argv, char **envp)
 		cmd = ft_calloc(sizeof(t_cmd), 1);
 		if (!cmd)
 			exit_error(cmd, "malloc", ERR_SYSTEM, EXIT_FAILURE);
+		lst = tokenize(line);
 		parse(cmd, line);
 		free(line);
+		if (!lst)
+			continue ;
+		print_lst(lst);
+		ft_lstclear(&lst, (void (*)(void *))free_token);
 		child_process(cmd, envp);
 		free_args(cmd->args);
 		free(cmd);
