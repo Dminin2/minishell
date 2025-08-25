@@ -6,10 +6,15 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 14:21:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/23 17:47:30 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/08/25 20:30:36 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "types.h"
+#ifndef LEXER_H
+# define LEXER_H
+
+# include "types.h"
 
 t_list	*tokenize(char *line);
+
+#endif
