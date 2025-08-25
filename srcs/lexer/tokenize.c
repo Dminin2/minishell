@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/25 20:32:00 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/08/25 20:57:56 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,35 @@ t_status	handle_operator(t_lexer *lex, t_list **head)
 		return (ERR_SYSTEM);
 	if (lex->line[lex->pos] == '<')
 	{
-		if (lex->line[++lex->pos] == '<')
+		if (lex->line[lex->pos + 1] == '<')
+		{
 			tok->type = TK_HEREDOC;
+			lex->pos += 2;
+		}
 		else
+		{
 			tok->type = TK_REDIR_IN;
+			lex->pos += 1;
+		}
 	}
 	else if (lex->line[lex->pos] == '>')
 	{
-		if (lex->line[++lex->pos] == '>')
+		if (lex->line[lex->pos + 1] == '>')
+		{
 			tok->type = TK_APPEND;
+			lex->pos += 2;
+		}
 		else
+		{
 			tok->type = TK_REDIR_OUT;
+			lex->pos += 1;
+		}
 	}
 	else
+	{
 		tok->type = TK_PIPE;
-	if (tok->type == TK_HEREDOC || tok->type == TK_APPEND
-		|| tok->type == TK_PIPE)
-		lex->pos++;
+		lex->pos += 1;
+	}
 	new = ft_lstnew(tok);
 	if (!new)
 		return (ERR_SYSTEM);
