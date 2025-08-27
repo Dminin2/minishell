@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/27 18:04:21 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/08/27 18:06:28 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,28 @@ void	parse(t_cmd *cmd, char *line)
 		cmd->args = ft_split(line, ' ');
 }
 
-void	print_lst(t_list *head)
-{
-	t_token	*tok;
+// void	print_lst(t_list *head)
+// {
+// 	t_token	*tok;
 
-	while (head)
-	{
-		tok = head->content;
-		if (tok->type == TK_WORD)
-			printf("%s\n", tok->value);
-		else if (tok->type == TK_PIPE)
-			printf("|\n");
-		else if (tok->type == TK_REDIR_IN)
-			printf("<\n");
-		else if (tok->type == TK_REDIR_OUT)
-			printf(">\n");
-		else if (tok->type == TK_HEREDOC)
-			printf("<<\n");
-		else if (tok->type == TK_APPEND)
-			printf(">>\n");
-		head = head->next;
-	}
-}
+// 	while (head)
+// 	{
+// 		tok = head->content;
+// 		if (tok->type == TK_WORD)
+// 			printf("%s\n", tok->value);
+// 		else if (tok->type == TK_PIPE)
+// 			printf("|\n");
+// 		else if (tok->type == TK_REDIR_IN)
+// 			printf("<\n");
+// 		else if (tok->type == TK_REDIR_OUT)
+// 			printf(">\n");
+// 		else if (tok->type == TK_HEREDOC)
+// 			printf("<<\n");
+// 		else if (tok->type == TK_APPEND)
+// 			printf(">>\n");
+// 		head = head->next;
+// 	}
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -77,7 +77,8 @@ int	main(int argc, char **argv, char **envp)
 			free(line);
 			continue ;
 		}
-		print_lst(lst);
+		// debug用残しておきます
+		//  print_lst(lst);
 		ft_lstclear(&lst, &free_token_wrapper);
 		//コマンド実行できるように残しておいただけなのでまだ未完成のparse
 		cmd = ft_calloc(sizeof(t_cmd), 1);
