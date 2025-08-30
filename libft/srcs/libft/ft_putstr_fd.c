@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 16:24:16 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/04/27 16:26:06 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/08/25 23:00:10 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int	i;
+	int	len;
 
-	i = 0;
 	if (!s)
 		return ;
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
+	len = ft_strlen(s);
+	write(fd, s, len);
 }
