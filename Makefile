@@ -5,6 +5,7 @@ OBJS_DIR = objs
 
 READLINE_DIR = readline
 EXECUTOR_DIR = executor
+LEXER_DIR = lexer
 UTILS_DIR = utils
 
 SRCS_MAIN = main.c
@@ -12,6 +13,7 @@ SRCS_READLINE = $(READLINE_DIR)/readline.c
 SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/process.c \
 	$(EXECUTOR_DIR)/path.c
+SRCS_LEXER = $(LEXER_DIR)/tokenize.c
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c
 
@@ -19,6 +21,7 @@ SRCS_UTILS = $(UTILS_DIR)/free.c \
 SRCS = $(SRCS_MAIN) \
 $(SRCS_READLINE) \
 $(SRCS_EXECUTOR) \
+$(SRCS_LEXER) \
 $(SRCS_UTILS)
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
@@ -47,6 +50,7 @@ $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)
 	mkdir -p $(OBJS_DIR)/$(READLINE_DIR)
 	mkdir -p $(OBJS_DIR)/$(EXECUTOR_DIR)
+	mkdir -p $(OBJS_DIR)/$(LEXER_DIR)
 	mkdir -p $(OBJS_DIR)/$(UTILS_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
