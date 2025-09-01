@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/25 19:39:02 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/01 15:29:07 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 # define TYPES_H
 
 # include "libft.h"
-
-typedef struct s_cmd
-{
-	char		*path;
-	char		**args;
-}				t_cmd;
 
 typedef enum e_tok_types
 {
@@ -30,19 +24,45 @@ typedef enum e_tok_types
 	TK_HEREDOC,
 	TK_APPEND,
 	TK_EOF
-}				t_tok_types;
+}					t_tok_types;
 
 typedef struct s_token
 {
-	t_tok_types	type;
-	char		*value;
-}				t_token;
+	t_tok_types		type;
+	char			*value;
+}					t_token;
 
 typedef struct s_lexer
 {
-	const char	*line;
-	int			pos;
-}				t_lexer;
+	const char		*line;
+	int				pos;
+}					t_lexer;
+
+typedef enum e_redir_type
+{
+	R_IN,
+	R_OUT,
+	R_HEREDOC,
+	R_APPEND
+}					t_redir_type;
+
+typedef struct s_redir
+{
+	t_redir_type	type;
+	char			*value;
+}					t_redir;
+
+typedef struct s_cmd
+{
+	char			**args;
+	t_list			*redir_lst;
+}					t_cmd;
+
+typedef struct s_pipeline
+{
+	t_list			*cmd_lst;
+	int				n;
+}					t_pipeline;
 
 typedef enum e_status
 {
@@ -51,6 +71,6 @@ typedef enum e_status
 	ERR_SYNTAX,
 	ERR_CMD_NOT_FOUND,
 	ERR_NOT_VALID_PATH
-}				t_status;
+}					t_status;
 
 #endif
