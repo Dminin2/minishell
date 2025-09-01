@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/25 20:53:44 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/08/31 20:38:28 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "execute.h"
 # include "lexer.h"
+# include "parser.h"
 # include "readline.h"
 # include "types.h"
 # include "utils.h"
