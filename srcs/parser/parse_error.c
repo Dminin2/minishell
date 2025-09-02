@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 20:27:03 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/02 20:51:59 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ void	handle_error(t_list *tok_lst, t_list *head, t_status status)
 			}
 		}
 		else
-			assert_error(head, "newline", ERR_SYNTAX);
+			assert_error_parser(head, "newline", ERR_SYNTAX);
 	}
 }
