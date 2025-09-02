@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/31 20:38:28 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/02 21:01:23 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+# include "debug.h"
+
 #endif
