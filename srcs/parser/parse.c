@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 12:23:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 20:19:43 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/02 21:54:39 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_list	*get_cmd_lst(t_list *tok_lst)
 	head = NULL;
 	while (tok_lst)
 	{
-		cmd = ft_calloc(sizeof(t_cmd), 1);
+		cmd = ft_calloc(1, sizeof(t_cmd));
 		if (!cmd)
 		{
 			assert_error_parser(head, "malloc", ERR_SYSTEM);
@@ -89,7 +89,7 @@ t_pipeline	*parse(t_list *tok_lst)
 {
 	t_pipeline	*pipeline;
 
-	pipeline = ft_calloc(sizeof(t_pipeline), 1);
+	pipeline = ft_calloc(1, sizeof(t_pipeline));
 	if (!pipeline)
 	{
 		assert_error_parser(NULL, "malloc", ERR_SYSTEM);

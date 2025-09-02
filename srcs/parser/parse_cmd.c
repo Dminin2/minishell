@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:22:44 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 17:53:06 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/02 21:54:18 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_status	get_simple_command(t_list **tok_lst, t_cmd *cmd)
 	if (tok->type == TK_PIPE)
 		return (ERR_SYNTAX);
 	n = count_args(*tok_lst);
-	args = ft_calloc(sizeof(char *) * (n + 1), 1);
+	args = ft_calloc(n + 1, sizeof(char *));
 	if (!args)
 		return (ERR_SYSTEM);
 	i = 0;
