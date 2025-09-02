@@ -15,7 +15,10 @@ SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/process.c \
 	$(EXECUTOR_DIR)/path.c
 SRCS_LEXER = $(LEXER_DIR)/tokenize.c
-SRCS_PARSER = $(PARSER_DIR)/parse.c
+SRCS_PARSER = $(PARSER_DIR)/parse.c \
+	$(PARSER_DIR)/parse_error.c \
+	$(PARSER_DIR)/parse_redir.c \
+	$(PARSER_DIR)/parse_cmd.c
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c
 
