@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:17:00 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/01 15:29:28 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/02 20:52:40 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,6 @@ void	free_args(char **args)
 		free(args);
 	}
 }
-
-// void	free_cmd(t_cmd *cmd)
-// {
-// 	if (cmd)
-// 	{
-// 		if (cmd->args)
-// 			free_args(cmd->args);
-// 		if (cmd->path)
-// 			free(cmd->path);
-// 		free(cmd);
-// 	}
-// }
 
 void	free_token_wrapper(void *tok)
 {
