@@ -22,12 +22,18 @@ SRCS_PARSER = $(PARSER_DIR)/parse.c \
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c
 
+# debug用
+DEBUG_DIR = debug
+SRCS_DEBUG = $(DEBUG_DIR)/print_pipeline.c \
+	$(DEBUG_DIR)/print_token.c
+
 
 SRCS = $(SRCS_MAIN) \
 $(SRCS_READLINE) \
 $(SRCS_LEXER) \
 $(SRCS_PARSER) \
-$(SRCS_UTILS)
+$(SRCS_UTILS) \
+$(SRCS_DEBUG)
 
 # $(SRCS_EXECUTOR) \
 
@@ -60,6 +66,7 @@ $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)/$(LEXER_DIR)
 	mkdir -p $(OBJS_DIR)/$(PARSER_DIR)
 	mkdir -p $(OBJS_DIR)/$(UTILS_DIR)
+	mkdir -p $(OBJS_DIR)/$(DEBUG_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	$(CC) $(CFLAGS) -I$(INCLUDES) -I$(LIBFT_INCLUDES) -c $< -o $@
