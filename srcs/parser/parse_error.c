@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 17:49:36 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/02 20:27:03 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	handle_error(t_list *tok_lst, t_list *head, t_status status)
 {
 	t_token	*tok;
 
-	tok = tok_lst->content;
 	if (status == ERR_SYSTEM)
 		assert_error_parser(head, "malloc", ERR_SYSTEM);
 	else if (status == ERR_SYNTAX)
@@ -41,6 +40,6 @@ void	handle_error(t_list *tok_lst, t_list *head, t_status status)
 			}
 		}
 		else
-			assert_error(head, NULL, ERR_SYNTAX);
+			assert_error(head, "newline", ERR_SYNTAX);
 	}
 }

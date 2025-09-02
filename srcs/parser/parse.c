@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 12:23:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 17:40:46 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/02 20:19:43 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ t_status	add_newlst(t_list **head, void *content)
 	return (SUCCESS);
 }
 
-t_status	handle_pipe(t_list **tok_lst)
+t_status	skip_pipe(t_list **tok_lst)
 {
-	if (!(*tok_lst)->next)
-		return (ERR_SYNTAX);
 	*tok_lst = (*tok_lst)->next;
-	return (SUCCESS);
+	if (!*tok_lst)
+		return (ERR_SYNTAX);
+	else
+		return (SUCCESS);
 }
 
 t_list	*get_cmd_lst(t_list *tok_lst)
@@ -61,7 +62,12 @@ t_list	*get_cmd_lst(t_list *tok_lst)
 			return (NULL);
 		}
 		if (tok_lst)
-			status = handle_pipe(&tok_lst);
+			status = skip_pipe(&tok_lst);
+		if (status == ERR_SYNTAX)
+		{
+			assert_error_parser(head, "newline", ERR_SYNTAX);
+			return (NULL);
+		}
 	}
 	return (head);
 }
