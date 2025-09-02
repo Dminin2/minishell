@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:20:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/05/22 10:54:02 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/02 20:36:57 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,6 @@ static int	handle_format(const char c, va_list *args)
 	else
 		return (-1);
 }
-
-// static int	print_not_valid_specifier(const char c)
-// {
-// 	if (c == '\n')
-// 	{
-// 		if (ft_putstr_fd_error("%\n", 1) == -1)
-// 			return (-1);
-// 		return (2);
-// 	}
-// 	else
-// 	{
-// 		if (ft_putchar_fd_error('%', 1) == -1)
-// 			return (-1);
-// 		return (1);
-// 	}
-// }
-
-// static int	is_valid_specifier(const char c)
-// {
-// 	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u'
-// 		|| c == 'x' || c == 'X' || c == '%')
-// 		return (1);
-// 	return (0);
-// }
 
 static int	loop_format(const char *format, va_list *args)
 {
