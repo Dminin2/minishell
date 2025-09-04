@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/01 15:29:07 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/04 20:07:51 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 # define TYPES_H
 
 # include "libft.h"
+
+typedef enum e_status
+{
+	SUCCESS,
+	FAILURE,
+	ERR_SYSTEM,
+	ERR_SYNTAX,
+	ERR_CMD_NOT_FOUND,
+	ERR_NOT_VALID_PATH,
+	ERR_FILE,
+	ERR_DUP,
+	ERR_MALLOC
+}					t_status;
 
 typedef enum e_tok_types
 {
@@ -50,11 +63,13 @@ typedef struct s_redir
 {
 	t_redir_type	type;
 	char			*value;
+	int				fd_hd;
 }					t_redir;
 
 typedef struct s_cmd
 {
 	char			**args;
+	char			*path;
 	t_list			*redir_lst;
 }					t_cmd;
 
@@ -64,13 +79,10 @@ typedef struct s_pipeline
 	int				n;
 }					t_pipeline;
 
-typedef enum e_status
+typedef struct s_redir_err
 {
-	SUCCESS,
-	ERR_SYSTEM,
-	ERR_SYNTAX,
-	ERR_CMD_NOT_FOUND,
-	ERR_NOT_VALID_PATH
-}					t_status;
+	t_status		status;
+	t_redir			*redir_err;
+}					t_redir_err;
 
 #endif
