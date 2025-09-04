@@ -7,6 +7,7 @@ READLINE_DIR = readline
 EXECUTOR_DIR = executor
 LEXER_DIR = lexer
 PARSER_DIR = parser
+REDIRECTION_DIR = redirection
 UTILS_DIR = utils
 
 SRCS_MAIN = main.c
@@ -19,8 +20,11 @@ SRCS_PARSER = $(PARSER_DIR)/parse.c \
 	$(PARSER_DIR)/parse_error.c \
 	$(PARSER_DIR)/parse_redir.c \
 	$(PARSER_DIR)/parse_cmd.c
+SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
+	$(REDIRECTION_DIR)/heredoc.c
 SRCS_UTILS = $(UTILS_DIR)/free.c \
-	$(UTILS_DIR)/exit.c
+	$(UTILS_DIR)/exit.c \
+	$(UTILS_DIR)/close.c
 
 # debug用
 DEBUG_DIR = debug
@@ -32,10 +36,11 @@ SRCS = $(SRCS_MAIN) \
 $(SRCS_READLINE) \
 $(SRCS_LEXER) \
 $(SRCS_PARSER) \
+$(SRCS_REDIRECTION) \
+$(SRCS_EXECUTOR) \
 $(SRCS_UTILS) \
 $(SRCS_DEBUG)
 
-# $(SRCS_EXECUTOR) \
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
@@ -65,6 +70,7 @@ $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)/$(EXECUTOR_DIR)
 	mkdir -p $(OBJS_DIR)/$(LEXER_DIR)
 	mkdir -p $(OBJS_DIR)/$(PARSER_DIR)
+	mkdir -p $(OBJS_DIR)/$(REDIRECTION_DIR)
 	mkdir -p $(OBJS_DIR)/$(UTILS_DIR)
 	mkdir -p $(OBJS_DIR)/$(DEBUG_DIR)
 

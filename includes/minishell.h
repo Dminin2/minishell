@@ -6,20 +6,23 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 21:01:23 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:04:58 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "debug.h"
 # include "execute.h"
 # include "lexer.h"
 # include "parser.h"
 # include "readline.h"
+# include "redirection.h"
 # include "types.h"
 # include "utils.h"
 # include <errno.h>
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
@@ -28,7 +31,5 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
-# include "debug.h"
 
 #endif
