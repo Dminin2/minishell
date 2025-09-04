@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:17:00 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 20:52:40 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:15:22 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	free_cmd(t_cmd *cmd)
 	{
 		if (cmd->args)
 			free_args(cmd->args);
+		if (cmd->path)
+			free(cmd->path);
 		if (cmd->redir_lst)
 			ft_lstclear(&(cmd->redir_lst), &free_redir_wrapper);
 		free(cmd);
