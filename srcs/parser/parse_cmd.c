@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:22:44 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 21:54:18 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/05 13:12:54 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ t_status	get_cmd_args(t_list **tok_lst, char **args, int *pos)
 	tok = (*tok_lst)->content;
 	args[*pos] = ft_strdup(tok->value);
 	if (!args[*pos])
-	{
-		free_args(args);
 		return (ERR_SYSTEM);
-	}
 	(*pos)++;
 	*tok_lst = (*tok_lst)->next;
 	return (SUCCESS);
