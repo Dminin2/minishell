@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 20:27:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/04 20:35:54 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/05 13:46:22 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	loop_redir_lst(t_list *redir_lst)
 void	close_heredoc(t_list *cmd_lst)
 {
 	t_cmd	*cmd;
+
 	while (cmd_lst)
 	{
 		cmd = cmd_lst->content;

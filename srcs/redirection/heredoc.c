@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/04 21:50:49 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/05 13:53:48 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_status	handle_heredoc(t_redir *redir)
 	fd = open(tmp_file, O_CREAT | O_EXCL | O_WRONLY, 0644);
 	if (fd < 0)
 		return (ERR_FILE);
-	// TODO: delimitterのexpandを行う。double quoteでも展開しなくていいので注意。
+	// TODO: delimiterのexpandを行う。double quoteでも展開しなくていいので注意。
 	if (redir->value)
 		read_line_and_write_fd(redir->value, fd);
 	else
