@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/04 21:51:14 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/05 13:45:28 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	redir_append(t_redir *redir, t_redir_err *err)
 		err->redir_err = NULL;
 		return ;
 	}
+	close(fd);
 }
 
 void	redirect(t_list *redir_lst, t_redir_err *err)
