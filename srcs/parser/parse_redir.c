@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:12 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 21:54:25 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/05 13:13:39 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,10 @@ void	handle_redir_type(t_token *tok, t_redir *redir)
 t_status	handle_redir_value(t_token *tok, t_redir *redir)
 {
 	if (tok->type != TK_WORD)
-	{
-		free(redir);
 		return (ERR_SYNTAX);
-	}
 	redir->value = ft_strdup(tok->value);
 	if (!redir->value)
-	{
-		free(redir);
 		return (ERR_SYSTEM);
-	}
 	return (SUCCESS);
 }
 
@@ -57,7 +51,10 @@ t_status	get_redirection(t_list **tok_lst, t_cmd *cmd)
 	}
 	status = handle_redir_value((*tok_lst)->content, redir);
 	if (status != SUCCESS)
+	{
+		free(redir);
 		return (status);
+	}
 	status = add_newlst(&(cmd->redir_lst), (void *)redir);
 	if (status != SUCCESS)
 	{
