@@ -61,12 +61,13 @@ t_list	*get_cmd_lst(t_list *tok_lst)
 			assert_error_parser(head, "malloc", ERR_SYSTEM);
 			return (NULL);
 		}
-		if (tok_lst)
+		if (tok_lst){
 			status = skip_pipe(&tok_lst);
-		if (status == ERR_SYNTAX)
-		{
-			assert_error_parser(head, "newline", ERR_SYNTAX);
-			return (NULL);
+		    if (status == ERR_SYNTAX)
+		    {
+			    assert_error_parser(head, "newline", ERR_SYNTAX);
+			    return (NULL);
+		    }
 		}
 	}
 	return (head);
