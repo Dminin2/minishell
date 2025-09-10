@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 20:27:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/09 18:53:19 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/10 18:36:30 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	close_simple_pipe(int *pipe)
 {
 	if (!pipe)
 		return ;
-	if (pipe[0] > 0)
+	if (pipe[0] >= 0)
 		close(pipe[0]);
-	if (pipe[1] > 0)
+	if (pipe[1] >= 0)
 		close(pipe[1]);
 	pipe[0] = -1;
 	pipe[1] = -1;
