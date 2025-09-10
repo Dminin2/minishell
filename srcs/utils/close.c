@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 20:27:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/10 18:36:30 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/10 22:36:46 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	loop_redir_lst(t_list *redir_lst)
 	while (redir_lst)
 	{
 		redir = redir_lst->content;
-		if (redir->fd_hd > 0)
+		if (redir->fd_hd >= 0)
 			close(redir->fd_hd);
 		redir_lst = redir_lst->next;
 	}
