@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   debug.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 21:01:23 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/09/02 20:59:45 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/09/05 13:18:54 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include "execute.h"
-# include "lexer.h"
-# include "parser.h"
-# include "readline.h"
+#ifndef DEBUG_H
+# define DEBUG_H
 # include "types.h"
-# include "utils.h"
-# include <errno.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <unistd.h>
 
-# include "debug.h"
+void	print_token(t_list *head);
+void	print_pipeline(t_pipeline *pipeline);
 
 #endif

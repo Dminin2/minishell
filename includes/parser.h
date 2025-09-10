@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 21:01:23 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/08/31 20:37:20 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/09/02 17:41:55 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PARSER_H
+# define PARSER_H
+# include "minishell.h"
 
-# include "execute.h"
-# include "lexer.h"
-# include "parser.h"
-# include "readline.h"
-# include "types.h"
-# include "utils.h"
-# include <errno.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <unistd.h>
+t_pipeline	*parse(t_list *tok_lst);
+void		handle_error(t_list *tok_lst, t_list *head, t_status status);
+t_status	get_redirection(t_list **tok_lst, t_cmd *cmd);
+t_status	get_simple_command(t_list **tok_lst, t_cmd *cmd);
 
-# include "debug.h"
+t_status	add_newlst(t_list **head, void *content);
 
 #endif

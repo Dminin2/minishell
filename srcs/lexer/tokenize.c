@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/27 18:03:16 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/02 21:54:01 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_status	handle_operator(t_lexer *lex, t_list **head)
 	t_token	*tok;
 	t_list	*new;
 
-	tok = ft_calloc(sizeof(t_token), 1);
+	tok = ft_calloc(1, sizeof(t_token));
 	if (!tok)
 		return (ERR_SYSTEM);
 	//一文字めの確認
@@ -135,7 +135,7 @@ t_status	handle_word(t_lexer *lex, t_list **head)
 			break ;
 		lex->pos++;
 	}
-	tok = ft_calloc(sizeof(t_token), 1);
+	tok = ft_calloc(1, sizeof(t_token));
 	if (!tok)
 		return (ERR_SYSTEM);
 	tok->type = TK_WORD;
