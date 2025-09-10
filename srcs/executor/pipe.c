@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 15:32:57 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/09 19:44:24 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/10 18:36:06 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ t_status	create_pipes(t_pipeline *pipeline)
 			free_pipes(pipes, i);
 			return (ERR_MALLOC);
 		}
+		pipes[i][0] = -1;
+		pipes[i][1] = -1;
 		i++;
 	}
 	pipeline->pipes = pipes;
