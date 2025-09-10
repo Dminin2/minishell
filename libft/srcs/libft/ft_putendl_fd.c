@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 16:29:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/26 15:05:00 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/05 13:50:00 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	ft_putendl_fd(char *s, int fd)
 
 	if (!s)
 		return ;
-	len = ft_strlen(s) + 1;
-	s = ft_strjoin(s, "\n");
+	len = ft_strlen(s);
 	write(fd, s, len);
-	free(s);
+	write(1, "\n", 1);
 }

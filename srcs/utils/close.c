@@ -1,23 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.h                                          :+:      :+:    :+:   */
+/*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/04 20:18:04 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/09/04 20:27:22 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/09/05 13:46:22 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_H
-# define EXECUTE_H
+#include "minishell.h"
 
-# include "types.h"
+void	loop_redir_lst(t_list *redir_lst)
+{
+	t_redir	*redir;
 
-void		execute(t_pipeline *pipeline, char **envp);
-void		child_process(t_pipeline *pipeline, char **envp);
+	while (redir_lst)
+	{
+		redir = redir_lst->content;
+		if (redir->fd_hd > 0)
+			close(redir->fd_hd);
+		redir_lst = redir_lst->next;
+	}
+}
 
-t_status	resolve_command_path(t_cmd *cmd, char **envp);
+void	close_heredoc(t_list *cmd_lst)
+{
+	t_cmd	*cmd;
 
-#endif
+	while (cmd_lst)
+	{
+		cmd = cmd_lst->content;
+		if (cmd->redir_lst)
+			loop_redir_lst(cmd->redir_lst);
+		cmd_lst = cmd_lst->next;
+	}
+}

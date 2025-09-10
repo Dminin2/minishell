@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/04 17:04:58 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/09/04 17:03:44 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/09/04 20:06:02 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include "debug.h"
-# include "execute.h"
-# include "lexer.h"
-# include "parser.h"
-# include "readline.h"
-# include "redirection.h"
+#ifndef REDIRECTION_H
+# define REDIRECTION_H
 # include "types.h"
-# include "utils.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <unistd.h>
+
+void		redirect(t_list *redir_lst, t_redir_err *err);
+t_status	read_heredoc(t_list *cmd_lst);
 
 #endif
