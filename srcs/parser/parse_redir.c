@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:12 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/05 13:24:43 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/10 22:36:13 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_status	get_redirection(t_list **tok_lst, t_cmd *cmd)
 	redir = ft_calloc(1, sizeof(t_redir));
 	if (!redir)
 		return (ERR_SYSTEM);
+	redir->fd_hd = -1;
 	handle_redir_type((*tok_lst)->content, redir);
 	*tok_lst = (*tok_lst)->next;
 	if (!*tok_lst)
