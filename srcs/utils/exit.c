@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/04 17:12:43 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:47:59 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ void	assert_error_parser(t_list *lst, char *context, t_status status)
 {
 	print_error_msg(context, status);
 	ft_lstclear(&lst, free_cmd_wrapper);
+}
+
+void	assert_error_parent(t_pipeline *pipeline, char *context,
+		t_status status)
+{
+	print_error_msg(context, status);
+	free_pipeline(pipeline);
 }
 
 void	exit_error(t_pipeline *pipeline, char *context, t_status status,

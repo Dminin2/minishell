@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:17:00 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/04 17:15:22 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/09 18:58:06 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,33 @@ void	free_cmd(t_cmd *cmd)
 	}
 }
 
+void	free_pipes(int **pipes, int n)
+{
+	int	i;
+
+	i = 0;
+	if (pipes)
+	{
+		while (i < n)
+		{
+			free(pipes[i]);
+			i++;
+		}
+		free(pipes);
+	}
+}
+
 void	free_pipeline(t_pipeline *pipeline)
 {
 	if (pipeline)
 	{
 		if (pipeline->cmd_lst)
 			ft_lstclear(&(pipeline->cmd_lst), &free_cmd_wrapper);
+		if (pipeline->pipes)
+		{
+			close_pipes(pipeline->pipes, pipeline->n - 1);
+			free_pipes(pipeline->pipes, pipeline->n - 1);
+		}
 		free(pipeline);
 	}
 }
