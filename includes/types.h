@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/04 20:07:51 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:43:48 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ typedef enum e_status
 	ERR_NOT_VALID_PATH,
 	ERR_FILE,
 	ERR_DUP,
-	ERR_MALLOC
+	ERR_MALLOC,
+	ERR_PIPE,
+	ERR_FORK
 }					t_status;
 
 typedef enum e_tok_types
@@ -77,6 +79,7 @@ typedef struct s_pipeline
 {
 	t_list			*cmd_lst;
 	int				n;
+	int				**pipes;
 }					t_pipeline;
 
 typedef struct s_redir_err

@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 20:27:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/05 13:46:22 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/10 18:36:30 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,32 @@ void	close_heredoc(t_list *cmd_lst)
 		if (cmd->redir_lst)
 			loop_redir_lst(cmd->redir_lst);
 		cmd_lst = cmd_lst->next;
+	}
+}
+
+void	close_simple_pipe(int *pipe)
+{
+	if (!pipe)
+		return ;
+	if (pipe[0] >= 0)
+		close(pipe[0]);
+	if (pipe[1] >= 0)
+		close(pipe[1]);
+	pipe[0] = -1;
+	pipe[1] = -1;
+}
+
+void	close_pipes(int **pipes, int n)
+{
+	int	i;
+
+	i = 0;
+	if (pipes)
+	{
+		while (i < n)
+		{
+			close_simple_pipe(pipes[i]);
+			i++;
+		}
 	}
 }
