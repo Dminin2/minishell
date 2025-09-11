@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:32:03 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/11 17:39:01 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/11 20:03:46 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,10 @@ t_status	search_path(t_cmd *cmd, char **paths)
 		free(tmp);
 		if (!full_path)
 			return (ERR_SYSTEM);
-		if (access(full_path, F_OK) == 0)
+		if (stat(full_path, &st_buf) != -1 && !S_ISDIR(st_buf.st_mode))
 		{
-			if (stat(full_path, &st_buf) != -1 && !S_ISDIR(st_buf.st_mode))
-			{
-				cmd->path = full_path;
-				return (SUCCESS);
-			}
+			cmd->path = full_path;
+			return (SUCCESS);
 		}
 		free(full_path);
 		i++;
