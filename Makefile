@@ -1,4 +1,5 @@
 NAME = minishell
+NAME_DEBUG = minishell_debug
 
 SRCS_DIR = srcs
 OBJS_DIR = objs
@@ -28,6 +29,7 @@ SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/close.c
 
 # debug用
+SRCS_MAIN_DEBUG = main_debug.c
 DEBUG_DIR = debug
 SRCS_DEBUG = $(DEBUG_DIR)/print_pipeline.c \
 	$(DEBUG_DIR)/print_token.c
@@ -39,11 +41,20 @@ $(SRCS_LEXER) \
 $(SRCS_PARSER) \
 $(SRCS_REDIRECTION) \
 $(SRCS_EXECUTOR) \
+$(SRCS_UTILS)
+
+SRCS_DEBUG_ALL = $(SRCS_MAIN_DEBUG) \
+$(SRCS_READLINE) \
+$(SRCS_LEXER) \
+$(SRCS_PARSER) \
+$(SRCS_REDIRECTION) \
+$(SRCS_EXECUTOR) \
 $(SRCS_UTILS) \
 $(SRCS_DEBUG)
 
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
+OBJS_DEBUG_ALL = $(addprefix $(OBJS_DIR)/, $(SRCS_DEBUG_ALL:.c=.o))
 
 INCLUDES = includes
 
@@ -61,6 +72,11 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_A)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) -lreadline -o $(NAME)
+
+debug: $(NAME_DEBUG)
+
+$(NAME_DEBUG): $(OBJS_DEBUG_ALL) $(LIBFT_A)
+	$(CC) $(CFLAGS) $(OBJS_DEBUG_ALL) $(LIBFT_A) -lreadline -o $(NAME_DEBUG)
 
 $(LIBFT_A):
 	make -C $(LIBFT_DIR)
@@ -80,11 +96,13 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 
 clean:
 	$(RM) $(OBJS)
+	$(RM) $(OBJS_DEBUG_ALL)
 	$(RM_DIR) $(OBJS_DIR)
 	$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(NAME_DEBUG)
 	$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
