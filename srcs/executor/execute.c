@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/11 10:38:34 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/11 20:05:09 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	execute(t_pipeline *pipeline, int pos, char **envp)
 			exit_error(pipeline, cmd->args[0], status, 127);
 	}
 	if (stat(cmd->path, &st_buf) == -1)
-		exit_error(pipeline, cmd->args[0], ERR_ERRNO, 127);
+		exit_error(pipeline, cmd->path, ERR_ERRNO, 127);
 	if (S_ISDIR(st_buf.st_mode))
-		exit_error(pipeline, cmd->args[0], ERR_ISDIR, 126);
+		exit_error(pipeline, cmd->path, ERR_ISDIR, 126);
 	if (access(cmd->path, X_OK) == -1)
 		exit_error(pipeline, cmd->path, ERR_SYSTEM, 126);
 	else if (execve(cmd->path, cmd->args, envp) == -1)
