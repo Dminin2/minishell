@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/09 20:36:02 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/11 10:38:34 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,20 @@ void	handle_redir_err(t_pipeline *pipeline, t_redir_err err)
 		exit_error(pipeline, "dup", ERR_SYSTEM, EXIT_FAILURE);
 }
 
+void	handle_execve_error(t_pipeline *pipeline, t_cmd *cmd)
+{
+	if (errno == EISDIR)
+		exit_error(pipeline, cmd->args[0], ERR_ISDIR, 126);
+	else
+		exit_error(pipeline, cmd->args[0], ERR_ERRNO, 126);
+}
+
 void	execute(t_pipeline *pipeline, int pos, char **envp)
 {
 	t_status	status;
 	t_redir_err	err;
 	t_cmd		*cmd;
+	struct stat	st_buf;
 
 	cmd = get_cmd_from_lst(pipeline->cmd_lst, pos);
 	status = pipe_duplicate(pipeline, pos);
@@ -62,8 +71,12 @@ void	execute(t_pipeline *pipeline, int pos, char **envp)
 		else
 			exit_error(pipeline, cmd->args[0], status, 127);
 	}
-	if (access(cmd->path, X_OK) != 0)
-		exit_error(pipeline, cmd->path, ERR_SYSTEM, 127);
+	if (stat(cmd->path, &st_buf) == -1)
+		exit_error(pipeline, cmd->args[0], ERR_ERRNO, 127);
+	if (S_ISDIR(st_buf.st_mode))
+		exit_error(pipeline, cmd->args[0], ERR_ISDIR, 126);
+	if (access(cmd->path, X_OK) == -1)
+		exit_error(pipeline, cmd->path, ERR_SYSTEM, 126);
 	else if (execve(cmd->path, cmd->args, envp) == -1)
-		exit_error(pipeline, cmd->path, ERR_SYSTEM, 127);
+		handle_execve_error(pipeline, cmd);
 }
