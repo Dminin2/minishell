@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/09 16:43:48 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/11 10:33:55 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ typedef enum e_status
 	ERR_SYNTAX,
 	ERR_CMD_NOT_FOUND,
 	ERR_NOT_VALID_PATH,
+	ERR_ISDIR,
 	ERR_FILE,
 	ERR_DUP,
 	ERR_MALLOC,
 	ERR_PIPE,
-	ERR_FORK
+	ERR_FORK,
+	ERR_ERRNO
 }					t_status;
 
 typedef enum e_tok_types

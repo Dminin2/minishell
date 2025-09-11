@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:32:03 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/19 16:39:39 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/11 20:03:46 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ int	find_path_indexdex(char **envp)
 
 t_status	search_path(t_cmd *cmd, char **paths)
 {
-	char	*full_path;
-	char	*tmp;
-	int		i;
+	char		*full_path;
+	char		*tmp;
+	int			i;
+	struct stat	st_buf;
 
 	i = 0;
 	while (paths[i])
@@ -56,7 +57,7 @@ t_status	search_path(t_cmd *cmd, char **paths)
 		free(tmp);
 		if (!full_path)
 			return (ERR_SYSTEM);
-		if (access(full_path, X_OK) == 0)
+		if (stat(full_path, &st_buf) != -1 && !S_ISDIR(st_buf.st_mode))
 		{
 			cmd->path = full_path;
 			return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/09 17:47:59 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/11 10:40:57 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ void	print_error_msg(char *context, t_status status)
 			"minishell: syntax error near unexpected token `%s'\n", context);
 	else if (status == ERR_FILE)
 		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
+	else if (status == ERR_ERRNO)
+		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
+	else if (status == ERR_ISDIR)
+		dprintf(STDERR_FILENO, "minishell: %s: is a directory\n", context);
 }
 
 void	assert_error(t_list *lst, char *context, t_status status)
