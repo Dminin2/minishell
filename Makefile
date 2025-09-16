@@ -29,8 +29,10 @@ SRCS_UTILS = $(UTILS_DIR)/free.c \
 
 # debug用
 DEBUG_DIR = debug
-SRCS_DEBUG = $(DEBUG_DIR)/print_pipeline.c \
-	$(DEBUG_DIR)/print_token.c
+SRCS_DEBUG = $(DEBUG_DIR)/print_pipeline_ir.c \
+	$(DEBUG_DIR)/print_token.c \
+	$(DEBUG_DIR)/print_pipeline.c \
+	$(DEBUG_DIR)/print_redir_lst.c
 
 
 SRCS = $(SRCS_MAIN) \
