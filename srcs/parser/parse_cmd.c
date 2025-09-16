@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_cmd.c                                        :+:      :+:    :+:   */
+/*   parse_cmd_ir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,68 +12,42 @@
 
 #include "minishell.h"
 
-int	count_args(t_list *tok_lst)
+t_status	get_cmd_ir_args(t_list **tok_lst, t_cmd_ir *cmd_ir)
 {
-	int		n;
-	t_token	*tok;
-
-	n = 0;
-	while (tok_lst)
-	{
-		tok = tok_lst->content;
-		if (tok->type == TK_PIPE)
-			break ;
-		else if (tok->type == TK_WORD)
-			n++;
-		tok_lst = tok_lst->next;
-	}
-	return (n);
-}
-
-t_status	get_cmd_args(t_list **tok_lst, char **args, int *pos)
-{
-	t_token	*tok;
+	t_token		*tok;
+	char		*args;
+	t_status	status;
 
 	tok = (*tok_lst)->content;
-	args[*pos] = ft_strdup(tok->value);
-	if (!args[*pos])
+	args = ft_strdup(tok->value);
+	if (!args)
 		return (ERR_SYSTEM);
-	(*pos)++;
+	status = add_newlst(&(cmd_ir->args_lst), args);
+	if (status != SUCCESS)
+		return (status);
 	*tok_lst = (*tok_lst)->next;
 	return (SUCCESS);
 }
 
-t_status	get_simple_command(t_list **tok_lst, t_cmd *cmd)
+t_status	get_simple_command(t_list **tok_lst, t_cmd_ir *cmd_ir)
 {
 	t_token		*tok;
-	char		**args;
-	int			n;
-	int			i;
 	t_status	status;
 
 	tok = (*tok_lst)->content;
 	if (tok->type == TK_PIPE)
 		return (ERR_SYNTAX);
-	n = count_args(*tok_lst);
-	args = ft_calloc(n + 1, sizeof(char *));
-	if (!args)
-		return (ERR_SYSTEM);
-	i = 0;
 	while (*tok_lst)
 	{
 		tok = (*tok_lst)->content;
 		if (tok->type == TK_PIPE)
 			break ;
 		else if (tok->type == TK_WORD)
-			status = get_cmd_args(tok_lst, args, &i);
+			status = get_cmd_ir_args(tok_lst, cmd_ir);
 		else
-			status = get_redirection(tok_lst, cmd);
+			status = get_redirection(tok_lst, cmd_ir);
 		if (status != SUCCESS)
-		{
-			free_args(args);
 			return (status);
-		}
 	}
-	cmd->args = args;
 	return (SUCCESS);
 }

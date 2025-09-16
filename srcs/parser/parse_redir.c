@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:12 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/10 22:36:13 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/14 00:17:22 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_status	handle_redir_value(t_token *tok, t_redir *redir)
 	return (SUCCESS);
 }
 
-t_status	get_redirection(t_list **tok_lst, t_cmd *cmd)
+t_status	get_redirection(t_list **tok_lst, t_cmd_ir *cmd_ir)
 {
 	t_redir		*redir;
 	t_status	status;
@@ -56,7 +56,7 @@ t_status	get_redirection(t_list **tok_lst, t_cmd *cmd)
 		free(redir);
 		return (status);
 	}
-	status = add_newlst(&(cmd->redir_lst), (void *)redir);
+	status = add_newlst(&(cmd_ir->redir_lst), (void *)redir);
 	if (status != SUCCESS)
 	{
 		free_redir(redir);

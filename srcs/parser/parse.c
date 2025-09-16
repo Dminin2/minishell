@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 12:23:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/07 12:02:23 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/13 23:58:53 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,32 @@ t_status	skip_pipe(t_list **tok_lst)
 		return (SUCCESS);
 }
 
-t_list	*get_cmd_lst(t_list *tok_lst)
+t_list	*get_cmd_ir_lst(t_list *tok_lst)
 {
-	t_cmd		*cmd;
+	t_cmd_ir		*cmd_ir;
 	t_status	status;
 	t_list		*head;
 
 	head = NULL;
 	while (tok_lst)
 	{
-		cmd = ft_calloc(1, sizeof(t_cmd));
-		if (!cmd)
+		cmd_ir = ft_calloc(1, sizeof(t_cmd_ir));
+		if (!cmd_ir)
 		{
 			assert_error_parser(head, "malloc", ERR_SYSTEM);
 			return (NULL);
 		}
-		status = get_simple_command(&tok_lst, cmd);
+		status = get_simple_command(&tok_lst, cmd_ir);
 		if (status != SUCCESS)
 		{
-			free_cmd(cmd);
+			free_cmd_ir(cmd_ir);
 			handle_error(tok_lst, head, status);
 			return (NULL);
 		}
-		status = add_newlst(&head, (void *)cmd);
+		status = add_newlst(&head, (void *)cmd_ir);
 		if (status == ERR_SYSTEM)
 		{
-			free_cmd(cmd);
+			free_cmd_ir(cmd_ir);
 			assert_error_parser(head, "malloc", ERR_SYSTEM);
 			return (NULL);
 		}
@@ -74,35 +74,35 @@ t_list	*get_cmd_lst(t_list *tok_lst)
 	return (head);
 }
 
-int	count_cmds(t_list *cmd_lst)
+int	count_cmd_irs(t_list *cmd_ir_lst)
 {
 	int	n;
 
 	n = 0;
-	while (cmd_lst)
+	while (cmd_ir_lst)
 	{
 		n++;
-		cmd_lst = cmd_lst->next;
+		cmd_ir_lst = cmd_ir_lst->next;
 	}
 	return (n);
 }
 
-t_pipeline	*parse(t_list *tok_lst)
+t_pipeline_ir	*parse(t_list *tok_lst)
 {
-	t_pipeline	*pipeline;
+	t_pipeline_ir	*pipeline_ir;
 
-	pipeline = ft_calloc(1, sizeof(t_pipeline));
-	if (!pipeline)
+	pipeline_ir = ft_calloc(1, sizeof(t_pipeline_ir));
+	if (!pipeline_ir)
 	{
 		assert_error_parser(NULL, "malloc", ERR_SYSTEM);
 		return (NULL);
 	}
-	pipeline->cmd_lst = get_cmd_lst(tok_lst);
-	if (!pipeline->cmd_lst)
+	pipeline_ir->cmd_ir_lst = get_cmd_ir_lst(tok_lst);
+	if (!pipeline_ir->cmd_ir_lst)
 	{
-		free(pipeline);
+		free(pipeline_ir);
 		return (NULL);
 	}
-	pipeline->n = count_cmds(pipeline->cmd_lst);
-	return (pipeline);
+	pipeline_ir->n = count_cmd_irs(pipeline_ir->cmd_ir_lst);
+	return (pipeline_ir);
 }
