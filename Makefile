@@ -8,6 +8,7 @@ EXECUTOR_DIR = executor
 LEXER_DIR = lexer
 PARSER_DIR = parser
 REDIRECTION_DIR = redirection
+ENV_DIR = env
 UTILS_DIR = utils
 
 SRCS_MAIN = main.c
@@ -23,6 +24,7 @@ SRCS_PARSER = $(PARSER_DIR)/parse.c \
 	$(PARSER_DIR)/parse_cmd.c
 SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
 	$(REDIRECTION_DIR)/heredoc.c
+SRCS_ENV = $(ENV_DIR)/env_init.c
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c \
 	$(UTILS_DIR)/close.c
@@ -32,7 +34,8 @@ DEBUG_DIR = debug
 SRCS_DEBUG = $(DEBUG_DIR)/print_pipeline_ir.c \
 	$(DEBUG_DIR)/print_token.c \
 	$(DEBUG_DIR)/print_pipeline.c \
-	$(DEBUG_DIR)/print_redir_lst.c
+	$(DEBUG_DIR)/print_redir_lst.c \
+	$(DEBUG_DIR)/print_env_lst.c
 
 
 SRCS = $(SRCS_MAIN) \
@@ -41,6 +44,7 @@ $(SRCS_LEXER) \
 $(SRCS_PARSER) \
 $(SRCS_REDIRECTION) \
 $(SRCS_EXECUTOR) \
+$(SRCS_ENV) \
 $(SRCS_UTILS) \
 $(SRCS_DEBUG)
 
@@ -74,6 +78,7 @@ $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)/$(LEXER_DIR)
 	mkdir -p $(OBJS_DIR)/$(PARSER_DIR)
 	mkdir -p $(OBJS_DIR)/$(REDIRECTION_DIR)
+	mkdir -p $(OBJS_DIR)/$(ENV_DIR)
 	mkdir -p $(OBJS_DIR)/$(UTILS_DIR)
 	mkdir -p $(OBJS_DIR)/$(DEBUG_DIR)
 
