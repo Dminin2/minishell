@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/14 00:20:46 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/16 16:35:43 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ void	assert_error_parent(t_pipeline *pipeline, char *context,
 {
 	print_error_msg(context, status);
 	free_pipeline(pipeline);
+}
+
+void	assert_error_env_init(t_list *env_lst, char *context, t_status status)
+{
+	print_error_msg(context, status);
+	ft_lstclear(&env_lst, free_env_wrapper);
 }
 
 void	exit_error(t_pipeline *pipeline, char *context, t_status status,

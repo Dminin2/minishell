@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:17:00 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/14 12:38:24 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/16 16:11:58 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,22 @@ void	free_pipeline_ir(t_pipeline_ir *pipeline_ir)
 		if (pipeline_ir->cmd_ir_lst)
 			ft_lstclear(&(pipeline_ir->cmd_ir_lst), &free_cmd_ir_wrapper);
 		free(pipeline_ir);
+	}
+}
+
+void	free_env_wrapper(void *env)
+{
+	free_env((t_env *)env);
+}
+
+void	free_env(t_env *env)
+{
+	if (env)
+	{
+		if (env->key)
+			free(env->key);
+		if (env->value)
+			free(env->value);
+		free(env);
 	}
 }
