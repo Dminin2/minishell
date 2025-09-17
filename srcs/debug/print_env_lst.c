@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug.h                                            :+:      :+:    :+:   */
+/*   print_env_lst.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/02 20:59:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/16 16:31:48 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/09/16 16:27:22 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/09/16 16:30:50 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEBUG_H
-# define DEBUG_H
-# include "types.h"
+#include "minishell.h"
 
-void	print_token(t_list *head);
-void	print_pipeline_ir(t_pipeline_ir *pipeline_ir);
-void	print_pipeline(t_pipeline *pipeline);
-void	print_redir_lst(t_list *head);
-void	print_env_lst(t_list *env_lst);
+void	print_env_lst(t_list *env_lst)
+{
+	t_env	*env;
 
-#endif
+	printf("=== env_lst ===\n");
+	while (env_lst)
+	{
+		env = env_lst->content;
+		printf("%s=%s\n", env->key, env->value);
+		env_lst = env_lst->next;
+	}
+}
