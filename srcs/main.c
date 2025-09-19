@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/12 12:47:00 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/16 11:50:58 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char		*line;
-	t_list		*lst;
-	t_pipeline	*pipeline;
+	char			*line;
+	t_list			*token_lst;
+	t_pipeline_ir	*pipeline_ir;
 
+	// t_pipeline		*pipeline;
 	(void)argc;
 	(void)argv;
 	(void)envp;
@@ -26,27 +27,29 @@ int	main(int argc, char **argv, char **envp)
 		line = get_command_line();
 		if (!line)
 			break ;
-		lst = tokenize(line);
+		token_lst = tokenize(line);
 		free(line);
-		if (!lst)
+		if (!token_lst)
 			continue ;
 #ifdef DEBUG
-		print_token(lst);
+		print_token(token_lst);
 #endif
-		pipeline = parse(lst);
-		ft_lstclear(&lst, &free_token_wrapper);
-		if (!pipeline)
+		pipeline_ir = parse(token_lst);
+		ft_lstclear(&token_lst, &free_token_wrapper);
+		if (!pipeline_ir)
 			continue ;
 #ifdef DEBUG
-		print_pipeline(pipeline);
+		print_pipeline_ir(pipeline_ir);
 #endif
-		if (read_heredoc(pipeline->cmd_lst) == FAILURE)
-		{
-			close_heredoc(pipeline->cmd_lst);
-			free_pipeline(pipeline);
-			continue ;
-		}
-		child_process(pipeline, envp);
+		free_pipeline_ir(pipeline_ir);
+		// executeできる状態じゃないのでコメントアウト
+		// if (read_heredoc(pipeline->cmd_lst) == FAILURE)
+		// {
+		// 	close_heredoc(pipeline->cmd_lst);
+		// 	free_pipeline(pipeline);
+		// 	continue ;
+		// }
+		// child_process(pipeline, envp);
 	}
 	return (0);
 }

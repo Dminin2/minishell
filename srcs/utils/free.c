@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:17:00 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/09 18:58:06 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/14 12:38:24 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,33 @@ void	free_cmd(t_cmd *cmd)
 	}
 }
 
+void	free_str_wrapper(void *str)
+{
+	free_str((char *)str);
+}
+
+void	free_str(char *str)
+{
+	free(str);
+}
+
+void	free_cmd_ir_wrapper(void *cmd_ir)
+{
+	free_cmd_ir((t_cmd_ir *)cmd_ir);
+}
+
+void	free_cmd_ir(t_cmd_ir *cmd_ir)
+{
+	if (cmd_ir)
+	{
+		if (cmd_ir->args_lst)
+			ft_lstclear(&(cmd_ir->args_lst), &free_str_wrapper);
+		if (cmd_ir->redir_lst)
+			ft_lstclear(&(cmd_ir->redir_lst), &free_redir_wrapper);
+		free(cmd_ir);
+	}
+}
+
 void	free_pipes(int **pipes, int n)
 {
 	int	i;
@@ -105,5 +132,15 @@ void	free_pipeline(t_pipeline *pipeline)
 			free_pipes(pipeline->pipes, pipeline->n - 1);
 		}
 		free(pipeline);
+	}
+}
+
+void	free_pipeline_ir(t_pipeline_ir *pipeline_ir)
+{
+	if (pipeline_ir)
+	{
+		if (pipeline_ir->cmd_ir_lst)
+			ft_lstclear(&(pipeline_ir->cmd_ir_lst), &free_cmd_ir_wrapper);
+		free(pipeline_ir);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/11 10:33:55 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/14 00:04:54 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,18 @@ typedef struct s_pipeline
 	int				n;
 	int				**pipes;
 }					t_pipeline;
+
+typedef struct s_cmd_ir
+{
+	t_list			*args_lst;
+	t_list			*redir_lst;
+}					t_cmd_ir;
+
+typedef struct s_pipeline_ir
+{
+	t_list			*cmd_ir_lst;
+	int				n;
+}					t_pipeline_ir;
 
 typedef struct s_redir_err
 {

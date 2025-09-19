@@ -1,49 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_pipeline.c                                   :+:      :+:    :+:   */
+/*   print_pipeline_ir.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/02 20:58:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/16 11:48:57 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/09/14 12:38:51 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/09/16 11:48:24 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_cmd_lst(t_list *head)
+void	print_args_lst(t_list *head)
 {
-	int		i;
-	int		j;
-	t_cmd	*cmd;
+	char	*args;
+
+	while (head)
+	{
+		args = head->content;
+		printf("    -(%s)\n", args);
+		head = head->next;
+	}
+}
+
+void	print_cmd_ir_lst(t_list *head)
+{
+	int			i;
+	t_cmd_ir	*cmd_ir;
 
 	i = 1;
 	while (head)
 	{
 		printf("\nCommand #%d\n", i);
-		cmd = head->content;
-		j = 0;
-		if (cmd->args)
+		cmd_ir = head->content;
+		if (cmd_ir->args_lst)
 		{
 			printf("  Args:\n");
-			while (cmd->args[j])
-			{
-				printf("  -(%s)\n", cmd->args[j]);
-				j++;
-			}
+			print_args_lst(cmd_ir->args_lst);
 		}
-		if (cmd->redir_lst)
-			print_redir_lst(cmd->redir_lst);
+		if (cmd_ir->redir_lst)
+			print_redir_lst(cmd_ir->redir_lst);
 		i++;
 		head = head->next;
 	}
 }
 
-void	print_pipeline(t_pipeline *pipeline)
+void	print_pipeline_ir(t_pipeline_ir *pipeline_ir)
 {
-	printf("=== pipeline ===\n");
-	printf("cmd count : %d\n", pipeline->n);
-	print_cmd_lst(pipeline->cmd_lst);
+	printf("=== pipeline_ir ===\n");
+	printf("cmd count : %d\n", pipeline_ir->n);
+	print_cmd_ir_lst(pipeline_ir->cmd_ir_lst);
 	printf("\n===  result  ===\n");
 }
