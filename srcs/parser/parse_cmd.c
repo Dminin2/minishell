@@ -24,7 +24,10 @@ t_status	get_cmd_ir_args(t_list **tok_lst, t_cmd_ir *cmd_ir)
 		return (ERR_SYSTEM);
 	status = add_newlst(&(cmd_ir->args_lst), args);
 	if (status != SUCCESS)
+	{
+		free(args);
 		return (status);
+	}
 	*tok_lst = (*tok_lst)->next;
 	return (SUCCESS);
 }
