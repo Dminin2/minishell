@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/16 11:50:58 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/16 16:33:08 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,17 @@ int	main(int argc, char **argv, char **envp)
 	char			*line;
 	t_list			*token_lst;
 	t_pipeline_ir	*pipeline_ir;
+	t_minishell		minishell;
 
 	// t_pipeline		*pipeline;
 	(void)argc;
 	(void)argv;
-	(void)envp;
+	minishell.env_lst = env_init(envp);
+	if (!minishell.env_lst)
+		exit(1);
+#ifdef DEBUG
+	print_env_lst(minishell.env_lst);
+#endif
 	while (1)
 	{
 		line = get_command_line();
@@ -51,5 +57,6 @@ int	main(int argc, char **argv, char **envp)
 		// }
 		// child_process(pipeline, envp);
 	}
+	ft_lstclear(&(minishell.env_lst), free_env_wrapper);
 	return (0);
 }

@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug.h                                            :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/02 20:59:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/16 16:31:48 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/09/16 16:13:45 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/09/16 16:27:38 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEBUG_H
-# define DEBUG_H
+#ifndef ENV_H
+# define ENV_H
+
 # include "types.h"
 
-void	print_token(t_list *head);
-void	print_pipeline_ir(t_pipeline_ir *pipeline_ir);
-void	print_pipeline(t_pipeline *pipeline);
-void	print_redir_lst(t_list *head);
-void	print_env_lst(t_list *env_lst);
+t_list	*env_init(char **envp);
 
 #endif

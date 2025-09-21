@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/11 10:38:18 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/16 16:27:50 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "debug.h"
+# include "env.h"
 # include "execute.h"
 # include "lexer.h"
 # include "parser.h"
