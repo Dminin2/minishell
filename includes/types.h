@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:21:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/16 15:43:57 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/22 10:37:08 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_env
 typedef struct s_minishell
 {
 	t_list			*env_lst;
+	int				last_status;
 }					t_minishell;
 
 typedef struct s_redir_err
