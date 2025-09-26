@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   search_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 16:13:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 13:25:30 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/09/23 23:39:55 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/09/23 23:43:43 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#include "minishell.h"
 
-# include "types.h"
+char	*search_env(t_list *env_lst, char *key)
+{
+	t_env	*env;
 
-t_list	*env_init(char **envp);
-char	*search_env(t_list *env_lst, char *key);
-
-#endif
+	while (env_lst)
+	{
+		env = env_lst->content;
+		if (ft_strncmp(key, env->key, ft_strlen(env->key) + 1) == 0)
+			return (env->value);
+		env_lst = env_lst->next;
+	}
+	return (NULL);
+}
