@@ -75,8 +75,7 @@ t_status	get_env_from_line(t_env *env, char *line)
 		env->value = ft_strdup(line + i + 1);
 	if (!env->value)
 		return (ERR_MALLOC);
-	else
-		return (SUCCESS);
+	return (SUCCESS);
 }
 
 t_status	create_and_addlst(t_list **head, char *line)
