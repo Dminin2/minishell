@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:42:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/27 12:22:25 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/09/27 12:29:18 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_list	*env_init(char **envp)
 			if (existing_env)
 			{
 				status = replace_env_value(existing_env, envp[i]);
-				if (status != SUCCESS)
+				if (status == ERR_MALLOC)
 				{
 					assert_error_env_init(head, "malloc", ERR_SYSTEM);
 					return (NULL);
