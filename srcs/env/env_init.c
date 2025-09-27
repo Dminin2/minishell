@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:42:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/22 00:57:31 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/27 12:29:18 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	key_exists(t_list *env_lst, char *line)
+t_env	*find_existing_env(t_list *env_lst, char *line)
 {
 	t_env	*env;
 	size_t	key_len;
@@ -23,29 +23,18 @@ int	key_exists(t_list *env_lst, char *line)
 		key_len = ft_strlen(env->key);
 		if (ft_strncmp(env->key, line, key_len) == 0 && (line[key_len] == '='
 				|| line[key_len] == '\0'))
-			return (1);
+			return (env);
 		env_lst = env_lst->next;
 	}
-	return (0);
+	return (NULL);
 }
 
-t_status	replace_env_value(t_list *env_lst, char *line)
+t_status	replace_env_value(t_env *env, char *line)
 {
-	t_env	*env;
 	size_t	key_len;
 	char	*new_value;
 
-	while (env_lst)
-	{
-		env = env_lst->content;
-		key_len = ft_strlen(env->key);
-		if (ft_strncmp(env->key, line, key_len) == 0 && (line[key_len] == '='
-				|| line[key_len] == '\0'))
-			break ;
-		env_lst = env_lst->next;
-	}
-	if (!env_lst)
-		return (FAILURE);
+	key_len = ft_strlen(env->key);
 	if (line[key_len] == '\0')
 		new_value = ft_strdup("");
 	else
@@ -101,8 +90,9 @@ t_status	create_and_addlst(t_list **head, char *line)
 t_list	*env_init(char **envp)
 {
 	t_list		*head;
-	int			i;
 	t_status	status;
+	t_env		*existing_env;
+	int			i;
 
 	i = 0;
 	head = NULL;
@@ -110,10 +100,11 @@ t_list	*env_init(char **envp)
 	{
 		while (envp[i])
 		{
-			if (key_exists(head, envp[i]))
+			existing_env = find_existing_env(head, envp[i]);
+			if (existing_env)
 			{
-				status = replace_env_value(head, envp[i]);
-				if (status != SUCCESS)
+				status = replace_env_value(existing_env, envp[i]);
+				if (status == ERR_MALLOC)
 				{
 					assert_error_env_init(head, "malloc", ERR_SYSTEM);
 					return (NULL);
