@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/28 14:17:57 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/09/28 14:19:33 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_status	handle_operator(t_lexer *lex, t_list **head, t_tok_types *op_type)
 
 	tok = ft_calloc(1, sizeof(t_token));
 	if (!tok)
-		return (ERR_SYSTEM);
+		return (ERR_MALLOC);
 	tok->type = *op_type;
 	if (tok->type == TK_HEREDOC || tok->type == TK_APPEND)
 		lex->pos += 2;
@@ -70,7 +70,7 @@ t_status	handle_operator(t_lexer *lex, t_list **head, t_tok_types *op_type)
 	if (!new)
 	{
 		free(tok);
-		return (ERR_SYSTEM);
+		return (ERR_MALLOC);
 	}
 	ft_lstadd_back(head, new);
 	return (SUCCESS);
@@ -99,19 +99,19 @@ t_status	handle_word(t_lexer *lex, t_list **head)
 	}
 	tok = ft_calloc(1, sizeof(t_token));
 	if (!tok)
-		return (ERR_SYSTEM);
+		return (ERR_MALLOC);
 	tok->type = TK_WORD;
 	tok->value = ft_substr(lex->line, start, lex->pos - start);
 	if (!tok->value)
 	{
 		free(tok);
-		return (ERR_SYSTEM);
+		return (ERR_MALLOC);
 	}
 	new = ft_lstnew(tok);
 	if (!new)
 	{
 		free_token(tok);
-		return (ERR_SYSTEM);
+		return (ERR_MALLOC);
 	}
 	ft_lstadd_back(head, new);
 	return (SUCCESS);
@@ -138,9 +138,9 @@ t_list	*tokenize(char *line)
 			status = handle_word(&lex, &head);
 		if (status != SUCCESS)
 		{
-			if (status == ERR_SYSTEM)
-				assert_error(head, "malloc", ERR_SYSTEM);
-			else
+			if (status == ERR_MALLOC)
+				assert_error(head, "malloc", ERR_MALLOC);
+			else if (status == ERR_SYNTAX)
 				assert_error(head, "Unclosed quote", ERR_SYNTAX);
 			return (NULL);
 		}
