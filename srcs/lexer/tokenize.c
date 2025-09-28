@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/28 14:27:04 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/09/28 14:34:15 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_status	consume_quote(t_lexer *lex, char quote_char)
 		lex->pos++;
 	if (!lex->line[lex->pos])
 		return (ERR_SYNTAX);
+	lex->pos++;
 	return (SUCCESS);
 }
 
@@ -101,6 +102,7 @@ t_status	handle_word(t_lexer *lex, t_list **head)
 			status = consume_quote(lex, lex->line[lex->pos]);
 			if (status == ERR_SYNTAX)
 				return (ERR_SYNTAX);
+			continue ;
 		}
 		else if (is_metacharacter(lex->line[lex->pos]))
 			break ;
