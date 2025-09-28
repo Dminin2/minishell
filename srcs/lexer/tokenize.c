@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 21:54:01 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/28 12:13:15 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	is_operator(t_lexer *lex)
 	return (0);
 }
 
-//特別処理をするmetacharacterであるかどうか確認する。
+// 特別処理をするmetacharacterであるかどうか確認する。
 int	is_metacharacter(char c)
 {
 	if (ft_strchr("|<>", c))
@@ -52,50 +52,37 @@ t_status	handle_operator(t_lexer *lex, t_list **head)
 	tok = ft_calloc(1, sizeof(t_token));
 	if (!tok)
 		return (ERR_SYSTEM);
-	//一文字めの確認
-	if (lex->line[lex->pos] == '<')
+	if (ft_strncmp(&(lex->line[lex->pos]), "<<", 2) == 0)
 	{
-		//二文字めの確認
-		if (lex->line[lex->pos + 1] == '<')
-		{
-			tok->type = TK_HEREDOC;
-			lex->pos += 2;
-		}
-		else
-		{
-			tok->type = TK_REDIR_IN;
-			lex->pos += 1;
-		}
+		tok->type = TK_HEREDOC;
+		lex->pos += 2;
 	}
-	//一文字めの確認
+	else if (ft_strncmp(&(lex->line[lex->pos]), ">>", 2) == 0)
+	{
+		tok->type = TK_APPEND;
+		lex->pos += 2;
+	}
+	else if (lex->line[lex->pos] == '<')
+	{
+		tok->type = TK_REDIR_IN;
+		lex->pos += 1;
+	}
 	else if (lex->line[lex->pos] == '>')
 	{
-		//二文字めの確認
-		if (lex->line[lex->pos + 1] == '>')
-		{
-			tok->type = TK_APPEND;
-			lex->pos += 2;
-		}
-		else
-		{
-			tok->type = TK_REDIR_OUT;
-			lex->pos += 1;
-		}
+		tok->type = TK_REDIR_OUT;
+		lex->pos += 1;
 	}
-	// redirectじゃなかったらパイプ
-	else
+	else if (lex->line[lex->pos] == '|')
 	{
 		tok->type = TK_PIPE;
 		lex->pos += 1;
 	}
-	// lstに繋げるtokを内蔵した新しいt_listを作る
 	new = ft_lstnew(tok);
 	if (!new)
 	{
 		free(tok);
 		return (ERR_SYSTEM);
 	}
-	//作ったnew listを後ろに繋げる
 	ft_lstadd_back(head, new);
 	return (SUCCESS);
 }
@@ -106,7 +93,7 @@ t_status	handle_word(t_lexer *lex, t_list **head)
 	t_list	*new;
 	int		start;
 
-	//文字列の複製を作りたいので、startの位置を記録しておく
+	// 文字列の複製を作りたいので、startの位置を記録しておく
 	start = lex->pos;
 	// spaceにあたるまで繰り返す
 	while (lex->line[lex->pos] && !isspace(lex->line[lex->pos]))
@@ -171,7 +158,7 @@ t_list	*tokenize(char *line)
 	lex.pos = 0;
 	// malloc失敗ならERR_SYSTEM,quoteが閉じていないならERR_SYNTAXで返ってくる
 	status = SUCCESS;
-	//文字列終端まで読み込む
+	// 文字列終端まで読み込む
 	while (lex.line[lex.pos])
 	{
 		// spaceならそれをスッキプする
@@ -180,7 +167,7 @@ t_list	*tokenize(char *line)
 		// operator(pipe,redirection)ならその情報をlstに繋げる
 		else if (is_operator(&lex))
 			status = handle_operator(&lex, &head);
-		//それ以外ならwordとしてそのまま読み込みlstに繋げる
+		// それ以外ならwordとしてそのまま読み込みlstに繋げる
 		else
 			status = handle_word(&lex, &head);
 		// statusを確認してエラーがあったらエラーメッセージを表示させ、その時点でmainのループに戻る
