@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/28 12:13:15 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/09/28 12:51:21 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ void	consume_blank(t_lexer *lex)
 		lex->pos++;
 }
 
-int	is_operator(t_lexer *lex)
+int	scan_operator(t_lexer *lex, t_tok_types *op_type)
 {
-	char	*op[] = {"|", "<<", ">>", "<", ">"};
-	int		i;
-
-	// op配列の中でも二文字あるredirectionを前に持っておいておくのに注意
-	i = 0;
-	while (i < 5)
-	{
-		// op[i]とlex->line[lex->pos]から一文字または二文字を確認
-		if (!ft_memcmp(op[i], &(lex->line[lex->pos]), ft_strlen(op[i])))
-			return (1);
-		i++;
-	}
-	return (0);
+	if (ft_strncmp(&(lex->line[lex->pos]), "<<", 2) == 0)
+		*op_type = TK_HEREDOC;
+	else if (ft_strncmp(&(lex->line[lex->pos]), ">>", 2) == 0)
+		*op_type = TK_APPEND;
+	else if (lex->line[lex->pos] == '<')
+		*op_type = TK_REDIR_IN;
+	else if (lex->line[lex->pos] == '>')
+		*op_type = TK_REDIR_OUT;
+	else if (lex->line[lex->pos] == '|')
+		*op_type = TK_PIPE;
+	else
+		return (0);
+	return (1);
 }
 
 // 特別処理をするmetacharacterであるかどうか確認する。
@@ -44,7 +44,7 @@ int	is_metacharacter(char c)
 		return (0);
 }
 
-t_status	handle_operator(t_lexer *lex, t_list **head)
+t_status	handle_operator(t_lexer *lex, t_list **head, t_tok_types *op_type)
 {
 	t_token	*tok;
 	t_list	*new;
@@ -52,31 +52,11 @@ t_status	handle_operator(t_lexer *lex, t_list **head)
 	tok = ft_calloc(1, sizeof(t_token));
 	if (!tok)
 		return (ERR_SYSTEM);
-	if (ft_strncmp(&(lex->line[lex->pos]), "<<", 2) == 0)
-	{
-		tok->type = TK_HEREDOC;
+	tok->type = *op_type;
+	if (op_type == TK_HEREDOC || op_type == TK_APPEND)
 		lex->pos += 2;
-	}
-	else if (ft_strncmp(&(lex->line[lex->pos]), ">>", 2) == 0)
-	{
-		tok->type = TK_APPEND;
-		lex->pos += 2;
-	}
-	else if (lex->line[lex->pos] == '<')
-	{
-		tok->type = TK_REDIR_IN;
+	else
 		lex->pos += 1;
-	}
-	else if (lex->line[lex->pos] == '>')
-	{
-		tok->type = TK_REDIR_OUT;
-		lex->pos += 1;
-	}
-	else if (lex->line[lex->pos] == '|')
-	{
-		tok->type = TK_PIPE;
-		lex->pos += 1;
-	}
 	new = ft_lstnew(tok);
 	if (!new)
 	{
@@ -150,6 +130,7 @@ t_list	*tokenize(char *line)
 	t_list		*head;
 	t_lexer		lex;
 	t_status	status;
+	t_tok_types	op_type;
 
 	// ft_lst系を使いたかったのでlst使ってるけど、malloc倍に増えるからなくてもよし
 	head = NULL;
@@ -165,8 +146,8 @@ t_list	*tokenize(char *line)
 		if (isspace(lex.line[lex.pos]))
 			consume_blank(&lex);
 		// operator(pipe,redirection)ならその情報をlstに繋げる
-		else if (is_operator(&lex))
-			status = handle_operator(&lex, &head);
+		else if (scan_operator(&lex, &op_type))
+			status = handle_operator(&lex, &head, &op_type);
 		// それ以外ならwordとしてそのまま読み込みlstに繋げる
 		else
 			status = handle_word(&lex, &head);
