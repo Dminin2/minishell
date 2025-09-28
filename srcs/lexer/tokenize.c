@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/28 14:34:15 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/09/28 14:39:53 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,13 @@ t_status	consume_quote(t_lexer *lex, char quote_char)
 
 int	scan_operator(t_lexer *lex, t_tok_types *op_type)
 {
-	if (lex->line[lex->pos + 1])
-	{
-		if (ft_strncmp(&(lex->line[lex->pos]), "<<", 2) == 0)
-		{
-			*op_type = TK_HEREDOC;
-			return (1);
-		}
-		else if (ft_strncmp(&(lex->line[lex->pos]), ">>", 2) == 0)
-		{
-			*op_type = TK_APPEND;
-			return (1);
-		}
-	}
-	if (lex->line[lex->pos] == '<')
+	if (lex->line[lex->pos + 1] && ft_strncmp(&(lex->line[lex->pos]), "<<",
+			2) == 0)
+		*op_type = TK_HEREDOC;
+	else if (lex->line[lex->pos + 1] && ft_strncmp(&(lex->line[lex->pos]), ">>",
+			2) == 0)
+		*op_type = TK_APPEND;
+	else if (lex->line[lex->pos] == '<')
 		*op_type = TK_REDIR_IN;
 	else if (lex->line[lex->pos] == '>')
 		*op_type = TK_REDIR_OUT;
