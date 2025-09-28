@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/28 12:56:37 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/09/28 14:17:57 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@ void	consume_blank(t_lexer *lex)
 {
 	while (lex->line[lex->pos] && isspace(lex->line[lex->pos]))
 		lex->pos++;
+}
+
+t_status	consume_quote(t_lexer *lex, char quote_char)
+{
+	lex->pos++;
+	while (lex->line[lex->pos] && lex->line[lex->pos] != quote_char)
+		lex->pos++;
+	if (!lex->line[lex->pos])
+		return (ERR_SYNTAX);
+	return (SUCCESS);
 }
 
 int	scan_operator(t_lexer *lex, t_tok_types *op_type)
@@ -52,7 +62,7 @@ t_status	handle_operator(t_lexer *lex, t_list **head, t_tok_types *op_type)
 	if (!tok)
 		return (ERR_SYSTEM);
 	tok->type = *op_type;
-	if (op_type == TK_HEREDOC || op_type == TK_APPEND)
+	if (tok->type == TK_HEREDOC || tok->type == TK_APPEND)
 		lex->pos += 2;
 	else
 		lex->pos += 1;
@@ -68,27 +78,19 @@ t_status	handle_operator(t_lexer *lex, t_list **head, t_tok_types *op_type)
 
 t_status	handle_word(t_lexer *lex, t_list **head)
 {
-	t_token	*tok;
-	t_list	*new;
-	int		start;
+	t_token		*tok;
+	t_list		*new;
+	int			start;
+	t_status	status;
 
 	start = lex->pos;
+	status = SUCCESS;
 	while (lex->line[lex->pos] && !isspace(lex->line[lex->pos]))
 	{
-		if (lex->line[lex->pos] == '\'')
+		if (lex->line[lex->pos] == '\'' || lex->line[lex->pos] == '\"')
 		{
-			lex->pos++;
-			while (lex->line[lex->pos] && lex->line[lex->pos] != '\'')
-				lex->pos++;
-			if (!lex->line[lex->pos])
-				return (ERR_SYNTAX);
-		}
-		else if (lex->line[lex->pos] == '\"')
-		{
-			lex->pos++;
-			while (lex->line[lex->pos] && lex->line[lex->pos] != '\"')
-				lex->pos++;
-			if (!lex->line[lex->pos])
+			status = consume_quote(lex, lex->line[lex->pos]);
+			if (status == ERR_SYNTAX)
 				return (ERR_SYNTAX);
 		}
 		else if (is_metacharacter(lex->line[lex->pos]))
