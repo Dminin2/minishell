@@ -2,3 +2,5 @@
 .DS_Store
 minishell.pdf
 minishell_tester
+labels.json
+create_labels.sh
