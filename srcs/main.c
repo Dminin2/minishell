@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/22 10:49:12 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/26 21:38:18 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	main(int argc, char **argv, char **envp)
 	t_list			*token_lst;
 	t_pipeline_ir	*pipeline_ir;
 	t_minishell		minishell;
+	t_pipeline		*pipeline;
 
-	// t_pipeline		*pipeline;
 	(void)argc;
 	(void)argv;
 	minishell.last_status = 0;
@@ -48,7 +48,18 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_pipeline_ir(pipeline_ir);
 #endif
-		free_pipeline_ir(pipeline_ir);
+		pipeline = expand(minishell, pipeline_ir);
+		if (!pipeline)
+		{
+			free_pipeline_ir(pipeline_ir);
+			continue ;
+		}
+		else
+			free_pipeline_ir_after_expand(pipeline_ir);
+#ifdef DEBUG
+		print_pipeline(pipeline);
+#endif
+		free_pipeline(pipeline);
 		// executeできる状態じゃないのでコメントアウト
 		// if (read_heredoc(pipeline->cmd_lst) == FAILURE)
 		// {

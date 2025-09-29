@@ -7,6 +7,7 @@ READLINE_DIR = readline
 EXECUTOR_DIR = executor
 LEXER_DIR = lexer
 PARSER_DIR = parser
+EXPANDER_DIR = expander
 REDIRECTION_DIR = redirection
 ENV_DIR = env
 UTILS_DIR = utils
@@ -22,9 +23,16 @@ SRCS_PARSER = $(PARSER_DIR)/parse.c \
 	$(PARSER_DIR)/parse_error.c \
 	$(PARSER_DIR)/parse_redir.c \
 	$(PARSER_DIR)/parse_cmd.c
+SRCS_EXPANDER = $(EXPANDER_DIR)/expand.c \
+	$(EXPANDER_DIR)/build_cmd.c \
+	$(EXPANDER_DIR)/remove_quote.c \
+	$(EXPANDER_DIR)/expand_param.c \
+	$(EXPANDER_DIR)/build_args.c \
+	$(EXPANDER_DIR)/expand_utils.c
 SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
 	$(REDIRECTION_DIR)/heredoc.c
-SRCS_ENV = $(ENV_DIR)/env_init.c
+SRCS_ENV = $(ENV_DIR)/env_init.c \
+	$(ENV_DIR)/search_env.c
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c \
 	$(UTILS_DIR)/close.c
@@ -43,6 +51,7 @@ SRCS = $(SRCS_MAIN) \
 $(SRCS_READLINE) \
 $(SRCS_LEXER) \
 $(SRCS_PARSER) \
+$(SRCS_EXPANDER) \
 $(SRCS_REDIRECTION) \
 $(SRCS_EXECUTOR) \
 $(SRCS_ENV) \
@@ -78,6 +87,7 @@ $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)/$(EXECUTOR_DIR)
 	mkdir -p $(OBJS_DIR)/$(LEXER_DIR)
 	mkdir -p $(OBJS_DIR)/$(PARSER_DIR)
+	mkdir -p $(OBJS_DIR)/$(EXPANDER_DIR)
 	mkdir -p $(OBJS_DIR)/$(REDIRECTION_DIR)
 	mkdir -p $(OBJS_DIR)/$(ENV_DIR)
 	mkdir -p $(OBJS_DIR)/$(UTILS_DIR)
