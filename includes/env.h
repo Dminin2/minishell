@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:13:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 13:25:30 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/09/30 14:35:01 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,13 @@
 
 # include "types.h"
 
-t_list	*env_init(char **envp);
-char	*search_env(t_list *env_lst, char *key);
+t_list		*env_init(char **envp);
+
+t_env		*find_existing_env(t_list *env_lst, char *line);
+t_status	replace_env_value(t_env *env, char *line);
+t_status	get_env_from_line(t_env *env, char *line);
+t_status	create_and_addlst(t_list **head, char *line);
+
+char		*search_env(t_list *env_lst, char *key);
 
 #endif
