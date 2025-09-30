@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 12:34:29 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/09/30 13:21:17 by hmaruyam          #+#    #+#             */
+/*   Updated: 2025/09/30 13:30:47 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "common.h"
 # include "debug.h"
 # include "env.h"
 # include "execute.h"
 # include "expander.h"
 # include "lexer.h"
+# include "libft.h"
 # include "parser.h"
 # include "readline.h"
 # include "redirection.h"
-# include "types.h"
 # include "utils.h"
 # include <errno.h>
 # include <fcntl.h>
