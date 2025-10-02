@@ -3,17 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 21:38:01 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:18:40 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-# include "types.h"
+# include "common.h"
+# include "env.h"
+# include "expander.h"
+# include "lexer.h"
+# include "parser.h"
+# include "redirection.h"
+# include <errno.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
 
 void	free_args(char **args);
 

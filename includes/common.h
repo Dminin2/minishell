@@ -1,34 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   common.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 16:13:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 09:16:52 by hmaruyam         ###   ########.fr       */
+/*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
+/*   Updated: 2025/10/02 09:12:14 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#ifndef COMMON_H
+# define COMMON_H
 
 # include "libft.h"
-# include <stdlib.h>
 
-typedef struct s_env
+typedef enum e_status
 {
-	char	*key;
-	char	*value;
-}			t_env;
+	SUCCESS,
+	FAILURE,
+	ERR_SYSTEM,
+	ERR_SYNTAX,
+	ERR_CMD_NOT_FOUND,
+	ERR_NOT_VALID_PATH,
+	ERR_ISDIR,
+	ERR_FILE,
+	ERR_DUP,
+	ERR_MALLOC,
+	ERR_PIPE,
+	ERR_FORK,
+	ERR_ERRNO
+}			t_status;
 
-t_list		*env_init(char **envp);
-
-t_env		*find_existing_env(t_list *env_lst, char *line);
-t_status	replace_env_value(t_env *env, char *line);
-t_status	get_env_from_line(t_env *env, char *line);
-t_status	create_and_addlst(t_list **head, char *line);
-
-char		*search_env(t_list *env_lst, char *key);
+typedef struct s_minishell
+{
+	t_list	*env_lst;
+	int		last_status;
+}			t_minishell;
 
 #endif
