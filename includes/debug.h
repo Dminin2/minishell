@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 20:59:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 09:16:22 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:21:03 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "lexer.h"
 # include "parser.h"
 # include "redirection.h"
+# include <stdio.h>
 
 void	print_token(t_list *head);
 void	print_pipeline_ir(t_pipeline_ir *pipeline_ir);
