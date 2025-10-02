@@ -3,17 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/09 19:43:20 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:18:56 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
-# include "types.h"
+# include "expander.h"
+# include <errno.h>
+# include <stdlib.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
 void		execute(t_pipeline *pipeline, int pos, char **envp);
 void		child_process(t_pipeline *pipeline, char **envp);

@@ -3,16 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   debug.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 20:59:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/22 10:47:54 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:21:03 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEBUG_H
 # define DEBUG_H
-# include "types.h"
+
+# include "env.h"
+# include "expander.h"
+# include "lexer.h"
+# include "parser.h"
+# include "redirection.h"
+# include <stdio.h>
 
 void	print_token(t_list *head);
 void	print_pipeline_ir(t_pipeline_ir *pipeline_ir);

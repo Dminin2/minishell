@@ -3,18 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 14:21:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/25 20:30:36 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:16:03 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "types.h"
+# include "libft.h"
+# include <stdlib.h>
 
-t_list	*tokenize(char *line);
+typedef enum e_tok_types
+{
+	TK_WORD,
+	TK_PIPE,
+	TK_REDIR_IN,
+	TK_REDIR_OUT,
+	TK_HEREDOC,
+	TK_APPEND,
+	TK_EOF
+}				t_tok_types;
+
+typedef struct s_token
+{
+	t_tok_types	type;
+	char		*value;
+}				t_token;
+
+typedef struct s_lexer
+{
+	const char	*line;
+	int			pos;
+}				t_lexer;
+
+t_list			*tokenize(char *line);
 
 #endif

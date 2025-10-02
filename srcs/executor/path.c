@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:32:03 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/11 20:03:46 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 21:37:58 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	has_slash(char *cmd)
 	return (0);
 }
 
-int	find_path_indexdex(char **envp)
+int	find_path_index(char **envp)
 {
 	int	i;
 
@@ -95,7 +95,7 @@ t_status	resolve_command_path(t_cmd *cmd, char **envp)
 	int			path_index;
 	t_status	status;
 
-	path_index = find_path_indexdex(envp);
+	path_index = find_path_index(envp);
 	if (!envp[path_index] || !cmd->args[0] || has_slash(cmd->args[0]))
 		status = assign_direct_path(cmd, path_index, envp);
 	else

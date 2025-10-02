@@ -3,17 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:33:02 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 23:16:36 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:16:07 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANDER_H
 # define EXPANDER_H
 
-# include "types.h"
+# include "common.h"
+# include "parser.h"
+# include <stdlib.h>
+
+typedef struct s_cmd
+{
+	char	**args;
+	char	*path;
+	t_list	*redir_lst;
+}			t_cmd;
+
+typedef struct s_pipeline
+{
+	t_list	*cmd_lst;
+	int		n;
+	int		**pipes;
+}			t_pipeline;
 
 t_pipeline	*expand(t_minishell minishell, t_pipeline_ir *pipeline_ir);
 
