@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 12:55:54 by hmaruyam         ###   ########.fr       */
+/*   Created: 2025/10/02 09:53:08 by hmaruyam          #+#    #+#             */
+/*   Updated: 2025/10/02 15:44:17 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include <minishell.h>
 
-# include "builtin.h"
-# include "common.h"
-# include "debug.h"
-# include "env.h"
-# include "execute.h"
-# include "expander.h"
-# include "lexer.h"
-# include "libft.h"
-# include "parser.h"
-# include "readline.h"
-# include "redirection.h"
-# include "utils.h"
+t_status	pwd(int out_fd)
+{
+	char	*cwd;
 
-#endif
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return (FAILURE);
+	ft_putendl_fd(cwd, out_fd);
+	free(cwd);
+	return (SUCCESS);
+}
