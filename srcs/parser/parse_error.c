@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 22:48:00 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/02 22:55:01 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	handle_error(t_list *tok_lst, t_list *head, t_status status)
 {
 	t_token	*tok;
-	char	*token_type;
+	char	*token_str;
 
 	if (status == ERR_SYSTEM)
 		assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_ir_wrapper);
@@ -30,16 +30,16 @@ void	handle_error(t_list *tok_lst, t_list *head, t_status status)
 			else
 			{
 				if (tok->type == TK_REDIR_IN)
-					token_type = "<";
+					token_str = "<";
 				else if (tok->type == TK_REDIR_OUT)
-					token_type = ">";
+					token_str = ">";
 				else if (tok->type == TK_HEREDOC)
-					token_type = "<<";
+					token_str = "<<";
 				else if (tok->type == TK_APPEND)
-					token_type = ">>";
+					token_str = ">>";
 				else
-					token_type = "|";
-				assert_error_lst(head, token_type, ERR_SYNTAX,
+					token_str = "|";
+				assert_error_lst(head, token_str, ERR_SYNTAX,
 					free_cmd_ir_wrapper);
 			}
 		}
