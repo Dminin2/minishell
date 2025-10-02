@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:41:53 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 23:03:48 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 23:12:22 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,36 +31,36 @@ char	*handle_single_quote(char *old, int *i)
 
 char	*add_normal_words(int start, int end, char *new, char *old)
 {
-	char	*tmp;
+	char	*sub_str;
 
-	tmp = ft_substr(old, start, end - start);
-	if (!tmp)
+	sub_str = ft_substr(old, start, end - start);
+	if (!sub_str)
 	{
 		free(new);
 		return (NULL);
 	}
 	if (new)
-		new = ft_strjoin_and_free(new, tmp);
+		new = ft_strjoin_and_free(new, sub_str);
 	else
-		new = tmp;
+		new = sub_str;
 	return (new);
 }
 
 char	*add_env_value(t_minishell minishell, int *i, char *new, char *old)
 {
-	char	*tmp;
+	char	*expand_str;
 
-	tmp = expand_parameter(minishell, old, i);
-	if (!tmp)
+	expand_str = expand_parameter(minishell, old, i);
+	if (!expand_str)
 	{
 		if (new)
 			free(new);
 		return (NULL);
 	}
 	if (new)
-		new = ft_strjoin_and_free(new, tmp);
+		new = ft_strjoin_and_free(new, expand_str);
 	else
-		new = tmp;
+		new = expand_str;
 	return (new);
 }
 
