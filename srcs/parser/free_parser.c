@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 01:18:08 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/03 01:44:45 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/03 01:59:43 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	free_cmd_ir_after_expand_wrapper(void *cmd_ir)
 {
 	free_cmd_ir_after_expand((t_cmd_ir *)cmd_ir);
 }
+
 void	free_pipeline_ir(t_pipeline_ir *pipeline_ir)
 {
 	if (pipeline_ir)
@@ -57,6 +58,7 @@ void	free_pipeline_ir(t_pipeline_ir *pipeline_ir)
 		free(pipeline_ir);
 	}
 }
+
 void	free_pipeline_ir_after_expand(t_pipeline_ir *pipeline_ir)
 {
 	if (pipeline_ir)
