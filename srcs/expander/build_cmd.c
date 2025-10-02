@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*handle_special_word(t_minishell minishell, char *old, int *i)
+char	*handle_special_word(t_minishell *minishell, char *old, int *i)
 {
 	char	*word;
 
@@ -37,7 +37,7 @@ char	*handle_normal_word(char *old, int *i)
 	return (new);
 }
 
-t_status	expand_args_lst(t_minishell minishell, t_list *args_lst)
+t_status	expand_args_lst(t_minishell *minishell, t_list *args_lst)
 {
 	char	*old_args;
 	int		i;

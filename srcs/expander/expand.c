@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:14:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 23:16:21 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 21:56:13 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_status	expand_and_convert_args(t_minishell minishell, t_list *args_lst, t_cmd *cmd)
+t_status	expand_and_convert_args(t_minishell *minishell, t_list *args_lst,
+		t_cmd *cmd)
 {
 	t_status	status;
 
@@ -23,7 +24,7 @@ t_status	expand_and_convert_args(t_minishell minishell, t_list *args_lst, t_cmd 
 	return (status);
 }
 
-t_list	*get_cmd_lst(t_minishell minishell, t_list *cmd_ir_lst)
+t_list	*get_cmd_lst(t_minishell *minishell, t_list *cmd_ir_lst)
 {
 	t_cmd		*cmd;
 	t_list		*head;
@@ -63,7 +64,7 @@ t_list	*get_cmd_lst(t_minishell minishell, t_list *cmd_ir_lst)
 	return (head);
 }
 
-t_pipeline	*expand(t_minishell minishell, t_pipeline_ir *pipeline_ir)
+t_pipeline	*expand(t_minishell *minishell, t_pipeline_ir *pipeline_ir)
 {
 	t_pipeline	*pipeline;
 

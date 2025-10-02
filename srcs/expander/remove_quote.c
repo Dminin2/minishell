@@ -46,7 +46,7 @@ char	*add_normal_words(int start, int end, char *new, char *old)
 	return (new);
 }
 
-char	*add_env_value(t_minishell minishell, int *i, char *new, char *old)
+char	*add_env_value(t_minishell *minishell, int *i, char *new, char *old)
 {
 	char	*expand_str;
 
@@ -64,7 +64,7 @@ char	*add_env_value(t_minishell minishell, int *i, char *new, char *old)
 	return (new);
 }
 
-char	*handle_double_quote(t_minishell minishell, char *old, int *i)
+char	*handle_double_quote(t_minishell *minishell, char *old, int *i)
 {
 	char	*new;
 	int		copied_pos;
