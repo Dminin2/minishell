@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:33:02 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 09:16:07 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/02 21:57:39 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ typedef struct s_pipeline
 	int		**pipes;
 }			t_pipeline;
 
-t_pipeline	*expand(t_minishell minishell, t_pipeline_ir *pipeline_ir);
+t_pipeline	*expand(t_minishell *minishell, t_pipeline_ir *pipeline_ir);
 
-t_status	expand_args_lst(t_minishell minishell, t_list *args_lst);
+t_status	expand_args_lst(t_minishell *minishell, t_list *args_lst);
 
 char		*handle_single_quote(char *old, int *i);
-char		*handle_double_quote(t_minishell minishell, char *old, int *i);
+char		*handle_double_quote(t_minishell *minishell, char *old, int *i);
 
-char		*expand_parameter(t_minishell minishell, char *args, int *i);
+char		*expand_parameter(t_minishell *minishell, char *args, int *i);
 
 t_status	get_args_from_lst(t_list *args_lst, t_cmd *cmd);
 
