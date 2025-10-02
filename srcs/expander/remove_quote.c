@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:41:53 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 23:03:48 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 21:58:00 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*add_normal_words(int start, int end, char *new, char *old)
 	return (new);
 }
 
-char	*add_env_value(t_minishell minishell, int *i, char *new, char *old)
+char	*add_env_value(t_minishell *minishell, int *i, char *new, char *old)
 {
 	char	*tmp;
 
@@ -64,7 +64,7 @@ char	*add_env_value(t_minishell minishell, int *i, char *new, char *old)
 	return (new);
 }
 
-char	*handle_double_quote(t_minishell minishell, char *old, int *i)
+char	*handle_double_quote(t_minishell *minishell, char *old, int *i)
 {
 	char	*new;
 	int		copied_pos;

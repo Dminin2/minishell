@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:43:55 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 23:16:45 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 21:56:25 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*handle_special_word(t_minishell minishell, char *old, int *i)
+char	*handle_special_word(t_minishell *minishell, char *old, int *i)
 {
 	char	*tmp;
 
@@ -37,7 +37,7 @@ char	*handle_normal_word(char *old, int *i)
 	return (new);
 }
 
-t_status	expand_args_lst(t_minishell minishell, t_list *args_lst)
+t_status	expand_args_lst(t_minishell *minishell, t_list *args_lst)
 {
 	char	*old_args;
 	int		i;
