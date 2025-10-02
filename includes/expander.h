@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:33:02 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 09:16:07 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/03 01:16:18 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,10 @@ char		*ft_strjoin_and_free(char *s1, char *s2);
 int			is_to_expand(char c);
 int			is_valid_key_first_char(char c);
 int			is_valid_key_char(char c);
+
+void		free_cmd_wrapper(void *cmd);
+void		free_cmd(t_cmd *cmd);
+void		free_pipes(int **pipes, int n);
+void		free_pipeline(t_pipeline *pipeline);
 
 #endif

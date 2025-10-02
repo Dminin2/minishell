@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/16 16:17:00 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 01:40:18 by hmaruyam         ###   ########.fr       */
+/*   Created: 2025/10/03 01:50:00 by hmaruyam          #+#    #+#             */
+/*   Updated: 2025/10/03 01:50:00 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_args(char **args)
+void	free_redir_wrapper(void *redir)
 {
-	int	i;
+	free_redir((t_redir *)redir);
+}
 
-	i = 0;
-	if (args)
+void	free_redir(t_redir *redir)
+{
+	if (redir)
 	{
-		while (args[i])
-		{
-			free(args[i]);
-			i++;
-		}
-		free(args);
+		if (redir->value)
+			free(redir->value);
+		free(redir);
 	}
-}
-
-void	free_str_wrapper(void *str)
-{
-	free_str((char *)str);
-}
-
-void	free_str(char *str)
-{
-	free(str);
 }

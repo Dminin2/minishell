@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 12:23:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/13 23:58:53 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/03 01:50:11 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_status	skip_pipe(t_list **tok_lst)
 
 t_list	*get_cmd_ir_lst(t_list *tok_lst)
 {
-	t_cmd_ir		*cmd_ir;
+	t_cmd_ir	*cmd_ir;
 	t_status	status;
 	t_list		*head;
 
