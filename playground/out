@@ -1,7 +1,1 @@
-Makefile
-includes
-libft
-minishell
-objs
-playground
-srcs
+todo:echo
