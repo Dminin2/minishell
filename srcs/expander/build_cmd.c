@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:43:55 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 23:16:45 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 23:15:49 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*handle_special_word(t_minishell minishell, char *old, int *i)
+char	*handle_special_word(t_minishell *minishell, char *old, int *i)
 {
-	char	*tmp;
+	char	*word;
 
 	if (old[*i] == '\'')
-		tmp = handle_single_quote(old, i);
+		word = handle_single_quote(old, i);
 	else if (old[*i] == '\"')
-		tmp = handle_double_quote(minishell, old, i);
+		word = handle_double_quote(minishell, old, i);
 	else
-		tmp = expand_parameter(minishell, old, i);
-	return (tmp);
+		word = expand_parameter(minishell, old, i);
+	return (word);
 }
 
 char	*handle_normal_word(char *old, int *i)
@@ -37,11 +37,11 @@ char	*handle_normal_word(char *old, int *i)
 	return (new);
 }
 
-t_status	expand_args_lst(t_minishell minishell, t_list *args_lst)
+t_status	expand_args_lst(t_minishell *minishell, t_list *args_lst)
 {
 	char	*old_args;
 	int		i;
-	char	*tmp;
+	char	*word;
 	char	*new_args;
 
 	while (args_lst)
@@ -52,18 +52,18 @@ t_status	expand_args_lst(t_minishell minishell, t_list *args_lst)
 		while (old_args[i])
 		{
 			if (is_to_expand(old_args[i]))
-				tmp = handle_special_word(minishell, old_args, &i);
+				word = handle_special_word(minishell, old_args, &i);
 			else
-				tmp = handle_normal_word(old_args, &i);
-			if (!tmp)
+				word = handle_normal_word(old_args, &i);
+			if (!word)
 			{
 				free(new_args);
 				return (ERR_MALLOC);
 			}
 			if (new_args)
-				new_args = ft_strjoin_and_free(new_args, tmp);
+				new_args = ft_strjoin_and_free(new_args, word);
 			else
-				new_args = tmp;
+				new_args = word;
 			if (!new_args)
 				return (ERR_MALLOC);
 		}
