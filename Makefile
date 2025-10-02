@@ -17,7 +17,11 @@ SRCS_READLINE = $(READLINE_DIR)/readline.c
 SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/process.c \
 	$(EXECUTOR_DIR)/path.c \
-	$(EXECUTOR_DIR)/pipe.c
+	$(EXECUTOR_DIR)/pipe.c \
+	$(EXECUTOR_DIR)/run_in_child.c \
+	$(EXECUTOR_DIR)/run_in_parent.c \
+	$(EXECUTOR_DIR)/execute_builtin.c \
+	$(EXECUTOR_DIR)/stdio_fd.c
 SRCS_LEXER = $(LEXER_DIR)/tokenize.c
 SRCS_PARSER = $(PARSER_DIR)/parse.c \
 	$(PARSER_DIR)/parse_error.c \
