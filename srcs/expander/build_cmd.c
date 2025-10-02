@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:43:55 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 23:11:19 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/02 23:15:49 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_status	expand_args_lst(t_minishell minishell, t_list *args_lst)
 {
 	char	*old_args;
 	int		i;
-	char	word;
+	char	*word;
 	char	*new_args;
 
 	while (args_lst)
