@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:33:02 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/30 13:30:57 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:16:07 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "common.h"
 # include "parser.h"
+# include <stdlib.h>
 
 typedef struct s_cmd
 {

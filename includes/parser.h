@@ -6,15 +6,16 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 20:37:20 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/30 13:21:20 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:15:19 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "libft.h"
 # include "common.h"
+# include "libft.h"
+# include <stdlib.h>
 
 typedef struct s_cmd_ir
 {

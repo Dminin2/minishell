@@ -6,12 +6,15 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:17:56 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/30 13:31:02 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/02 08:46:11 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef READLINE_H
 # define READLINE_H
+
+# include <readline/history.h>
+# include <readline/readline.h>
 
 char	*get_command_line(void);
 

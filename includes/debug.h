@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 20:59:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/30 13:30:52 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:16:22 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "env.h"
 # include "expander.h"
 # include "lexer.h"
+# include "parser.h"
 # include "redirection.h"
 
 void	print_token(t_list *head);

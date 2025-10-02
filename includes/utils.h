@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/30 13:31:06 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:18:40 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@
 # include "env.h"
 # include "expander.h"
 # include "lexer.h"
+# include "parser.h"
 # include "redirection.h"
+# include <errno.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
 
 void	free_args(char **args);
 

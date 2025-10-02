@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:03:44 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/30 13:31:03 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:18:44 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "common.h"
 # include "libft.h"
+# include <fcntl.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef enum e_redir_type
 {

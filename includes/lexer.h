@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 14:21:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/30 13:30:58 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:16:03 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LEXER_H
 
 # include "libft.h"
+# include <stdlib.h>
 
 typedef enum e_tok_types
 {
