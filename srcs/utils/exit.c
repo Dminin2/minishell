@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 13:10:39 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 22:41:52 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,11 @@ void	print_error_msg(char *context, t_status status)
 		dprintf(STDERR_FILENO, "minishell: %s: is a directory\n", context);
 }
 
-void	assert_error(t_list *lst, char *context, t_status status)
+void	assert_error_lst(t_list *lst, char *context, t_status status,
+		void (*del)(void *))
 {
 	print_error_msg(context, status);
-	ft_lstclear(&lst, free_token_wrapper);
-}
-
-void	assert_error_parser(t_list *lst, char *context, t_status status)
-{
-	print_error_msg(context, status);
-	ft_lstclear(&lst, free_cmd_ir_wrapper);
+	ft_lstclear(&lst, del);
 }
 
 void	assert_error_parent(t_pipeline *pipeline, char *context,
