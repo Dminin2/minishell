@@ -12,7 +12,8 @@
 
 #include "minishell.h"
 
-t_status	expand_and_convert_args(t_minishell minishell, t_list *args_lst,
+
+t_status	expand_and_convert_args(t_minishell *minishell, t_list *args_lst,
 		t_cmd *cmd)
 {
 	t_status	status;
@@ -24,7 +25,7 @@ t_status	expand_and_convert_args(t_minishell minishell, t_list *args_lst,
 	return (status);
 }
 
-t_list	*get_cmd_lst(t_minishell minishell, t_list *cmd_ir_lst)
+t_list	*get_cmd_lst(t_minishell *minishell, t_list *cmd_ir_lst)
 {
 	t_cmd		*cmd;
 	t_list		*head;
@@ -64,7 +65,7 @@ t_list	*get_cmd_lst(t_minishell minishell, t_list *cmd_ir_lst)
 	return (head);
 }
 
-t_pipeline	*expand(t_minishell minishell, t_pipeline_ir *pipeline_ir)
+t_pipeline	*expand(t_minishell *minishell, t_pipeline_ir *pipeline_ir)
 {
 	t_pipeline	*pipeline;
 
