@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:38:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 21:55:40 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/03 22:19:35 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	execute(t_pipeline *pipeline, char **envp)
 		type = scan_command_type((t_cmd *)(pipeline->cmd_lst->content));
 		if (type != EXTERNAL)
 		{
-			run_builtin_in_parent(pipeline);
+			run_builtin_in_parent(pipeline, type);
 			return ;
 		}
 	}

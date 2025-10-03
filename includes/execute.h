@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 21:56:24 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/03 22:19:57 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void			handle_redir_err(t_pipeline *pipeline, t_redir_err err);
 void			run_in_child(t_pipeline *pipeline, int pos, char **envp);
 void			child_process(t_pipeline *pipeline, char **envp);
 
-void			run_builtin_in_parent(t_pipeline *pipeline);
+void			run_builtin_in_parent(t_pipeline *pipelin, t_command_type type);
 
 t_cmd			*get_cmd_from_lst(t_list *head, int target);
 
