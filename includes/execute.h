@@ -55,4 +55,6 @@ t_status		pipe_duplicate(t_pipeline *pipeline, int pos);
 t_status		save_stdio_fd(t_list *redir_lst, int *saved);
 t_status		restore_stdio_fd(int *saved);
 
+void		free_pipes(int **pipes, int n);
+
 #endif

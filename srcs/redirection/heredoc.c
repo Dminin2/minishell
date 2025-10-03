@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/05 13:53:48 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/03 22:20:11 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,12 @@ t_status	read_heredoc(t_list *cmd_lst)
 		if (status != SUCCESS)
 		{
 			if (status == ERR_FILE)
-				assert_error(NULL, "/tmp/minishell_heredoc", ERR_FILE);
+				assert_error_lst(NULL, "/tmp/minishell_heredoc", ERR_FILE,
+					NULL);
 			else if (status == ERR_SYNTAX)
-				assert_error(NULL, "", ERR_SYNTAX);
+				assert_error_lst(NULL, "", ERR_SYNTAX, NULL);
 			else if (status == ERR_MALLOC)
-				assert_error(NULL, "malloc", ERR_SYSTEM);
+				assert_error_lst(NULL, "malloc", ERR_SYSTEM, NULL);
 			return (FAILURE);
 		}
 		cmd_lst = cmd_lst->next;

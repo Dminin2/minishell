@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/02 20:51:59 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/02 22:55:01 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,35 @@
 void	handle_error(t_list *tok_lst, t_list *head, t_status status)
 {
 	t_token	*tok;
+	char	*token_str;
 
 	if (status == ERR_SYSTEM)
-		assert_error_parser(head, "malloc", ERR_SYSTEM);
+		assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_ir_wrapper);
 	else if (status == ERR_SYNTAX)
 	{
 		if (tok_lst)
 		{
 			tok = tok_lst->content;
 			if (tok->value)
-				assert_error_parser(head, tok->value, ERR_SYNTAX);
+				assert_error_lst(head, tok->value, ERR_SYNTAX,
+					free_cmd_ir_wrapper);
 			else
 			{
 				if (tok->type == TK_REDIR_IN)
-					assert_error_parser(head, "<", ERR_SYNTAX);
+					token_str = "<";
 				else if (tok->type == TK_REDIR_OUT)
-					assert_error_parser(head, ">", ERR_SYNTAX);
+					token_str = ">";
 				else if (tok->type == TK_HEREDOC)
-					assert_error_parser(head, "<<", ERR_SYNTAX);
+					token_str = "<<";
 				else if (tok->type == TK_APPEND)
-					assert_error_parser(head, ">>", ERR_SYNTAX);
+					token_str = ">>";
 				else
-					assert_error_parser(head, "|", ERR_SYNTAX);
+					token_str = "|";
+				assert_error_lst(head, token_str, ERR_SYNTAX,
+					free_cmd_ir_wrapper);
 			}
 		}
 		else
-			assert_error_parser(head, "newline", ERR_SYNTAX);
+			assert_error_lst(head, "newline", ERR_SYNTAX, free_cmd_ir_wrapper);
 	}
 }
