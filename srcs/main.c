@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
 /*   Updated: 2025/10/03 00:41:09 by aomatsud         ###   ########.fr       */
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_pipeline_ir(pipeline_ir);
 #endif
-		pipeline = expand(minishell, pipeline_ir);
+		pipeline = expand(&minishell, pipeline_ir);
 		if (!pipeline)
 		{
 			free_pipeline_ir(pipeline_ir);
