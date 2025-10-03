@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 21:55:51 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/03 00:41:09 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,14 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_pipeline(pipeline);
 #endif
-		free_pipeline(pipeline);
 		// executeできる状態じゃないのでコメントアウト
-		// if (read_heredoc(pipeline->cmd_lst) == FAILURE)
-		// {
-		// 	close_heredoc(pipeline->cmd_lst);
-		// 	free_pipeline(pipeline);
-		// 	continue ;
-		// }
-		// child_process(pipeline, envp);
+		if (read_heredoc(pipeline->cmd_lst) == FAILURE)
+		{
+			close_heredoc(pipeline->cmd_lst);
+			free_pipeline(pipeline);
+			continue ;
+		}
+		execute(pipeline, envp);
 #ifdef DEBUG
 		print_status(minishell.last_status);
 #endif

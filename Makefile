@@ -18,6 +18,10 @@ SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/process.c \
 	$(EXECUTOR_DIR)/path.c \
 	$(EXECUTOR_DIR)/pipe.c \
+	$(EXECUTOR_DIR)/run_in_child.c \
+	$(EXECUTOR_DIR)/run_in_parent.c \
+	$(EXECUTOR_DIR)/execute_builtin.c \
+	$(EXECUTOR_DIR)/stdio_fd.c
 	$(EXECUTOR_DIR)/free_pipes.c
 SRCS_LEXER = $(LEXER_DIR)/tokenize.c \
 	$(LEXER_DIR)/free_token.c

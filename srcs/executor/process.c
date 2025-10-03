@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/10 18:37:14 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/03 00:39:15 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	fork_all_children(t_pipeline *pipeline, pid_t *pids, char **envp)
 		if (pids[i] == 0)
 		{
 			free(pids);
-			execute(pipeline, i, envp);
+			run_in_child(pipeline, i, envp);
 		}
 		i++;
 	}
