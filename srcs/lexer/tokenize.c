@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/28 14:39:53 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/02 22:41:37 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +143,11 @@ t_list	*tokenize(char *line)
 		if (status != SUCCESS)
 		{
 			if (status == ERR_MALLOC)
-				assert_error(head, "malloc", ERR_MALLOC);
+				assert_error_lst(head, "malloc", ERR_MALLOC,
+					free_token_wrapper);
 			else if (status == ERR_SYNTAX)
-				assert_error(head, "Unclosed quote", ERR_SYNTAX);
+				assert_error_lst(head, "Unclosed quote", ERR_SYNTAX,
+					free_token_wrapper);
 			return (NULL);
 		}
 	}
