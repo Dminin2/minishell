@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_expander.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 01:17:52 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/03 01:23:37 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/03 20:04:57 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,6 @@ void	free_cmd(t_cmd *cmd)
 		if (cmd->redir_lst)
 			ft_lstclear(&(cmd->redir_lst), &free_redir_wrapper);
 		free(cmd);
-	}
-}
-
-void	free_pipes(int **pipes, int n)
-{
-	int	i;
-
-	i = 0;
-	if (pipes)
-	{
-		while (i < n)
-		{
-			free(pipes[i]);
-			i++;
-		}
-		free(pipes);
 	}
 }
 

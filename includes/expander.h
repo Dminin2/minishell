@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:33:02 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 01:16:18 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/03 21:07:37 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,13 @@ int			is_to_expand(char c);
 int			is_valid_key_first_char(char c);
 int			is_valid_key_char(char c);
 
+void		free_pipeline_ir_after_expand(t_pipeline_ir *pipeline_ir);
+void		free_cmd_ir_after_expand(t_cmd_ir *cmd_ir);
+void		free_cmd_ir_after_expand_wrapper(void *cmd_ir);
+void		free_args_lst_after_expand_wrapper(void *args);
+
 void		free_cmd_wrapper(void *cmd);
 void		free_cmd(t_cmd *cmd);
-void		free_pipes(int **pipes, int n);
 void		free_pipeline(t_pipeline *pipeline);
 
 #endif
