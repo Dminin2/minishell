@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:42:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/30 14:33:23 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/03 11:21:41 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_list	*env_init(char **envp)
 			status = process_env_line(&head, envp[i]);
 			if (status == ERR_MALLOC)
 			{
-				assert_error_env_init(head, "malloc", ERR_SYSTEM);
+				assert_error_lst(head, "malloc", ERR_SYSTEM, free_env_wrapper);
 				return (NULL);
 			}
 			i++;

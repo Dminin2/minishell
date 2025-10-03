@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 22:42:00 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/03 11:22:46 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void	assert_error_lst(t_list *lst, char *context, t_status status,
 			void (*del)(void *));
 void	assert_error_parent(t_pipeline *pipeline, char *context,
 			t_status status);
-void	assert_error_env_init(t_list *env_lst, char *context, t_status status);
-void	assert_error_expander(t_list *cmd_lst, char *context, t_status status);
 void	exit_error(t_pipeline *pipeline, char *context, t_status status,
 			int exit_status);
 
