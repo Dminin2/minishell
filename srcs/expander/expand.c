@@ -6,12 +6,11 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:14:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 11:23:44 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/03 11:27:50 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 t_status	expand_and_convert_args(t_minishell *minishell, t_list *args_lst,
 		t_cmd *cmd)
