@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 09:18:56 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/03 20:05:33 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ t_status	resolve_command_path(t_cmd *cmd, char **envp);
 t_status	create_pipes(t_pipeline *pipeline);
 t_status	pipe_pipes(int **pipes, int n);
 t_status	pipe_duplicate(t_pipeline *pipeline, int pos);
+
+void		free_pipes(int **pipes, int n);
 
 #endif
