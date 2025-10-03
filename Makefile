@@ -21,7 +21,7 @@ SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/run_in_child.c \
 	$(EXECUTOR_DIR)/run_in_parent.c \
 	$(EXECUTOR_DIR)/execute_builtin.c \
-	$(EXECUTOR_DIR)/stdio_fd.c
+	$(EXECUTOR_DIR)/stdio_fd.c \
 	$(EXECUTOR_DIR)/free_pipes.c
 SRCS_LEXER = $(LEXER_DIR)/tokenize.c \
 	$(LEXER_DIR)/free_token.c
@@ -40,7 +40,7 @@ SRCS_EXPANDER = $(EXPANDER_DIR)/expand.c \
 	$(EXPANDER_DIR)/free_pipeline.c \
 	$(EXPANDER_DIR)/free_pipeline_ir_in_expander.c
 SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
-	$(REDIRECTION_DIR)/heredoc.c 
+	$(REDIRECTION_DIR)/heredoc.c
 SRCS_ENV = $(ENV_DIR)/env_init.c \
 	$(ENV_DIR)/env_utils.c \
 	$(ENV_DIR)/search_env.c \
