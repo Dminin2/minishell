@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 00:40:57 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/03 21:56:24 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,38 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-void		execute(t_pipeline *pipeline, char **envp);
+typedef enum e_command_type
+{
+	EXTERNAL,
+	BLT_ECHO,
+	BLT_CD,
+	BLT_PWD,
+	BLT_EXPORT,
+	BLT_UNSET,
+	BLT_ENV,
+	BLT_EXIT
+}				t_command_type;
 
-void		handle_redir_err(t_pipeline *pipeline, t_redir_err err);
-void		run_in_child(t_pipeline *pipeline, int pos, char **envp);
-void		child_process(t_pipeline *pipeline, char **envp);
+void			execute(t_pipeline *pipeline, char **envp);
 
-void		run_builtin_in_parent(t_pipeline *pipeline);
+void			handle_redir_err(t_pipeline *pipeline, t_redir_err err);
+void			run_in_child(t_pipeline *pipeline, int pos, char **envp);
+void			child_process(t_pipeline *pipeline, char **envp);
 
-t_cmd		*get_cmd_from_lst(t_list *head, int target);
+void			run_builtin_in_parent(t_pipeline *pipeline);
 
-int			is_builtin(t_cmd *cmd);
-int			execute_builtin(t_cmd *cmd);
+t_cmd			*get_cmd_from_lst(t_list *head, int target);
 
-t_status	resolve_command_path(t_cmd *cmd, char **envp);
+t_command_type	scan_command_type(t_cmd *cmd);
+int				execute_builtin(t_cmd *cmd, t_command_type type);
 
-t_status	create_pipes(t_pipeline *pipeline);
-t_status	pipe_pipes(int **pipes, int n);
-t_status	pipe_duplicate(t_pipeline *pipeline, int pos);
+t_status		resolve_command_path(t_cmd *cmd, char **envp);
 
-t_status	save_stdio_fd(t_list *redir_lst, int *saved);
-t_status	restore_stdio_fd(int *saved);
+t_status		create_pipes(t_pipeline *pipeline);
+t_status		pipe_pipes(int **pipes, int n);
+t_status		pipe_duplicate(t_pipeline *pipeline, int pos);
+
+t_status		save_stdio_fd(t_list *redir_lst, int *saved);
+t_status		restore_stdio_fd(int *saved);
 
 #endif

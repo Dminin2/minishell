@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 00:41:36 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/03 21:56:29 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ void	handle_execve_error(t_pipeline *pipeline, t_cmd *cmd)
 
 void	run_in_child(t_pipeline *pipeline, int pos, char **envp)
 {
-	t_status	status;
-	t_redir_err	err;
-	t_cmd		*cmd;
-	struct stat	st_buf;
+	t_status		status;
+	t_redir_err		err;
+	t_cmd			*cmd;
+	struct stat		st_buf;
+	t_command_type	type;
 
 	cmd = get_cmd_from_lst(pipeline->cmd_lst, pos);
 	status = pipe_duplicate(pipeline, pos);
@@ -63,9 +64,10 @@ void	run_in_child(t_pipeline *pipeline, int pos, char **envp)
 	redirect(cmd->redir_lst, &err);
 	if (err.status != SUCCESS)
 		handle_redir_err(pipeline, err);
-	if (is_builtin(cmd))
+	type = scan_command_type(cmd);
+	if (type != EXTERNAL)
 	{
-		execute_builtin(cmd);
+		execute_builtin(cmd, type);
 		free_pipeline(pipeline);
 		exit(0);
 	}
