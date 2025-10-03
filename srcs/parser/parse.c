@@ -6,22 +6,11 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 12:23:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 01:50:11 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/03 11:45:59 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_status	add_newlst(t_list **head, void *content)
-{
-	t_list	*new;
-
-	new = ft_lstnew(content);
-	if (!new)
-		return (ERR_SYSTEM);
-	ft_lstadd_back(head, new);
-	return (SUCCESS);
-}
 
 t_status	skip_pipe(t_list **tok_lst)
 {
