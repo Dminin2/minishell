@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 11:58:48 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/03 12:04:39 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_status	handle_operator(t_lexer *lex, t_list **head, t_tok_types *op_type)
 		lex->pos += 2;
 	else
 		lex->pos += 1;
-	status = add_newlst(&head, (void *)tok);
+	status = add_newlst(head, (void *)tok);
 	if (status == ERR_SYSTEM)
 	{
 		free_token(tok);
@@ -109,7 +109,7 @@ t_status	handle_word(t_lexer *lex, t_list **head)
 		free(tok);
 		return (ERR_MALLOC);
 	}
-	status = add_newlst(&head, (void *)tok);
+	status = add_newlst(head, (void *)tok);
 	if (status == ERR_SYSTEM)
 	{
 		free_token(tok);
