@@ -140,9 +140,11 @@ t_list	*tokenize(char *line)
 		if (status != SUCCESS)
 		{
 			if (status == ERR_MALLOC)
-				assert_error(head, "malloc", ERR_MALLOC);
+				assert_error_lst(head, "malloc", ERR_MALLOC,
+					free_token_wrapper);
 			else if (status == ERR_SYNTAX)
-				assert_error(head, "Unclosed quote", ERR_SYNTAX);
+				assert_error_lst(head, "Unclosed quote", ERR_SYNTAX,
+					free_token_wrapper);
 			return (NULL);
 		}
 	}

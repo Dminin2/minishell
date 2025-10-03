@@ -17,24 +17,26 @@ SRCS_READLINE = $(READLINE_DIR)/readline.c
 SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/process.c \
 	$(EXECUTOR_DIR)/path.c \
-	$(EXECUTOR_DIR)/pipe.c
+	$(EXECUTOR_DIR)/pipe.c \
+	$(EXECUTOR_DIR)/free_pipes.c
 SRCS_LEXER = $(LEXER_DIR)/tokenize.c \
 	$(LEXER_DIR)/free_token.c
 SRCS_PARSER = $(PARSER_DIR)/parse.c \
 	$(PARSER_DIR)/parse_error.c \
 	$(PARSER_DIR)/parse_redir.c \
 	$(PARSER_DIR)/parse_cmd.c \
-	$(PARSER_DIR)/free_parser.c
+	$(PARSER_DIR)/free_pipeline_ir.c \
+	$(PARSER_DIR)/free_redir.c
 SRCS_EXPANDER = $(EXPANDER_DIR)/expand.c \
 	$(EXPANDER_DIR)/build_cmd.c \
 	$(EXPANDER_DIR)/remove_quote.c \
 	$(EXPANDER_DIR)/expand_param.c \
 	$(EXPANDER_DIR)/build_args.c \
 	$(EXPANDER_DIR)/expand_utils.c \
-	$(EXPANDER_DIR)/free_expander.c
+	$(EXPANDER_DIR)/free_pipeline.c \
+	$(EXPANDER_DIR)/free_pipeline_ir_in_expander.c
 SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
-	$(REDIRECTION_DIR)/heredoc.c \
-	$(REDIRECTION_DIR)/free_redir.c
+	$(REDIRECTION_DIR)/heredoc.c 
 SRCS_ENV = $(ENV_DIR)/env_init.c \
 	$(ENV_DIR)/env_utils.c \
 	$(ENV_DIR)/search_env.c \
