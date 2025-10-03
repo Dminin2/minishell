@@ -43,7 +43,8 @@ SRCS_ENV = $(ENV_DIR)/env_init.c \
 	$(ENV_DIR)/free_env.c
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c \
-	$(UTILS_DIR)/close.c
+	$(UTILS_DIR)/close.c \
+	$(UTILS_DIR)/list.c
 
 # debug用
 DEBUG_DIR = debug

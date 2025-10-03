@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 22:41:37 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/03 12:04:39 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	is_metacharacter(char c)
 
 t_status	handle_operator(t_lexer *lex, t_list **head, t_tok_types *op_type)
 {
-	t_token	*tok;
-	t_list	*new;
+	t_token		*tok;
+	t_status	status;
 
 	tok = ft_calloc(1, sizeof(t_token));
 	if (!tok)
@@ -69,20 +69,18 @@ t_status	handle_operator(t_lexer *lex, t_list **head, t_tok_types *op_type)
 		lex->pos += 2;
 	else
 		lex->pos += 1;
-	new = ft_lstnew(tok);
-	if (!new)
+	status = add_newlst(head, (void *)tok);
+	if (status == ERR_SYSTEM)
 	{
-		free(tok);
+		free_token(tok);
 		return (ERR_MALLOC);
 	}
-	ft_lstadd_back(head, new);
 	return (SUCCESS);
 }
 
 t_status	handle_word(t_lexer *lex, t_list **head)
 {
 	t_token		*tok;
-	t_list		*new;
 	int			start;
 	t_status	status;
 
@@ -111,13 +109,12 @@ t_status	handle_word(t_lexer *lex, t_list **head)
 		free(tok);
 		return (ERR_MALLOC);
 	}
-	new = ft_lstnew(tok);
-	if (!new)
+	status = add_newlst(head, (void *)tok);
+	if (status == ERR_SYSTEM)
 	{
 		free_token(tok);
 		return (ERR_MALLOC);
 	}
-	ft_lstadd_back(head, new);
 	return (SUCCESS);
 }
 
