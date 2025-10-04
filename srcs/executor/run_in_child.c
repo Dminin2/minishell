@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/04 14:30:00 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/04 14:37:17 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,4 @@ void	run_in_child(t_pipeline *pipeline, int pos, t_list *env_lst)
 		free_args(envp);
 		handle_execve_error(pipeline, cmd);
 	}
-	exit(0);
 }
