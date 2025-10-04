@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 21:56:29 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/04 14:37:17 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@ void	handle_execve_error(t_pipeline *pipeline, t_cmd *cmd)
 		exit_error(pipeline, cmd->args[0], ERR_ERRNO, 126);
 }
 
-void	run_in_child(t_pipeline *pipeline, int pos, char **envp)
+void	run_in_child(t_pipeline *pipeline, int pos, t_list *env_lst)
 {
 	t_status		status;
 	t_redir_err		err;
 	t_cmd			*cmd;
 	struct stat		st_buf;
 	t_command_type	type;
+	char			**envp;
 
 	cmd = get_cmd_from_lst(pipeline->cmd_lst, pos);
 	status = pipe_duplicate(pipeline, pos);
@@ -71,7 +72,7 @@ void	run_in_child(t_pipeline *pipeline, int pos, char **envp)
 		free_pipeline(pipeline);
 		exit(0);
 	}
-	status = resolve_command_path(cmd, envp);
+	status = resolve_command_path(cmd, env_lst);
 	if (status != SUCCESS)
 	{
 		if (status == ERR_SYSTEM)
@@ -85,6 +86,12 @@ void	run_in_child(t_pipeline *pipeline, int pos, char **envp)
 		exit_error(pipeline, cmd->path, ERR_ISDIR, 126);
 	if (access(cmd->path, X_OK) == -1)
 		exit_error(pipeline, cmd->path, ERR_SYSTEM, 126);
-	else if (execve(cmd->path, cmd->args, envp) == -1)
+	envp = pack_env(env_lst);
+	if (!envp)
+		exit_error(pipeline, "malloc", ERR_MALLOC, EXIT_FAILURE);
+	if (execve(cmd->path, cmd->args, envp) == -1)
+	{
+		free_args(envp);
 		handle_execve_error(pipeline, cmd);
+	}
 }

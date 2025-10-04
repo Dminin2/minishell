@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:13:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 01:16:33 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/04 02:38:57 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ t_status	get_env_from_line(t_env *env, char *line);
 t_status	create_and_addlst(t_list **head, char *line);
 
 char		*search_env(t_list *env_lst, char *key);
+
+char		**pack_env(t_list *env_lst);
 
 void		free_env_wrapper(void *env);
 void		free_env(t_env *env);
