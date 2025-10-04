@@ -1,3 +1,2 @@
 ls -l
-cat
 echo "hello world" | cat
