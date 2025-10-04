@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/04 02:40:51 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/04 14:30:00 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ void	run_in_child(t_pipeline *pipeline, int pos, t_list *env_lst)
 	if (!envp)
 		exit_error(pipeline, "malloc", ERR_MALLOC, EXIT_FAILURE);
 	if (execve(cmd->path, cmd->args, envp) == -1)
+	{
+		free_args(envp);
 		handle_execve_error(pipeline, cmd);
+	}
 	exit(0);
 }
