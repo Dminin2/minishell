@@ -6,13 +6,13 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:38:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 22:19:35 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/04 13:27:28 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute(t_pipeline *pipeline, char **envp)
+void	execute(t_minishell *minishell, t_pipeline *pipeline)
 {
 	t_command_type	type;
 
@@ -25,5 +25,5 @@ void	execute(t_pipeline *pipeline, char **envp)
 			return ;
 		}
 	}
-	child_process(pipeline, envp);
+	child_process(minishell, pipeline);
 }

@@ -44,7 +44,8 @@ SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
 SRCS_ENV = $(ENV_DIR)/env_init.c \
 	$(ENV_DIR)/env_utils.c \
 	$(ENV_DIR)/search_env.c \
-	$(ENV_DIR)/free_env.c
+	$(ENV_DIR)/free_env.c \
+	$(ENV_DIR)/pack_env.c
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c \
 	$(UTILS_DIR)/close.c \
