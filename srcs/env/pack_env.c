@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 02:14:31 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/04 02:39:54 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/04 14:31:11 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**pack_env(t_list *env_lst)
 	int		i;
 
 	env_count = count_env_lst(env_lst);
-	envp = ft_calloc(sizeof(char *), env_count + 1);
+	envp = ft_calloc(env_count + 1, sizeof(char *));
 	if (!envp)
 		return (NULL);
 	i = 0;
