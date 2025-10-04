@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 00:39:15 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/04 13:33:00 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	wait_child_fork_pos(t_pipeline *pipeline, pid_t *pids, int pos)
 	free(pids);
 }
 
-int	fork_all_children(t_pipeline *pipeline, pid_t *pids, char **envp)
+int	fork_all_children(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids)
 {
 	int	i;
 
@@ -58,14 +58,14 @@ int	fork_all_children(t_pipeline *pipeline, pid_t *pids, char **envp)
 		if (pids[i] == 0)
 		{
 			free(pids);
-			run_in_child(pipeline, i, envp);
+			run_in_child(pipeline, i, minishell->env_lst);
 		}
 		i++;
 	}
 	return (0);
 }
 
-void	child_process(t_pipeline *pipeline, char **envp)
+void	child_process(t_minishell *minishell, t_pipeline *pipeline)
 {
 	t_status	status;
 	pid_t		*pids;
@@ -89,7 +89,7 @@ void	child_process(t_pipeline *pipeline, char **envp)
 		assert_error_parent(pipeline, "malloc", ERR_SYSTEM);
 		return ;
 	}
-	fork_pos = fork_all_children(pipeline, pids, envp);
+	fork_pos = fork_all_children(minishell, pipeline, pids);
 	if (fork_pos)
 	{
 		wait_child_fork_pos(pipeline, pids, fork_pos);
