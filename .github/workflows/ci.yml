@@ -19,5 +19,5 @@ jobs:
           while read -r cmd || [ -n "$cmd" ]; do
             echo "---"
             echo "Testing command: $cmd"
-            echo "$cmd" | valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 ./minishell
+            echo "$cmd" | valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible --track-origins=yes --error-exitcode=1 ./minishell
           done < tests/ci_commands.txt
