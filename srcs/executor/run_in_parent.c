@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:35:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 22:19:06 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/04 13:27:15 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	handle_redir_err_in_parent(t_pipeline *pipeline, t_redir_err err,
 		assert_error_parent(pipeline, "dup", ERR_DUP);
 }
 
-void	run_builtin_in_parent(t_pipeline *pipeline, t_command_type type)
+void	run_builtin_in_parent(t_pipeline *pipeline,
+		t_command_type type)
 {
 	int			saved[2];
 	t_redir_err	err;

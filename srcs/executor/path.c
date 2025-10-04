@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:32:03 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 21:37:58 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/05 00:15:33 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,6 @@ int	has_slash(char *cmd)
 		i++;
 	}
 	return (0);
-}
-
-int	find_path_index(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-			break ;
-		i++;
-	}
-	return (i);
 }
 
 t_status	search_path(t_cmd *cmd, char **paths)
@@ -68,13 +54,13 @@ t_status	search_path(t_cmd *cmd, char **paths)
 	return (ERR_CMD_NOT_FOUND);
 }
 
-t_status	assign_direct_path(t_cmd *cmd, int path_index, char **envp)
+t_status	assign_direct_path(t_cmd *cmd, char *path_value)
 {
 	t_status	status;
 
 	if (!cmd->args[0])
 	{
-		if (!envp[path_index])
+		if (!path_value)
 			status = ERR_NOT_VALID_PATH;
 		else
 			status = ERR_CMD_NOT_FOUND;
@@ -89,18 +75,18 @@ t_status	assign_direct_path(t_cmd *cmd, int path_index, char **envp)
 	return (status);
 }
 
-t_status	resolve_command_path(t_cmd *cmd, char **envp)
+t_status	resolve_command_path(t_cmd *cmd, t_list *env_lst)
 {
 	char		**paths;
-	int			path_index;
+	char		*path_value;
 	t_status	status;
 
-	path_index = find_path_index(envp);
-	if (!envp[path_index] || !cmd->args[0] || has_slash(cmd->args[0]))
-		status = assign_direct_path(cmd, path_index, envp);
+	path_value = search_env(env_lst, "PATH");
+	if (!path_value || !cmd->args[0] || has_slash(cmd->args[0]))
+		status = assign_direct_path(cmd, path_value);
 	else
 	{
-		paths = ft_split(&envp[path_index][5], ':');
+		paths = ft_split(path_value, ':');
 		if (!paths)
 			return (ERR_SYSTEM);
 		status = search_path(cmd, paths);

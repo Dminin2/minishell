@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 22:37:04 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/04 13:27:40 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,21 @@ typedef enum e_command_type
 	BLT_EXIT
 }				t_command_type;
 
-void			execute(t_pipeline *pipeline, char **envp);
+void			execute(t_minishell *minishell, t_pipeline *pipeline);
 
 void			handle_redir_err(t_pipeline *pipeline, t_redir_err err);
-void			run_in_child(t_pipeline *pipeline, int pos, char **envp);
-void			child_process(t_pipeline *pipeline, char **envp);
+void			run_in_child(t_pipeline *pipeline, int pos, t_list *env_lst);
+void			child_process(t_minishell *minishell, t_pipeline *pipeline);
 
-void			run_builtin_in_parent(t_pipeline *pipeline, t_command_type type);
+void			run_builtin_in_parent(t_pipeline *pipeline,
+					t_command_type type);
 
 t_cmd			*get_cmd_from_lst(t_list *head, int target);
 
 t_command_type	scan_command_type(t_cmd *cmd);
 int				execute_builtin(t_cmd *cmd, t_command_type type);
 
-t_status		resolve_command_path(t_cmd *cmd, char **envp);
+t_status		resolve_command_path(t_cmd *cmd, t_list *env_lst);
 
 t_status		create_pipes(t_pipeline *pipeline);
 t_status		pipe_pipes(int **pipes, int n);
@@ -55,6 +56,6 @@ t_status		pipe_duplicate(t_pipeline *pipeline, int pos);
 t_status		save_stdio_fd(t_list *redir_lst, int *saved);
 t_status		restore_stdio_fd(int *saved);
 
-void		free_pipes(int **pipes, int n);
+void			free_pipes(int **pipes, int n);
 
 #endif
