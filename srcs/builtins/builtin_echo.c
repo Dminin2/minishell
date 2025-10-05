@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-int	is_valid_n_option(char *arg)
+int	is_n_option(char *arg)
 {
 	int	i;
 
-	if (strncmp(arg, "-n", 2))
+	if (strncmp(arg, "-n", 2) != 0)
 		return (0);
 	i = 2;
 	while (arg[i])
