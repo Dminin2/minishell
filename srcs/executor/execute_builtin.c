@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 09:44:26 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/05 09:51:31 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,5 @@ int	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 		printf("todo:env\n");
 	else if (type == BLT_EXIT)
 		printf("todo:exit\n");
-	// 本来はexit_statusを返す
-	return (0);
+	return (minishell->last_status);
 }
