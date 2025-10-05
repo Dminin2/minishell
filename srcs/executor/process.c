@@ -6,13 +6,13 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/06 01:32:15 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:42:52 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	wait_child(t_pipeline *pipeline, pid_t *pids)
+void	wait_child(t_pipeline *pipeline, pid_t *pids, int pids_count)
 {
 	int	i;
 	int	status;
@@ -20,24 +20,7 @@ void	wait_child(t_pipeline *pipeline, pid_t *pids)
 	i = 0;
 	close_pipes(pipeline->pipes, pipeline->n - 1);
 	close_heredoc(pipeline->cmd_lst);
-	while (i < pipeline->n)
-	{
-		waitpid(pids[i], &status, 0);
-		i++;
-	}
-	free(pids);
-	free_pipeline(pipeline);
-}
-
-void	wait_child_fork_pos(t_pipeline *pipeline, pid_t *pids, int pos)
-{
-	int	i;
-	int	status;
-
-	i = 0;
-	close_pipes(pipeline->pipes, pipeline->n - 1);
-	close_heredoc(pipeline->cmd_lst);
-	while (i < pos)
+	while (i < pids_count)
 	{
 		waitpid(pids[i], &status, 0);
 		i++;
@@ -92,9 +75,10 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline)
 	fork_pos = fork_all_children(minishell, pipeline, pids);
 	if (fork_pos != pipeline->n)
 	{
-		wait_child_fork_pos(pipeline, pids, fork_pos);
+		wait_child(pipeline, pids, fork_pos);
 		assert_error_parent(pipeline, "fork", ERR_SYSTEM);
 		return ;
 	}
-	wait_child(pipeline, pids);
+	wait_child(pipeline, pids, pipeline->n);
+	free_pipeline(pipeline);
 }
