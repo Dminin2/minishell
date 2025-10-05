@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 09:53:08 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/05 13:30:59 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/05 13:34:42 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_pwd_valid(char *env_pwd)
 	return (0);
 }
 
-int	builtin_pwd(t_minishell *minishell)
+t_status	builtin_pwd(t_minishell *minishell)
 {
 	char	*cwd;
 	char	*env_pwd;
@@ -40,10 +40,10 @@ int	builtin_pwd(t_minishell *minishell)
 		if (!cwd)
 		{
 			print_error_msg("getcwd", ERR_SYSTEM);
-			return (0);
+			return (FAILURE);
 		}
 		ft_putendl_fd(cwd, STDOUT_FILENO);
 		free(cwd);
 	}
-	return (1);
+	return (SUCCESS);
 }
