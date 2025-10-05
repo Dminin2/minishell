@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:38:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/04 13:27:28 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 09:44:45 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 		type = scan_command_type((t_cmd *)(pipeline->cmd_lst->content));
 		if (type != EXTERNAL)
 		{
-			run_builtin_in_parent(pipeline, type);
+			run_builtin_in_parent(minishell, pipeline, type);
 			return ;
 		}
 	}

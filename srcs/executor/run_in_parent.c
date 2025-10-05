@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_in_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:35:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/04 13:27:15 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 09:50:47 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handle_redir_err_in_parent(t_pipeline *pipeline, t_redir_err err,
 		assert_error_parent(pipeline, "dup", ERR_DUP);
 }
 
-void	run_builtin_in_parent(t_pipeline *pipeline,
+void	run_builtin_in_parent(t_minishell *minishell, t_pipeline *pipeline,
 		t_command_type type)
 {
 	int			saved[2];
@@ -51,7 +51,7 @@ void	run_builtin_in_parent(t_pipeline *pipeline,
 		handle_redir_err_in_parent(pipeline, err, saved);
 		return ;
 	}
-	execute_builtin(cmd, type);
+	execute_builtin(minishell, cmd, type);
 	status = restore_stdio_fd(saved);
 	if (status != SUCCESS)
 	{

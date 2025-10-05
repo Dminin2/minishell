@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/04 13:27:40 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 13:40:38 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,18 @@ typedef enum e_command_type
 void			execute(t_minishell *minishell, t_pipeline *pipeline);
 
 void			handle_redir_err(t_pipeline *pipeline, t_redir_err err);
-void			run_in_child(t_pipeline *pipeline, int pos, t_list *env_lst);
+void			run_in_child(t_minishell *minishell, t_pipeline *pipeline,
+					int pos);
 void			child_process(t_minishell *minishell, t_pipeline *pipeline);
 
-void			run_builtin_in_parent(t_pipeline *pipeline,
-					t_command_type type);
+void			run_builtin_in_parent(t_minishell *minishell,
+					t_pipeline *pipeline, t_command_type type);
 
 t_cmd			*get_cmd_from_lst(t_list *head, int target);
 
 t_command_type	scan_command_type(t_cmd *cmd);
-int				execute_builtin(t_cmd *cmd, t_command_type type);
+void			execute_builtin(t_minishell *minishell, t_cmd *cmd,
+					t_command_type type);
 
 t_status		resolve_command_path(t_cmd *cmd, t_list *env_lst);
 
