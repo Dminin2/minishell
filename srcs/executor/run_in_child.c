@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_in_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 09:49:22 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/05 21:28:56 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,14 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	if (err.status != SUCCESS)
 		handle_redir_err(pipeline, err);
 	type = scan_command_type(cmd);
-	if (type != EXTERNAL)
+	if (type != EXTERNAL && type != NO_CMD)
 	{
 		execute_builtin(minishell, cmd, type);
 		free_pipeline(pipeline);
 		exit(minishell->last_status);
 	}
+	else if (type == NO_CMD)
+		exit(0);
 	status = resolve_command_path(cmd, minishell->env_lst);
 	if (status != SUCCESS)
 	{
