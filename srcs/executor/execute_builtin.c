@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 09:51:31 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/05 13:40:27 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ t_command_type	scan_command_type(t_cmd *cmd)
 	return (type);
 }
 
-int	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
+void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 {
 	(void)cmd;
+	(void)minishell;
 	if (type == BLT_ECHO)
 		printf("todo:echo\n");
 	else if (type == BLT_CD)
@@ -52,5 +53,4 @@ int	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 		printf("todo:env\n");
 	else if (type == BLT_EXIT)
 		printf("todo:exit\n");
-	return (minishell->last_status);
 }
