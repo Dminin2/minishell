@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 21:56:45 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 09:51:31 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_command_type	scan_command_type(t_cmd *cmd)
 	return (type);
 }
 
-int	execute_builtin(t_cmd *cmd, t_command_type type)
+int	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 {
 	(void)cmd;
 	if (type == BLT_ECHO)
@@ -52,6 +52,5 @@ int	execute_builtin(t_cmd *cmd, t_command_type type)
 		printf("todo:env\n");
 	else if (type == BLT_EXIT)
 		printf("todo:exit\n");
-	//本来はexit_statusを返す
-	return (0);
+	return (minishell->last_status);
 }

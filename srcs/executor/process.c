@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/04 13:33:00 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 09:44:56 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	fork_all_children(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids)
 		if (pids[i] == 0)
 		{
 			free(pids);
-			run_in_child(pipeline, i, minishell->env_lst);
+			run_in_child(minishell, pipeline, i);
 		}
 		i++;
 	}

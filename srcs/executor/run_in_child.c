@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_in_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/04 14:37:17 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 09:49:22 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	handle_execve_error(t_pipeline *pipeline, t_cmd *cmd)
 		exit_error(pipeline, cmd->args[0], ERR_ERRNO, 126);
 }
 
-void	run_in_child(t_pipeline *pipeline, int pos, t_list *env_lst)
+void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 {
 	t_status		status;
 	t_redir_err		err;
@@ -68,11 +68,11 @@ void	run_in_child(t_pipeline *pipeline, int pos, t_list *env_lst)
 	type = scan_command_type(cmd);
 	if (type != EXTERNAL)
 	{
-		execute_builtin(cmd, type);
+		execute_builtin(minishell, cmd, type);
 		free_pipeline(pipeline);
-		exit(0);
+		exit(minishell->last_status);
 	}
-	status = resolve_command_path(cmd, env_lst);
+	status = resolve_command_path(cmd, minishell->env_lst);
 	if (status != SUCCESS)
 	{
 		if (status == ERR_SYSTEM)
@@ -86,7 +86,7 @@ void	run_in_child(t_pipeline *pipeline, int pos, t_list *env_lst)
 		exit_error(pipeline, cmd->path, ERR_ISDIR, 126);
 	if (access(cmd->path, X_OK) == -1)
 		exit_error(pipeline, cmd->path, ERR_SYSTEM, 126);
-	envp = pack_env(env_lst);
+	envp = pack_env(minishell->env_lst);
 	if (!envp)
 		exit_error(pipeline, "malloc", ERR_MALLOC, EXIT_FAILURE);
 	if (execve(cmd->path, cmd->args, envp) == -1)

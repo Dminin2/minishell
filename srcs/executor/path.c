@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:32:03 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/04 13:29:46 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 00:15:33 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,6 @@ int	has_slash(char *cmd)
 		i++;
 	}
 	return (0);
-}
-
-int	find_path_index(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-			break ;
-		i++;
-	}
-	return (i);
 }
 
 t_status	search_path(t_cmd *cmd, char **paths)
@@ -92,7 +78,7 @@ t_status	assign_direct_path(t_cmd *cmd, char *path_value)
 t_status	resolve_command_path(t_cmd *cmd, t_list *env_lst)
 {
 	char		**paths;
-	char *path_value;
+	char		*path_value;
 	t_status	status;
 
 	path_value = search_env(env_lst, "PATH");
