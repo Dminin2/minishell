@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 21:28:56 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 21:38:34 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 		exit(minishell->last_status);
 	}
 	else if (type == NO_CMD)
-		exit(0);
+		exit_success(pipeline);
 	status = resolve_command_path(cmd, minishell->env_lst);
 	if (status != SUCCESS)
 	{
