@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:35:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 09:45:38 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/05 09:50:47 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	run_builtin_in_parent(t_minishell *minishell, t_pipeline *pipeline,
 		handle_redir_err_in_parent(pipeline, err, saved);
 		return ;
 	}
-	execute_builtin(cmd, type, minishell);
+	execute_builtin(minishell, cmd, type);
 	status = restore_stdio_fd(saved);
 	if (status != SUCCESS)
 	{
