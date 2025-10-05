@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 09:44:56 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:32:15 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	fork_all_children(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids)
 		}
 		i++;
 	}
-	return (0);
+	return (i);
 }
 
 void	child_process(t_minishell *minishell, t_pipeline *pipeline)
@@ -90,7 +90,7 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline)
 		return ;
 	}
 	fork_pos = fork_all_children(minishell, pipeline, pids);
-	if (fork_pos)
+	if (fork_pos != pipeline->n)
 	{
 		wait_child_fork_pos(pipeline, pids, fork_pos);
 		assert_error_parent(pipeline, "fork", ERR_SYSTEM);
