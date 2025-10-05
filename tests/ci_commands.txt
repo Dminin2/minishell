@@ -1,0 +1,34 @@
+
+
+""
+''
+"    "
+'    '
+""''
+"
+'
+no_such_cmd
+/no_such_path
+/bin/ls -l
+ls -l
+ls -z
+/bin/echo hello
+cat < playground/in > playground/out >> playground/out
+cat < no_such_file
+pwd | cat -e
+echo "hello world" | cat
+ls |
+ls >
+ls >>
+ls >>> playground/in
+ls || ls
+| ls
+|
+<
+<<
+>
+>>
+>>>
+||
+"unclosed quote
+'unclosed quote
