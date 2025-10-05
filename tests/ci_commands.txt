@@ -32,3 +32,6 @@ ls || ls
 ||
 "unclosed quote
 'unclosed quote
+> no_such_file
+< playground/in
+< playground/in | < playground/in
