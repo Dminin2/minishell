@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 13:41:56 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/05 17:28:09 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,27 @@ t_command_type	scan_command_type(t_cmd *cmd)
 {
 	t_command_type	type;
 
-	if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
-		type = BLT_ECHO;
-	else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
-		type = BLT_CD;
-	else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
-		type = BLT_PWD;
-	else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
-		type = BLT_EXPORT;
-	else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
-		type = BLT_UNSET;
-	else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
-		type = BLT_ENV;
-	else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
-		type = BLT_EXIT;
+	if (cmd->args)
+	{
+		if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
+			type = BLT_ECHO;
+		else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
+			type = BLT_CD;
+		else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
+			type = BLT_PWD;
+		else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
+			type = BLT_EXPORT;
+		else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
+			type = BLT_UNSET;
+		else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
+			type = BLT_ENV;
+		else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
+			type = BLT_EXIT;
+		else
+			type = EXTERNAL;
+	}
 	else
-		type = EXTERNAL;
+		type = NO_CMD;
 	return (type);
 }
 
