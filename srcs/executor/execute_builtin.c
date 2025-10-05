@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 13:40:27 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 13:41:56 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 	else if (type == BLT_CD)
 		printf("todo:cd\n");
 	else if (type == BLT_PWD)
-		printf("todo:pwd\n");
+		minishell->last_status = builtin_pwd(minishell);
 	else if (type == BLT_EXPORT)
 		printf("todo:export\n");
 	else if (type == BLT_UNSET)
