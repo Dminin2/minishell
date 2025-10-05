@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 22:10:56 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/06 01:48:04 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:59:40 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	builtin_echo(char **args)
 
 	i = 1;
 	n_option = false;
-	while (args[i] && is_valid_n_option(args[i]))
+	while (args[i] && is_n_option(args[i]))
 	{
 		n_option = true;
 		i++;
