@@ -13,6 +13,9 @@ no_such_cmd
 ls -l
 ls -z
 /bin/echo hello
+pwd
+pwd arguments
+pwd -option
 cat < playground/in > playground/out >> playground/out
 cat < no_such_file
 pwd | cat -e
