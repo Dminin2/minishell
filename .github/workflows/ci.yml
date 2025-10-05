@@ -17,5 +17,5 @@ jobs:
       - name: Run Valgrind leak check
         run: |
           while read -r cmd || [ -n "$cmd" ]; do
-            echo "$cmd" | valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible --track-origins=yes --error-exitcode=1 ./minishell
+            echo "$cmd" | valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible --track-origins=yes --trace-children=yes --track-fds=yes --error-exitcode=1 ./minishell
           done < tests/ci_commands.txt
