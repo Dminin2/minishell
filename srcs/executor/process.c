@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 20:14:57 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 21:07:41 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,15 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids)
 		}
 		i++;
 	}
-	if (WIFEXITED(status))
-		minishell->last_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		minishell->last_status = 128 + WTERMSIG(status);
+	if (i == pipeline->n)
+	{
+		if (WIFEXITED(status))
+			minishell->last_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			minishell->last_status = 128 + WTERMSIG(status);
+	}
+	else
+		minishell->last_status = 1;
 	free(pids);
 	free_pipeline(pipeline);
 }
@@ -59,10 +64,15 @@ void	wait_child_fork_pos(t_minishell *minishell, t_pipeline *pipeline,
 		}
 		i++;
 	}
-	if (WIFEXITED(status))
-		minishell->last_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		minishell->last_status = 128 + WTERMSIG(status);
+	if (i == pos)
+	{
+		if (WIFEXITED(status))
+			minishell->last_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			minishell->last_status = 128 + WTERMSIG(status);
+	}
+	else
+		minishell->last_status = 1;
 	free(pids);
 }
 
