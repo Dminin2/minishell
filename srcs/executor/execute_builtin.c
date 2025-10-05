@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 17:28:09 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 18:12:56 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_command_type	scan_command_type(t_cmd *cmd)
 void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 {
 	(void)cmd;
-	(void)minishell;
 	if (type == BLT_ECHO)
 		printf("todo:echo\n");
 	else if (type == BLT_CD)
