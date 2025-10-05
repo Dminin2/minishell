@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 11:24:02 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/05 17:44:15 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,21 @@ void	print_error_msg(char *context, t_status status)
 		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
 	else if (status == ERR_ISDIR)
 		dprintf(STDERR_FILENO, "minishell: %s: is a directory\n", context);
+}
+
+void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
+{
+	if (context)
+	{
+		if (error == BLTERR_ERRNO)
+			dprintf(STDERR_FILENO, "minishell: %s: %s: %s\n", cmd, context,
+				strerror(errno));
+	}
+	else
+	{
+		if (error == BLTERR_ERRNO)
+			dprintf(STDERR_FILENO, "minishell: %s: %s\n", cmd, strerror(errno));
+	}
 }
 
 void	assert_error_lst(t_list *lst, char *context, t_status status,

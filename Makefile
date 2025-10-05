@@ -11,6 +11,7 @@ EXPANDER_DIR = expander
 REDIRECTION_DIR = redirection
 ENV_DIR = env
 UTILS_DIR = utils
+BUILTINS_DIR = builtins
 
 SRCS_MAIN = main.c
 SRCS_READLINE = $(READLINE_DIR)/readline.c
@@ -50,6 +51,8 @@ SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c \
 	$(UTILS_DIR)/close.c \
 	$(UTILS_DIR)/list.c
+SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
+
 
 # debug用
 DEBUG_DIR = debug
@@ -70,7 +73,8 @@ $(SRCS_REDIRECTION) \
 $(SRCS_EXECUTOR) \
 $(SRCS_ENV) \
 $(SRCS_UTILS) \
-$(SRCS_DEBUG)
+$(SRCS_DEBUG) \
+$(SRCS_BUILTINS)
 
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
@@ -106,6 +110,7 @@ $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)/$(ENV_DIR)
 	mkdir -p $(OBJS_DIR)/$(UTILS_DIR)
 	mkdir -p $(OBJS_DIR)/$(DEBUG_DIR)
+	mkdir -p $(OBJS_DIR)/$(BUILTINS_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	$(CC) $(CFLAGS) -I$(INCLUDES) -I$(LIBFT_INCLUDES) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 13:40:38 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 14:56:47 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 typedef enum e_command_type
 {
+	NO_CMD,
 	EXTERNAL,
 	BLT_ECHO,
 	BLT_CD,
