@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 09:45:27 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/05 09:49:22 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	type = scan_command_type(cmd);
 	if (type != EXTERNAL)
 	{
-		execute_builtin(cmd, type, minishell);
+		execute_builtin(minishell, cmd, type);
 		free_pipeline(pipeline);
 		exit(minishell->last_status);
 	}
