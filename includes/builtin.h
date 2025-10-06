@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/05 17:44:04 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:46:46 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BUILTIN_H
 
 # include "common.h"
+# include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -23,5 +24,6 @@ typedef enum e_blt_error
 }	t_blt_error;
 
 int	builtin_pwd(t_minishell *minishell);
+int	builtin_echo(char **args);
 
 #endif

@@ -69,3 +69,9 @@ void	exit_error(t_pipeline *pipeline, char *context, t_status status,
 	free_pipeline(pipeline);
 	exit(exit_status);
 }
+
+void	exit_success(t_pipeline *pipeline)
+{
+	free_pipeline(pipeline);
+	exit(0);
+}
