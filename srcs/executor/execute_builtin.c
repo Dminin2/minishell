@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 17:28:09 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:49:49 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 	(void)cmd;
 	(void)minishell;
 	if (type == BLT_ECHO)
-		printf("todo:echo\n");
+		minishell->last_status = builtin_echo(cmd->args);
 	else if (type == BLT_CD)
 		printf("todo:cd\n");
 	else if (type == BLT_PWD)

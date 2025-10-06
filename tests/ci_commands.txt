@@ -38,3 +38,13 @@ ls || ls
 > no_such_file
 < playground/in
 < playground/in | < playground/in
+echo hello world
+echo
+echo -n hello world
+echo -nnnnn hello
+echo -n -n -nnn hello
+echo -nxyz hello
+echo hello -n
+echo hello "" world
+echo -n -nnn
+echo -n -
