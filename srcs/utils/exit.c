@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 17:44:15 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/05 21:38:26 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,10 @@ void	exit_error(t_pipeline *pipeline, char *context, t_status status,
 	print_error_msg(context, status);
 	free_pipeline(pipeline);
 	exit(exit_status);
+}
+
+void	exit_success(t_pipeline *pipeline)
+{
+	free_pipeline(pipeline);
+	exit(0);
 }

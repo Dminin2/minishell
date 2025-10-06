@@ -40,5 +40,6 @@ void						assert_error_parent(t_pipeline *pipeline,
 								char *context, t_status status);
 void						exit_error(t_pipeline *pipeline, char *context,
 								t_status status, int exit_status);
+void						exit_success(t_pipeline *pipeline);
 
 #endif
