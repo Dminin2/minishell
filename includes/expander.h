@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:33:02 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/06 15:52:26 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:14:44 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_pipeline	*expand(t_minishell *minishell, t_pipeline_ir *pipeline_ir);
 
 t_status	expand_args_lst(t_minishell *minishell, t_list *args_lst);
 t_status	expand_redir_lst(t_minishell *minishell, t_list *redir_lst,
-				t_redir_err *err);
+				t_redir **redir_err);
 
 char		*handle_special_word(t_minishell *minishell, char *old, int *i,
 				int *is_quoted);

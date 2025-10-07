@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:02:11 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/07 13:12:36 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:14:55 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	*get_new_value(t_minishell *minishell, t_redir *redir, int *is_quoted)
 }
 
 t_status	expand_redir_lst(t_minishell *minishell, t_list *redir_lst,
-		t_redir_err *err)
+		t_redir **redir_err)
 {
 	char	*new_value;
 	t_redir	*redir;
@@ -127,8 +127,7 @@ t_status	expand_redir_lst(t_minishell *minishell, t_list *redir_lst,
 		if (redir->type != R_HEREDOC && !is_quoted && new_value[0] == '\0')
 		{
 			free(new_value);
-			err->redir_err = redir;
-			err->status = ERR_AMB_REDIR;
+			*redir_err = redir;
 			return (ERR_AMB_REDIR);
 		}
 		free(redir->value);
