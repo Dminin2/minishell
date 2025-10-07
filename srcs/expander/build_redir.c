@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:02:11 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/07 15:14:55 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:42:47 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*expand_delimiter(char *old, int *i, int *is_quoted)
 {
 	char	*word;
 
-	// double quoteもsigle quoteも展開なし
+	// double quoteもsingle quoteも展開なし
 	if (old[*i] == '\'' || old[*i] == '\"')
 	{
 		word = read_quoted(old, i);
