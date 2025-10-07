@@ -38,6 +38,7 @@ SRCS_EXPANDER = $(EXPANDER_DIR)/expand.c \
 	$(EXPANDER_DIR)/expand_param.c \
 	$(EXPANDER_DIR)/build_args.c \
 	$(EXPANDER_DIR)/expand_utils.c \
+	$(EXPANDER_DIR)/build_redir.c \
 	$(EXPANDER_DIR)/free_pipeline.c \
 	$(EXPANDER_DIR)/free_pipeline_ir_in_expander.c
 SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
