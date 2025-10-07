@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/02 09:12:14 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/06 15:41:33 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef enum e_status
 	ERR_NOT_VALID_PATH,
 	ERR_ISDIR,
 	ERR_FILE,
+	ERR_AMB_REDIR,
 	ERR_DUP,
 	ERR_MALLOC,
 	ERR_PIPE,

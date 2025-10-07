@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 17:44:15 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/06 15:44:22 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	print_error_msg(char *context, t_status status)
 			"minishell: syntax error near unexpected token `%s'\n", context);
 	else if (status == ERR_FILE)
 		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
+	else if (status == ERR_AMB_REDIR)
+		dprintf(STDERR_FILENO, "minishell: %s: ambiguous redirect\n", context);
 	else if (status == ERR_ERRNO)
 		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
 	else if (status == ERR_ISDIR)
