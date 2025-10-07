@@ -14,9 +14,7 @@
 
 void	print_error_msg(char *context, t_status status)
 {
-	if (status == ERR_SYSTEM)
-		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
-	else if (status == ERR_CMD_NOT_FOUND)
+	if (status == ERR_CMD_NOT_FOUND)
 		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context,
 			"command not found");
 	else if (status == ERR_NOT_VALID_PATH)
@@ -33,6 +31,8 @@ void	print_error_msg(char *context, t_status status)
 		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
 	else if (status == ERR_ISDIR)
 		dprintf(STDERR_FILENO, "minishell: %s: is a directory\n", context);
+	else
+		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
 }
 
 void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
@@ -70,4 +70,10 @@ void	exit_error(t_pipeline *pipeline, char *context, t_status status,
 	print_error_msg(context, status);
 	free_pipeline(pipeline);
 	exit(exit_status);
+}
+
+void	exit_success(t_pipeline *pipeline)
+{
+	free_pipeline(pipeline);
+	exit(0);
 }
