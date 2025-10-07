@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/06 00:57:20 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:54:52 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
 		if (error == BLTERR_ERRNO)
 			dprintf(STDERR_FILENO, "minishell: %s: %s: %s\n", cmd, context,
 				strerror(errno));
+		else if (error == BLTERR_MSG)
+			dprintf(STDERR_FILENO, "minishell: %s: %s\n", cmd, context);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/06 01:46:46 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:56:00 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef enum e_blt_error
 {
+	BLTERR_MSG,
 	BLTERR_ERRNO
 }	t_blt_error;
 
