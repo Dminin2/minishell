@@ -18,6 +18,16 @@ pwd arguments
 pwd -option
 cat < playground/in > playground/out >> playground/out
 cat < no_such_file
+cat < $A
+cat < "$A"
+cat < '$A'
+cat << $A
+cat << "$A"
+cat << '$A'
+cat < ""
+cat < ''
+cat << ""
+cat << ''
 pwd | cat -e
 echo "hello world" | cat
 ls |
