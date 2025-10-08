@@ -39,7 +39,9 @@ int	builtin_pwd(t_minishell *minishell)
 		cwd = getcwd(NULL, 0);
 		if (!cwd)
 		{
-			print_error_msg("getcwd", ERR_SYSTEM);
+			print_error_msg_builtin("pwd",
+				"error retrieving current directory: getcwd: cannot access parent directories",
+				BLTERR_ERRNO);
 			return (1);
 		}
 		ft_putendl_fd(cwd, STDOUT_FILENO);
