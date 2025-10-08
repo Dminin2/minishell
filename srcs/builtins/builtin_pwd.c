@@ -38,7 +38,7 @@ int	builtin_pwd(t_minishell *minishell)
 	{
 		if (!getcwd(cwd, PATH_MAX))
 		{
-			print_error_msg_builtin("pwd", GETCWD_ERR, BLTERR_ERRNO);
+			print_error_msg_builtin("cd", GETCWD_ERR, BLTERR_ERRNO);
 			return (1);
 		}
 		ft_putendl_fd(cwd, STDOUT_FILENO);
