@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 12:59:46 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 15:17:35 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static char	*get_target_path(t_list *env_lst, char *arg)
 	{
 		target_path = search_env(env_lst, "HOME");
 		if (!target_path)
-			print_error_msg_builtin("cd", "HOME not set", BLTERR_MSG);
+			print_error_msg_builtin("cd", NULL, BLTERR_NO_SET_HOME);
 	}
 	else if (ft_strncmp(arg, "-", 2) == 0)
 	{
 		target_path = search_env(env_lst, "OLDPWD");
 		if (!target_path)
-			print_error_msg_builtin("cd", "OLDPWD not set", BLTERR_MSG);
+			print_error_msg_builtin("cd", NULL, BLTERR_NO_SET_OLDPWD);
 	}
 	else
 		target_path = arg;
@@ -90,7 +90,7 @@ int	builtin_cd(t_minishell *minishell, char **args)
 
 	if (args[1] && args[2])
 	{
-		print_error_msg_builtin("cd", "too many arguments", BLTERR_MSG);
+		print_error_msg_builtin("cd", NULL, BLTERR_MANY_ARG);
 		return (1);
 	}
 	target_path = get_target_path(minishell->env_lst, args[1]);
