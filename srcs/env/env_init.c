@@ -6,13 +6,13 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:42:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 11:21:41 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:47:41 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_status	process_env_line(t_list **head, char *line)
+t_status	process_env_line(t_list **head, char *line)
 {
 	t_env		*existing_env;
 	t_status	status;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:13:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/04 02:38:57 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:47:47 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_env
 
 t_list		*env_init(char **envp);
 
+t_status	process_env_line(t_list **head, char *line);
 t_env		*find_existing_env(t_list *env_lst, char *line);
 t_status	replace_env_value(t_env *env, char *line);
 t_status	get_env_from_line(t_env *env, char *line);

@@ -6,11 +6,11 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 09:53:08 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/06 15:14:11 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:57:19 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	is_pwd_valid(char *env_pwd)
 {
