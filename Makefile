@@ -53,6 +53,7 @@ SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/list.c
 SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_echo.c \
+	$(BUILTINS_DIR)/builtin_cd.c \
 
 
 # debug用
