@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 00:22:00 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:19:15 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 				err->status = ERR_MALLOC;
 				return ;
 			}
-			if (redir->type != R_HEREDOC && !is_quoted && new_value[0] == '\0')
+			if (!is_quoted && new_value[0] == '\0')
 			{
 				free(new_value);
 				err->redir_err = redir;
