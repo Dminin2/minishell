@@ -28,7 +28,7 @@ void	print_error_msg(char *context, t_status status)
 	else if (status == ERR_ERRNO)
 		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
 	else if (status == ERR_ISDIR)
-		dprintf(STDERR_FILENO, "minishell: %s: is a directory\n", context);
+		dprintf(STDERR_FILENO, "minishell: %s: Is a directory\n", context);
 	else
 		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
 }
