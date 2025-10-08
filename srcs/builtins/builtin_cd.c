@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 12:40:20 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 12:57:33 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,12 @@ static int	perform_chdir(t_list **env_lst, char *path)
 		print_error_msg_builtin("cd", path, BLTERR_ERRNO);
 		return (1);
 	}
-	new_pwd = getcwd(NULL, 0);
-	if (!new_pwd)
+	if (!getcwd(new_pwd, PATH_MAX))
 	{
 		print_error_msg_builtin("cd", GETCWD_ERR, BLTERR_ERRNO);
 		return (1);
 	}
 	exit_status = update_pwd_env(env_lst, old_pwd, new_pwd);
-	free(new_pwd);
 	return (exit_status);
 }
 
