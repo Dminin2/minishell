@@ -22,41 +22,7 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids)
 	err = 0;
 	close_pipes(pipeline->pipes, pipeline->n - 1);
 	close_heredoc(pipeline->cmd_lst);
-	while (i < pipeline->n)
-	{
-		if (waitpid(pids[i], &status, 0) == -1)
-		{
-			if (errno == EINTR)
-				continue ;
-			print_error_msg("waitpid", ERR_WAITPID);
-			err = 1;
-		}
-		i++;
-	}
-	if (err)
-		minishell->last_status = 1;
-	else if (WIFEXITED(status))
-		minishell->last_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		minishell->last_status = 128 + WTERMSIG(status);
-	else
-		minishell->last_status = 1;
-	free(pids);
-	free_pipeline(pipeline);
-}
-
-void	wait_child_fork_pos(t_minishell *minishell, t_pipeline *pipeline,
-		pid_t *pids, int pos)
-{
-	int	i;
-	int	status;
-	int	err;
-
-	i = 0;
-	err = 0;
-	close_pipes(pipeline->pipes, pipeline->n - 1);
-	close_heredoc(pipeline->cmd_lst);
-	while (i < pos)
+	while (i < pids_count)
 	{
 		if (waitpid(pids[i], &status, 0) == -1)
 		{
@@ -95,7 +61,7 @@ int	fork_all_children(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids)
 		}
 		i++;
 	}
-	return (0);
+	return (i);
 }
 
 void	child_process(t_minishell *minishell, t_pipeline *pipeline)
@@ -123,11 +89,12 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline)
 		return ;
 	}
 	fork_pos = fork_all_children(minishell, pipeline, pids);
-	if (fork_pos)
+	if (fork_pos != pipeline->n)
 	{
-		wait_child_fork_pos(minishell, pipeline, pids, fork_pos);
+		wait_child(pipeline, pids, fork_pos);
 		assert_error_parent(pipeline, "fork", ERR_SYSTEM);
 		return ;
 	}
-	wait_child(minishell, pipeline, pids);
+	wait_child(pipeline, pids, pipeline->n);
+	free_pipeline(pipeline);
 }
