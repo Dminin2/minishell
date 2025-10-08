@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 09:53:08 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 22:53:16 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 22:54:49 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	builtin_pwd(t_minishell *minishell)
 		cwd = getcwd(NULL, 0);
 		if (!cwd)
 		{
-			print_error_msg_builtin("cd", GETCWD_ERR, BLTERR_ERRNO);
+			print_error_msg_builtin("pwd", GETCWD_ERR, BLTERR_ERRNO);
 			return (1);
 		}
 		ft_putendl_fd(cwd, STDOUT_FILENO);
