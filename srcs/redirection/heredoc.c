@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 10:47:11 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 15:10:17 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,16 @@ t_status	handle_heredoc(t_redir *redir)
 	char	*delimiter;
 	int		is_quoted;
 
+	is_quoted = 0;
+	delimiter = expand_delimiter(redir->value, &is_quoted);
+	if (!delimiter)
+		return (ERR_MALLOC);
+	free(redir->value);
+	redir->value = delimiter;
 	tmp_file = "/tmp/minishell_heredoc";
 	fd = open(tmp_file, O_CREAT | O_EXCL | O_WRONLY, 0644);
 	if (fd < 0)
 		return (ERR_FILE);
-	is_quoted = 0;
-	delimiter = expand_delimiter(redir->value, &is_quoted);
-	if (!delimiter)
-	{
-		close(fd);
-		unlink(tmp_file);
-		return (ERR_MALLOC);
-	}
-	free(redir->value);
-	redir->value = delimiter;
 	read_line_and_write_fd(redir->value, fd);
 	close(fd);
 	redir->fd_hd = open(tmp_file, O_RDONLY);
@@ -97,8 +93,6 @@ t_status	read_heredoc(t_list *cmd_lst)
 			if (status == ERR_FILE)
 				assert_error_lst(NULL, "/tmp/minishell_heredoc", ERR_FILE,
 					NULL);
-			else if (status == ERR_SYNTAX)
-				assert_error_lst(NULL, "", ERR_SYNTAX, NULL);
 			else if (status == ERR_MALLOC)
 				assert_error_lst(NULL, "malloc", ERR_SYSTEM, NULL);
 			return (FAILURE);
