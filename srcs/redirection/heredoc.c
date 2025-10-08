@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 22:20:11 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 00:23:56 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,20 @@ t_status	handle_heredoc(t_redir *redir)
 {
 	int		fd;
 	char	*tmp_file;
+	char	*delimiter;
+	int		is_quoted;
 
 	tmp_file = "/tmp/minishell_heredoc";
 	fd = open(tmp_file, O_CREAT | O_EXCL | O_WRONLY, 0644);
 	if (fd < 0)
 		return (ERR_FILE);
-	// TODO: delimiterのexpandを行う。double quoteでも展開しなくていいので注意。
-	if (redir->value)
-		read_line_and_write_fd(redir->value, fd);
-	else
-		return (ERR_SYNTAX);
+	is_quoted = 0;
+	delimiter = expand_delimiter(redir->value, &is_quoted);
+	if (!delimiter)
+		return (ERR_MALLOC);
+	free(redir->value);
+	redir->value = delimiter;
+	read_line_and_write_fd(redir->value, fd);
 	close(fd);
 	redir->fd_hd = open(tmp_file, O_RDONLY);
 	unlink(tmp_file);
