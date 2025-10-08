@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 12:57:33 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 12:59:46 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd)
 static int	perform_chdir(t_list **env_lst, char *path)
 {
 	char	*old_pwd;
-	char	*new_pwd;
+	char	new_pwd[PATH_MAX];
 	int		exit_status;
 
 	old_pwd = search_env(*env_lst, "PWD");
