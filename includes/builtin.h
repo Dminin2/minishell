@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 11:53:50 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 12:06:47 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+#define GETCWD_ERR "error retrieving current directory: getcwd: cannot access parent directories"
 
 typedef enum e_blt_error
 {

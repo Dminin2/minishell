@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 11:59:22 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 12:08:06 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,7 @@ static int	perform_chdir(t_list *env_lst, char *path)
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 	{
-		print_error_msg_builtin("cd",
-			"error retrieving current directory: getcwd: \
-			cannot access parent directories",
-			BLTERR_ERRNO);
+		print_error_msg_builtin("cd", GETCWD_ERR, BLTERR_ERRNO);
 		return (1);
 	}
 	exit_status = update_pwd_env(env_lst, old_pwd, new_pwd);
