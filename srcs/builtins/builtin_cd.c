@@ -6,13 +6,13 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 11:48:55 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:59:22 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_target_path(t_env *env_lst, char *arg)
+static char	*get_target_path(t_list *env_lst, char *arg)
 {
 	char	*target_path;
 
@@ -33,13 +33,13 @@ static char	*get_target_path(t_env *env_lst, char *arg)
 	return (target_path);
 }
 
-static int	report_error(const char *msg, int err_type)
+static int	report_error(char *msg, int err_type)
 {
 	print_error_msg(msg, err_type);
 	return (1);
 }
 
-static int	update_pwd_env(t_env **env_lst, char *old_pwd, char *new_pwd)
+static int	update_pwd_env(t_list *env_lst, char *old_pwd, char *new_pwd)
 {
 	char		*pwd_line;
 	t_status	status;
@@ -47,27 +47,27 @@ static int	update_pwd_env(t_env **env_lst, char *old_pwd, char *new_pwd)
 	pwd_line = ft_strjoin("OLDPWD=", old_pwd);
 	if (!pwd_line)
 		return (report_error("malloc", ERR_SYSTEM));
-	status = process_env_line(env_lst, pwd_line);
+	status = process_env_line(&env_lst, pwd_line);
 	free(pwd_line);
 	if (status == ERR_MALLOC)
 		return (report_error("malloc", ERR_SYSTEM));
 	pwd_line = ft_strjoin("PWD=", new_pwd);
 	if (!pwd_line)
 		return (report_error("malloc", ERR_SYSTEM));
-	status = process_env_line(env_lst, pwd_line);
+	status = process_env_line(&env_lst, pwd_line);
 	free(pwd_line);
 	if (status == ERR_MALLOC)
 		return (report_error("malloc", ERR_SYSTEM));
 	return (0);
 }
 
-static int	perform_chdir(t_env **env_lst, char *path)
+static int	perform_chdir(t_list *env_lst, char *path)
 {
 	char	*old_pwd;
 	char	*new_pwd;
 	int		exit_status;
 
-	old_pwd = search_env(*env_lst, "PWD");
+	old_pwd = search_env(env_lst, "PWD");
 	if (!old_pwd)
 		old_pwd = "";
 	if (chdir(path) == -1)
@@ -103,5 +103,5 @@ int	builtin_cd(t_minishell *minishell, char **args)
 		return (1);
 	if (args[1] && ft_strncmp(args[1], "-", 2) == 0)
 		ft_putendl_fd(target_path, STDOUT_FILENO);
-	return (perform_chdir(&minishell->env_lst, target_path));
+	return (perform_chdir(minishell->env_lst, target_path));
 }
