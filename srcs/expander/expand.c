@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:14:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 00:23:31 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:22:30 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_list	*get_cmd_lst(t_minishell *minishell, t_list *cmd_ir_lst)
 	t_status	status;
 	t_cmd_ir	*cmd_ir;
 
-	// t_redir		*redir_err;
 	head = NULL;
 	while (cmd_ir_lst)
 	{

@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/04 00:58:59 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:28:27 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_pipeline(pipeline);
 #endif
-		// executeできる状態じゃないのでコメントアウト
 		if (read_heredoc(pipeline->cmd_lst) == FAILURE)
 		{
 			close_heredoc(pipeline->cmd_lst);
