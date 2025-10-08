@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 22:38:30 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 22:42:45 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static int	report_error(char *msg, int err_type)
 
 static int	update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd)
 {
-	char		*pwd_line;
 	t_status	status;
 
 	status = add_env(env_lst, "OLDPWD", old_pwd);
