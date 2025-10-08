@@ -30,6 +30,7 @@ typedef enum e_status
 	ERR_MALLOC,
 	ERR_PIPE,
 	ERR_FORK,
+	ERR_WAITPID,
 	ERR_ERRNO
 }			t_status;
 
