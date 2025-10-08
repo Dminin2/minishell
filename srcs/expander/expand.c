@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:14:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/07 15:14:37 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 00:23:31 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_list	*get_cmd_lst(t_minishell *minishell, t_list *cmd_ir_lst)
 	t_list		*head;
 	t_status	status;
 	t_cmd_ir	*cmd_ir;
-	t_redir		*redir_err;
 
+	// t_redir		*redir_err;
 	head = NULL;
 	while (cmd_ir_lst)
 	{
@@ -51,18 +51,6 @@ t_list	*get_cmd_lst(t_minishell *minishell, t_list *cmd_ir_lst)
 				assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_wrapper);
 				return (NULL);
 			}
-		}
-		redir_err = NULL;
-		status = expand_redir_lst(minishell, cmd_ir->redir_lst, &redir_err);
-		if (status != SUCCESS)
-		{
-			free_cmd(cmd);
-			if (status == ERR_AMB_REDIR)
-				assert_error_lst(head, redir_err->value, status,
-					free_cmd_wrapper);
-			else if (status == ERR_MALLOC)
-				assert_error_lst(head, "malloc", status, free_cmd_wrapper);
-			return (NULL);
 		}
 		cmd->redir_lst = cmd_ir->redir_lst;
 		cmd_ir->redir_lst = NULL;
