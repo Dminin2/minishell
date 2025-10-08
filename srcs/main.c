@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/04 00:58:59 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 12:02:52 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	main(int argc, char **argv, char **envp)
 		print_status(minishell.last_status);
 #endif
 	}
+	rl_clear_history();
 	ft_lstclear(&(minishell.env_lst), free_env_wrapper);
 	return (0);
 }
