@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 21:07:41 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:18:42 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids)
 {
 	int	i;
 	int	status;
+	int	err;
 
 	i = 0;
+	err = 0;
 	close_pipes(pipeline->pipes, pipeline->n - 1);
 	close_heredoc(pipeline->cmd_lst);
 	while (i < pipeline->n)
@@ -26,18 +28,17 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids)
 		{
 			if (errno == EINTR)
 				continue ;
-			else
-				print_error_msg("waitpid", ERR_WAITPID);
+			print_error_msg("waitpid", ERR_WAITPID);
+			err = 1;
 		}
 		i++;
 	}
-	if (i == pipeline->n)
-	{
-		if (WIFEXITED(status))
-			minishell->last_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			minishell->last_status = 128 + WTERMSIG(status);
-	}
+	if (err)
+		minishell->last_status = 1;
+	else if (WIFEXITED(status))
+		minishell->last_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		minishell->last_status = 128 + WTERMSIG(status);
 	else
 		minishell->last_status = 1;
 	free(pids);
@@ -49,8 +50,10 @@ void	wait_child_fork_pos(t_minishell *minishell, t_pipeline *pipeline,
 {
 	int	i;
 	int	status;
+	int	err;
 
 	i = 0;
+	err = 0;
 	close_pipes(pipeline->pipes, pipeline->n - 1);
 	close_heredoc(pipeline->cmd_lst);
 	while (i < pos)
@@ -59,18 +62,17 @@ void	wait_child_fork_pos(t_minishell *minishell, t_pipeline *pipeline,
 		{
 			if (errno == EINTR)
 				continue ;
-			else
-				print_error_msg("waitpid", ERR_WAITPID);
+			print_error_msg("waitpid", ERR_WAITPID);
+			err = 1;
 		}
 		i++;
 	}
-	if (i == pos)
-	{
-		if (WIFEXITED(status))
-			minishell->last_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			minishell->last_status = 128 + WTERMSIG(status);
-	}
+	if (err)
+		minishell->last_status = 1;
+	else if (WIFEXITED(status))
+		minishell->last_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		minishell->last_status = 128 + WTERMSIG(status);
 	else
 		minishell->last_status = 1;
 	free(pids);
