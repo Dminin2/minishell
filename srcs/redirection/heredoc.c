@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 00:23:56 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:47:11 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ t_status	handle_heredoc(t_redir *redir)
 	is_quoted = 0;
 	delimiter = expand_delimiter(redir->value, &is_quoted);
 	if (!delimiter)
+	{
+		close(fd);
+		unlink(tmp_file);
 		return (ERR_MALLOC);
+	}
 	free(redir->value);
 	redir->value = delimiter;
 	read_line_and_write_fd(redir->value, fd);
