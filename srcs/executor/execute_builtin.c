@@ -43,7 +43,6 @@ t_command_type	scan_command_type(t_cmd *cmd)
 void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 {
 	(void)cmd;
-	(void)minishell;
 	if (type == BLT_ECHO)
 		minishell->last_status = builtin_echo(cmd->args);
 	else if (type == BLT_CD)

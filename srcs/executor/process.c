@@ -6,25 +6,48 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/06 01:42:52 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:52:19 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	wait_child(t_pipeline *pipeline, pid_t *pids, int pids_count)
+void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
+		int pids_count)
 {
 	int	i;
 	int	status;
+	int	err;
 
 	i = 0;
+	err = 0;
 	close_pipes(pipeline->pipes, pipeline->n - 1);
 	close_heredoc(pipeline->cmd_lst);
+	if (pids_count <= 0)
+	{
+		free(pids);
+		return ;
+	}
 	while (i < pids_count)
 	{
-		waitpid(pids[i], &status, 0);
+		if (waitpid(pids[i], &status, 0) == -1)
+		{
+			if (errno == EINTR)
+				continue ;
+			print_error_msg("waitpid", ERR_WAITPID);
+			if (i == pids_count - 1)
+				err = 1;
+		}
 		i++;
 	}
+	if (err)
+		minishell->last_status = 1;
+	else if (WIFEXITED(status))
+		minishell->last_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		minishell->last_status = 128 + WTERMSIG(status);
+	else
+		minishell->last_status = 1;
 	free(pids);
 }
 
@@ -75,10 +98,11 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline)
 	fork_pos = fork_all_children(minishell, pipeline, pids);
 	if (fork_pos != pipeline->n)
 	{
-		wait_child(pipeline, pids, fork_pos);
+		wait_child(minishell, pipeline, pids, fork_pos);
+		minishell->last_status = 1;
 		assert_error_parent(pipeline, "fork", ERR_SYSTEM);
 		return ;
 	}
-	wait_child(pipeline, pids, pipeline->n);
+	wait_child(minishell, pipeline, pids, pipeline->n);
 	free_pipeline(pipeline);
 }
