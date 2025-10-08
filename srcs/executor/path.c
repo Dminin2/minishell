@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:32:03 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 00:15:33 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 18:35:19 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ t_status	resolve_command_path(t_cmd *cmd, t_list *env_lst)
 	t_status	status;
 
 	path_value = search_env(env_lst, "PATH");
-	if (!path_value || !cmd->args[0] || has_slash(cmd->args[0]))
+	if (!path_value || path_value[0] == '\0' || !cmd->args[0]
+		|| has_slash(cmd->args[0]))
 		status = assign_direct_path(cmd, path_value);
 	else
 	{
