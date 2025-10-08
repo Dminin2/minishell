@@ -58,3 +58,8 @@ echo hello -n
 echo hello "" world
 echo -n -nnn
 echo -n -
+cd
+cd ./
+cd ../
+cd -
+cd /
