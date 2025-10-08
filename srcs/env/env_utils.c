@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:27:13 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/09/30 14:31:33 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:05:45 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,12 @@ t_status	replace_env_value(t_env *env, char *line)
 
 	key_len = ft_strlen(env->key);
 	if (line[key_len] == '\0')
-		new_value = ft_strdup("");
+	{
+		if (env->value)
+			new_value = ft_strdup("");
+		else
+			return (SUCCESS);
+	}
 	else
 		new_value = ft_strdup(line + key_len + 1);
 	if (!new_value)
@@ -59,7 +64,7 @@ t_status	get_env_from_line(t_env *env, char *line)
 	if (!env->key)
 		return (ERR_MALLOC);
 	if (line[i] == '\0')
-		env->value = ft_strdup("");
+		env->value = NULL;
 	else
 		env->value = ft_strdup(line + i + 1);
 	if (!env->value)
