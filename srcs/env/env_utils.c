@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:27:13 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 22:39:22 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 22:47:53 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_status	replace_env_value(t_env *env, char *line)
 			new_value = ft_strdup("");
 		else
 			return (SUCCESS);
-		//env->valueがもともとnullで、今回もイコールなしなので何も入れない
 	}
 	else
 		new_value = ft_strdup(line + key_len + 1);
