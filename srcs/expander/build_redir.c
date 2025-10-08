@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:02:11 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 10:50:08 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 15:00:51 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,17 @@ static char	*read_quoted(char *old, int *i)
 {
 	int		start;
 	char	*new;
+	char	quote;
 
-	if (old[*i] == '\"')
-	{
-		start = ++*i;
-		while (old[*i] && old[*i] != '\"')
-			(*i)++;
-	}
-	else
-	{
-		start = ++*i;
-		while (old[*i] && old[*i] != '\'')
-			(*i)++;
-	}
+	quote = old[*i];
+	start = ++*i;
+	while (old[*i] && old[*i] != quote)
+		(*i)++;
 	if (start == *i)
 		new = ft_strdup("");
 	else
 		new = ft_substr(old, start, *i - start);
-	if (old[*i] == '\"' || old[*i] == '\'')
+	if (old[*i] == quote)
 		(*i)++;
 	return (new);
 }
