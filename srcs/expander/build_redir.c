@@ -6,13 +6,13 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:02:11 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 00:23:21 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:50:08 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*read_quoted(char *old, int *i)
+static char	*read_quoted(char *old, int *i)
 {
 	int		start;
 	char	*new;
@@ -38,7 +38,7 @@ char	*read_quoted(char *old, int *i)
 	return (new);
 }
 
-char	*read_unquoted(char *old, int *i)
+static char	*read_unquoted(char *old, int *i)
 {
 	int		start;
 	char	*new;
