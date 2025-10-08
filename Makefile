@@ -19,6 +19,7 @@ SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/process.c \
 	$(EXECUTOR_DIR)/path.c \
 	$(EXECUTOR_DIR)/pipe.c \
+	$(EXECUTOR_DIR)/path_utils.c \
 	$(EXECUTOR_DIR)/run_in_child.c \
 	$(EXECUTOR_DIR)/run_in_parent.c \
 	$(EXECUTOR_DIR)/execute_builtin.c \

@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 14:56:47 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 19:00:52 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_command_type	scan_command_type(t_cmd *cmd);
 void			execute_builtin(t_minishell *minishell, t_cmd *cmd,
 					t_command_type type);
 
+char			**split_path_value(char *path_value);
 t_status		resolve_command_path(t_cmd *cmd, t_list *env_lst);
 
 t_status		create_pipes(t_pipeline *pipeline);

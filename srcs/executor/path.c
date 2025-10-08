@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:32:03 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 18:35:19 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 21:18:54 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ t_status	search_path(t_cmd *cmd, char **paths)
 	i = 0;
 	while (paths[i])
 	{
-		tmp = ft_strjoin(paths[i], "/");
+		if (paths[i][0] != '\0')
+			tmp = ft_strjoin(paths[i], "/");
+		else
+			tmp = ft_strdup(paths[i]);
 		if (!tmp)
 			return (ERR_SYSTEM);
 		full_path = ft_strjoin(tmp, cmd->args[0]);
@@ -87,7 +90,7 @@ t_status	resolve_command_path(t_cmd *cmd, t_list *env_lst)
 		status = assign_direct_path(cmd, path_value);
 	else
 	{
-		paths = ft_split(path_value, ':');
+		paths = split_path_value(path_value);
 		if (!paths)
 			return (ERR_SYSTEM);
 		status = search_path(cmd, paths);
