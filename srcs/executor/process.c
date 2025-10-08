@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 11:24:18 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:52:19 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
 	err = 0;
 	close_pipes(pipeline->pipes, pipeline->n - 1);
 	close_heredoc(pipeline->cmd_lst);
+	if (pids_count <= 0)
+	{
+		free(pids);
+		return ;
+	}
 	while (i < pids_count)
 	{
 		if (waitpid(pids[i], &status, 0) == -1)
@@ -30,7 +35,8 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
 			if (errno == EINTR)
 				continue ;
 			print_error_msg("waitpid", ERR_WAITPID);
-			err = 1;
+			if (i == pids_count - 1)
+				err = 1;
 		}
 		i++;
 	}
@@ -93,6 +99,7 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline)
 	if (fork_pos != pipeline->n)
 	{
 		wait_child(minishell, pipeline, pids, fork_pos);
+		minishell->last_status = 1;
 		assert_error_parent(pipeline, "fork", ERR_SYSTEM);
 		return ;
 	}
