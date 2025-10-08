@@ -59,7 +59,6 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_pipeline(pipeline);
 #endif
-		// executeできる状態じゃないのでコメントアウト
 		if (read_heredoc(pipeline->cmd_lst) == FAILURE)
 		{
 			close_heredoc(pipeline->cmd_lst);

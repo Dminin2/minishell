@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_in_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:35:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 09:50:47 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/07 18:11:08 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	handle_redir_err_in_parent(t_pipeline *pipeline, t_redir_err err,
 		assert_error_parent(pipeline, err.redir_err->value, ERR_FILE);
 	else if (err.status == ERR_DUP)
 		assert_error_parent(pipeline, "dup", ERR_DUP);
+	else if (err.status == ERR_AMB_REDIR)
+		assert_error_parent(pipeline, err.redir_err->value, ERR_AMB_REDIR);
 }
 
 void	run_builtin_in_parent(t_minishell *minishell, t_pipeline *pipeline,
@@ -45,7 +47,7 @@ void	run_builtin_in_parent(t_minishell *minishell, t_pipeline *pipeline,
 		assert_error_parent(pipeline, "dup", status);
 		return ;
 	}
-	redirect(cmd->redir_lst, &err);
+	redirect(minishell, cmd->redir_lst, &err);
 	if (err.status != SUCCESS)
 	{
 		handle_redir_err_in_parent(pipeline, err, saved);

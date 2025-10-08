@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 21:38:34 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/07 23:48:59 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	handle_redir_err(t_pipeline *pipeline, t_redir_err err)
 		exit_error(pipeline, err.redir_err->value, ERR_FILE, EXIT_FAILURE);
 	else if (err.status == ERR_DUP)
 		exit_error(pipeline, "dup", ERR_SYSTEM, EXIT_FAILURE);
+	else if (err.status == ERR_AMB_REDIR)
+		exit_error(pipeline, err.redir_err->value, ERR_AMB_REDIR, EXIT_FAILURE);
 }
 
 void	handle_execve_error(t_pipeline *pipeline, t_cmd *cmd)
@@ -62,7 +64,7 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 		exit_error(pipeline, "dup", status, EXIT_FAILURE);
 	err.status = SUCCESS;
 	err.redir_err = NULL;
-	redirect(cmd->redir_lst, &err);
+	redirect(minishell, cmd->redir_lst, &err);
 	if (err.status != SUCCESS)
 		handle_redir_err(pipeline, err);
 	type = scan_command_type(cmd);
