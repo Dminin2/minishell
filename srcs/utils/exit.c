@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/06 00:57:20 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 12:13:44 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	print_error_msg(char *context, t_status status)
 	else if (status == ERR_ERRNO)
 		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
 	else if (status == ERR_ISDIR)
-		dprintf(STDERR_FILENO, "minishell: %s: is a directory\n", context);
+		dprintf(STDERR_FILENO, "minishell: %s: Is a directory\n", context);
 	else
 		dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
 }
