@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:35:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/09 13:45:58 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:22:28 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	handle_redir_err_in_parent(t_pipeline *pipeline, t_redir_err err,
 		assert_error_parent(pipeline, err.redir_err->value, ERR_AMB_REDIR);
 }
 
+//redirect前のfdを保持してredirectする関数
 t_status	save_fd_and_redirect(t_minishell *minishell, t_pipeline *pipeline,
 		t_cmd *cmd, int *saved)
 {
@@ -61,6 +62,7 @@ void	run_builtin_in_parent(t_minishell *minishell, t_pipeline *pipeline,
 	t_status	status;
 
 	cmd = pipeline->cmd_lst->content;
+	//fdを元に戻す責任はこっちにあります。
 	status = save_fd_and_redirect(minishell, pipeline, cmd, saved);
 	if (status != SUCCESS)
 		return ;
