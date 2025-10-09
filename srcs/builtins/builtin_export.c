@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 23:15:17 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/09 18:54:31 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/09 21:50:44 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,19 @@
 
 static void	print_no_args(t_list **env_array, size_t env_count)
 {
-	char	*env_value;
-	char	*env_key;
+	t_env	*env;
 	size_t	i;
 
 	i = 0;
 	while (i < env_count)
 	{
-		env_key = ((t_env *)(env_array[i]->content))->key;
-		env_value = ((t_env *)(env_array[i]->content))->value;
+		env = ((t_env *)(env_array[i]->content));
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
-		ft_putstr_fd(env_key, STDOUT_FILENO);
-		if (env_value)
+		ft_putstr_fd(env->key, STDOUT_FILENO);
+		if (env->value)
 		{
 			ft_putstr_fd("=\"", STDOUT_FILENO);
-			print_escape_value(env_value);
+			print_escape_value(env->value);
 			ft_putstr_fd("\"", STDOUT_FILENO);
 		}
 		ft_putstr_fd("\n", STDOUT_FILENO);
