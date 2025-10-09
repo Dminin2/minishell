@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/09 12:17:03 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/09 16:02:39 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@
 # include <unistd.h>
 
 # define GETCWD_ERR "error retrieving current directory: getcwd: cannot access parent directories"
-
+# define ENV_ERR "not a valid identifier"
 typedef enum e_blt_error
 {
 	BLTERR_NO_SET_HOME,
 	BLTERR_NO_SET_OLDPWD,
 	BLTERR_MANY_ARG,
+	BLTERR_NOT_VALID,
 	BLTERR_ERRNO
 }	t_blt_error;
 
