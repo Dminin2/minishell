@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 22:42:45 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/09 10:49:10 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd)
 
 	status = add_env(env_lst, "OLDPWD", old_pwd);
 	if (status == ERR_MALLOC)
-		return (report_error("malloc", ERR_MALLOC));
+		return (return_error("malloc", ERR_MALLOC));
 	status = add_env(env_lst, "PWD", new_pwd);
 	if (status == ERR_MALLOC)
 		return (return_error("malloc", ERR_MALLOC));
