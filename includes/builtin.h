@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 18:43:58 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:17:03 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef enum e_blt_error
 int	builtin_pwd(t_minishell *minishell);
 int	builtin_echo(char **args);
 int	builtin_cd(t_minishell *minishell, char **args);
+int	builtin_export(t_minishell *minishell, char **args);
 
 int	return_error(char *msg, t_status status);
 #endif
