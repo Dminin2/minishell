@@ -6,13 +6,13 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/09 11:05:49 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:58:46 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_heredocument(t_minishell *minishell, char *line)
+char	*expand_heredoc(t_minishell *minishell, char *line)
 {
 	char	*new_line;
 	int		start;
@@ -64,7 +64,7 @@ t_status	read_line_and_write_fd(t_minishell *minishell, char *delimiter,
 			return (SUCCESS);
 		}
 		if (!is_quoted)
-			line = expand_heredocument(minishell, line);
+			line = expand_heredoc(minishell, line);
 		if (!line)
 			return (ERR_MALLOC);
 		ft_putendl_fd(line, fd);
