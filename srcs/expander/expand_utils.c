@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:31:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 23:04:23 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:04:57 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,6 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 int	is_to_expand(char c)
 {
 	if (c == '\'' || c == '\"' || c == '$')
-		return (1);
-	else
-		return (0);
-}
-
-int	is_valid_key_first_char(char c)
-{
-	if (ft_isalpha(c) || c == '_')
-		return (1);
-	else
-		return (0);
-}
-
-int	is_valid_key_char(char c)
-{
-	if (ft_isalnum(c) || c == '_')
 		return (1);
 	else
 		return (0);
