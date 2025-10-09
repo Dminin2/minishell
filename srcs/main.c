@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 12:02:52 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/08 23:30:47 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_pipeline(pipeline);
 #endif
-		if (read_heredoc(pipeline->cmd_lst) == FAILURE)
+		if (read_heredoc(&minishell, pipeline->cmd_lst) == FAILURE)
 		{
 			close_heredoc(pipeline->cmd_lst);
 			free_pipeline(pipeline);
