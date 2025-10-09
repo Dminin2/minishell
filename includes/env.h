@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:13:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 22:19:59 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:05:46 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ t_env		*find_existing_env(t_list *env_lst, char *line);
 t_status	replace_env_value(t_env *env, char *line);
 t_status	get_env_from_line(t_env *env, char *line);
 t_status	create_and_addlst(t_list **head, char *line);
+
+int			is_valid_key_first_char(char c);
+int			is_valid_key_char(char c);
 
 t_status	add_env(t_list **head, char *key, char *value);
 

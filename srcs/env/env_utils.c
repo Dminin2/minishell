@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:27:13 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 22:47:53 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:04:55 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,20 @@ t_status	create_and_addlst(t_list **head, char *line)
 	if (status != SUCCESS)
 		free_env(env);
 	return (status);
+}
+
+int	is_valid_key_first_char(char c)
+{
+	if (ft_isalpha(c) || c == '_')
+		return (1);
+	else
+		return (0);
+}
+
+int	is_valid_key_char(char c)
+{
+	if (ft_isalnum(c) || c == '_')
+		return (1);
+	else
+		return (0);
 }
