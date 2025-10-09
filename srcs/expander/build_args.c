@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:33:54 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/09 11:20:05 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:56:46 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ t_status	get_args_from_lst(t_list *args_lst, t_cmd *cmd)
 		if (args_lst->content)
 		{
 			new_args[i] = args_lst->content;
+			args_lst->content = NULL;
 			i++;
 		}
-		args_lst->content = NULL;
 		args_lst = args_lst->next;
 	}
 	cmd->args = new_args;
