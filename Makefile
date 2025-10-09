@@ -57,6 +57,7 @@ SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_echo.c \
 	$(BUILTINS_DIR)/builtin_cd.c \
 	$(BUILTINS_DIR)/builtin_utils.c \
+	$(BUILTINS_DIR)/builtin_env.c \
 
 
 # debug用
