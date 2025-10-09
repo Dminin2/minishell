@@ -33,12 +33,6 @@ static char	*get_target_path(t_list *env_lst, char *arg)
 	return (target_path);
 }
 
-static int	report_error(char *msg, int err_type)
-{
-	print_error_msg(msg, err_type);
-	return (1);
-}
-
 static int	update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd)
 {
 	t_status	status;
@@ -48,14 +42,31 @@ static int	update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd)
 		return (report_error("malloc", ERR_MALLOC));
 	status = add_env(env_lst, "PWD", new_pwd);
 	if (status == ERR_MALLOC)
-		return (report_error("malloc", ERR_MALLOC));
+		return (return_error("malloc", ERR_MALLOC));
 	return (0);
+}
+
+static char	*join_with_slash(char *old_pwd, char *path)
+{
+	size_t	len;
+	char	*tmp;
+	char	*new_pwd;
+
+	len = ft_strlen(old_pwd);
+	if (len > 0 && old_pwd[len - 1] == '/')
+		return (ft_strjoin(old_pwd, path));
+	tmp = ft_strjoin(old_pwd, "/");
+	if (!tmp)
+		return (NULL);
+	new_pwd = ft_strjoin(tmp, path);
+	free(tmp);
+	return (new_pwd);
 }
 
 static int	perform_chdir(t_list **env_lst, char *path)
 {
 	char	*old_pwd;
-	char	new_pwd[PATH_MAX];
+	char	*new_pwd;
 	int		exit_status;
 
 	old_pwd = search_env(*env_lst, "PWD");
@@ -66,12 +77,16 @@ static int	perform_chdir(t_list **env_lst, char *path)
 		print_error_msg_builtin("cd", path, BLTERR_ERRNO);
 		return (1);
 	}
-	if (!getcwd(new_pwd, PATH_MAX))
+	new_pwd = getcwd(NULL, 0);
+	if (!new_pwd)
 	{
 		print_error_msg_builtin("cd", GETCWD_ERR, BLTERR_ERRNO);
-		return (1);
+		new_pwd = join_with_slash(old_pwd, path);
+		if (!new_pwd)
+			return (return_error("malloc", ERR_MALLOC));
 	}
 	exit_status = update_pwd_env(env_lst, old_pwd, new_pwd);
+	free(new_pwd);
 	return (exit_status);
 }
 
