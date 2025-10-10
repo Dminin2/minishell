@@ -34,9 +34,7 @@ jobs:
           : > bash_out.txt
           set +e
           while IFS= read -r cmd || [ -n "$cmd" ]; do
-            printf -- '--- CMD: %s ---\n' "$cmd" >> minishell_out.txt
             { printf -- '%s\n' "$cmd" | ./minishell 2>&1 | sed -E 's/^(minishell: |bash: (line [0-9]+: )?)//g'; } >> minishell_out.txt
-            printf -- '--- CMD: %s ---\n' "$cmd" >> bash_out.txt
             { printf -- '%s\n' "$cmd" | bash 2>&1 | sed -E 's/^(minishell: |bash: (line [0-9]+: )?)//g'; } >> bash_out.txt
           done < tests/ci_commands.txt
           diff -u minishell_out.txt bash_out.txt
