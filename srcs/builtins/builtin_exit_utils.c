@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 12:00:00 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/11 01:05:50 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/11 02:43:31 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	execute_conversion(char *str, int sign, unsigned char *last_status)
 		str++;
 	if (*str != '\0')
 		return (1);
-	*last_status = (unsigned char)((long long)result * sign);
+	*last_status = (unsigned char)(result * sign);
 	return (0);
 }
 
