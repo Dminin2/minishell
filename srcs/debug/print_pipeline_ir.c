@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 12:38:51 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/16 11:48:24 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/09 22:25:40 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ void	print_pipeline_ir(t_pipeline_ir *pipeline_ir)
 	printf("=== pipeline_ir ===\n");
 	printf("cmd count : %d\n", pipeline_ir->n);
 	print_cmd_ir_lst(pipeline_ir->cmd_ir_lst);
-	printf("\n===  result  ===\n");
+	printf("\n");
 }
