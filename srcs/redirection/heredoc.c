@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/10 23:39:29 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/10 23:55:59 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_status	handle_heredoc(t_minishell *minishell, t_redir *redir)
 	free(redir->value);
 	redir->value = delimiter;
 	tmp_file = "/tmp/minishell_heredoc";
-	fd = open(tmp_file, O_CREAT | O_EXCL | O_WRONLY, 0644);
+	fd = open(tmp_file, O_CREAT | O_EXCL | O_WRONLY, 0600);
 	if (fd < 0)
 		return (ERR_FILE);
 	status = read_line_and_write_fd(minishell, redir->value, fd, is_quoted);
