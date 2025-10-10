@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 12:02:52 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/09 22:26:55 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ int	main(int argc, char **argv, char **envp)
 #endif
 	while (1)
 	{
+#ifdef DEBUG
+		print_status(minishell.last_status);
+#endif
 		line = get_command_line();
 		if (!line)
 			break ;
@@ -66,9 +69,6 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		execute(&minishell, pipeline);
-#ifdef DEBUG
-		print_status(minishell.last_status);
-#endif
 	}
 	rl_clear_history();
 	ft_lstclear(&(minishell.env_lst), free_env_wrapper);
