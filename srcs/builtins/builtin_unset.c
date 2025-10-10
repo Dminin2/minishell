@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_env.c                                          :+:      :+:    :+:   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/08 22:17:15 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 22:30:00 by hmaruyam         ###   ########.fr       */
+/*   Created: 2025/10/10 10:30:54 by hmaruyam          #+#    #+#             */
+/*   Updated: 2025/10/10 11:27:32 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_status	add_env(t_list **head, char *key, char *value)
+int	builtin_unset(t_minishell *minishell, char **args)
 {
-	char		*line;
-	char		*tmp;
-	t_status	status;
+	int	i;
 
-	if (!value)
-		status = process_env_line(head, key);
-	else
+	i = 1;
+	while (args[i])
 	{
-		tmp = ft_strjoin(key, "=");
-		if (!tmp)
-			return (ERR_MALLOC);
-		line = ft_strjoin(tmp, value);
-		free(tmp);
-		if (!line)
-			return (ERR_MALLOC);
-		status = process_env_line(head, line);
-		free(line);
+		remove_env(&minishell->env_lst, args[i]);
+		i++;
 	}
-	return (status);
+	return (0);
 }
