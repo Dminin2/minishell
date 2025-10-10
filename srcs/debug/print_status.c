@@ -14,6 +14,6 @@
 
 void	print_status(int status)
 {
-	printf("=== last status ===\n");
+	printf("\n=== last status ===\n");
 	printf("%d\n", status);
 }
