@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/09 11:50:52 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/11 01:38:56 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,12 @@ t_command_type	scan_command_type(t_cmd *cmd)
 	return (type);
 }
 
-void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
+t_status	execute_builtin(t_minishell *minishell, t_cmd *cmd,
+		t_command_type type)
 {
-	(void)cmd;
+	t_status	status;
+
+	status = SUCCESS;
 	if (type == BLT_ECHO)
 		minishell->last_status = builtin_echo(cmd->args);
 	else if (type == BLT_CD)
@@ -58,5 +61,6 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 	else if (type == BLT_ENV)
 		printf("todo:env\n");
 	else if (type == BLT_EXIT)
-		printf("todo:exit\n");
+		minishell->last_status = builtin_exit(minishell, cmd->args, &status);
+	return (status);
 }
