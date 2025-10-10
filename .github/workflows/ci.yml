@@ -28,6 +28,7 @@ jobs:
       - name: Compile
         run: make
       - name: Run and compare outputs
+        shell: bash
         run: |
           touch minishell_out.txt bash_out.txt
           while read -r cmd || [ -n "$cmd" ]; do
