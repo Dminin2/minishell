@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 11:54:22 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/09 11:50:52 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ t_command_type	scan_command_type(t_cmd *cmd)
 
 	if (cmd->args)
 	{
-		if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
+		if (!cmd->args[0])
+			type = NO_CMD;
+		else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
 			type = BLT_ECHO;
 		else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
 			type = BLT_CD;
