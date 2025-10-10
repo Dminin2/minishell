@@ -51,7 +51,7 @@ int	execute_conversion(char *str, int sign, unsigned char *last_status)
 		str++;
 	if (*str != '\0')
 		return (1);
-	*last_status = (unsigned char)(result * sign);
+	*last_status = (unsigned char)((long long)result * sign);
 	return (0);
 }
 
