@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 18:17:01 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/09 19:01:52 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/10 10:47:44 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,6 @@ void	print_escape_value(char *str)
 		ft_putchar_fd(str[i], STDOUT_FILENO);
 		i++;
 	}
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	while (*s1 != '\0' && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
 
 void	bubble_sort_env_array(t_list **env_array, size_t env_count)
