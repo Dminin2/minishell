@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/09 12:58:46 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/10 23:39:29 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*expand_heredoc(t_minishell *minishell, char *line)
 		}
 		if (!word)
 		{
+			free(line);
 			free(new_line);
 			return (NULL);
 		}
@@ -42,7 +43,10 @@ char	*expand_heredoc(t_minishell *minishell, char *line)
 		else
 			new_line = word;
 		if (!new_line)
+		{
+			free(line);
 			return (NULL);
+		}
 	}
 	free(line);
 	return (new_line);
