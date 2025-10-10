@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Compile test
+      - name: Compile
         run: make
 
       - name: Install valgrind
@@ -19,3 +19,21 @@ jobs:
           while read -r cmd || [ -n "$cmd" ]; do
             echo "$cmd" | valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible --track-origins=yes --trace-children=yes --track-fds=yes --error-exitcode=1 ./minishell
           done < tests/ci_commands.txt
+
+  test:
+    runs-on: ubuntu-22.04
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile
+        run: make
+      - name: Run and compare outputs
+        run: |
+          touch minishell_out.txt bash_out.txt
+          while read -r cmd || [ -n "$cmd" ]; do
+            echo "--- CMD: $cmd ---" >> minishell_out.txt
+            echo "$cmd" | ./minishell >> minishell_out.txt 2>&1
+            echo "--- CMD: $cmd ---" >> bash_out.txt
+            echo "$cmd" | bash >> bash_out.txt 2>&1
+          done < tests/ci_commands.txt
+          diff minishell_out.txt bash_out.txt
