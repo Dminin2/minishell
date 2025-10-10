@@ -27,14 +27,16 @@ jobs:
       - uses: actions/checkout@v4
       - name: Compile
         run: make
-      - name: Run and compare outputs
+      - name: Compare outputs
         shell: bash
         run: |
-          touch minishell_out.txt bash_out.txt
-          while read -r cmd || [ -n "$cmd" ]; do
-            echo "--- CMD: $cmd ---" >> minishell_out.txt
-            echo "$cmd" | ./minishell >> minishell_out.txt 2>&1
-            echo "--- CMD: $cmd ---" >> bash_out.txt
-            echo "$cmd" | bash >> bash_out.txt 2>&1
+          : > minishell_out.txt
+          : > bash_out.txt
+          set +e
+          while IFS= read -r cmd || [ -n "$cmd" ]; do
+            printf '--- CMD: %s ---\n' "$cmd" >> minishell_out.txt
+            printf '%s\n' "$cmd" | ./minishell >> minishell_out.txt 2>&1 || true
+            printf '--- CMD: %s ---\n' "$cmd" >> bash_out.txt
+            printf '%s\n' "$cmd" | bash >> bash_out.txt 2>&1 || true
           done < tests/ci_commands.txt
-          diff minishell_out.txt bash_out.txt
+          diff -u minishell_out.txt bash_out.txt
