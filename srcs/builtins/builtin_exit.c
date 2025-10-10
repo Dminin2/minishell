@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 00:11:06 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/11 01:56:53 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/11 02:39:38 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	builtin_exit(t_minishell *minishell, char **args, t_status *status)
 {
 	unsigned char	last_status;
 
-	ft_putendl_fd("exit", STDOUT_FILENO);
+	if (isatty(STDIN_FILENO))
+		ft_putendl_fd("exit", STDOUT_FILENO);
 	if (!args[1])
 	{
 		*status = SHOULD_EXIT;
