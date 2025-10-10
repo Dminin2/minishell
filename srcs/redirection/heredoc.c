@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/10 23:55:59 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/11 00:03:18 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_status	read_line_and_write_fd(t_minishell *minishell, char *delimiter,
 			free(line);
 			return (SUCCESS);
 		}
-		if (!is_quoted)
+		if (line[0] != '\0' && !is_quoted)
 			line = expand_heredoc(minishell, line);
 		if (!line)
 			return (ERR_MALLOC);
