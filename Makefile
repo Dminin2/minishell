@@ -52,7 +52,8 @@ SRCS_ENV = $(ENV_DIR)/env_init.c \
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c \
 	$(UTILS_DIR)/close.c \
-	$(UTILS_DIR)/list.c
+	$(UTILS_DIR)/list.c \
+	$(UTILS_DIR)/string.c
 SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_echo.c \
 	$(BUILTINS_DIR)/builtin_cd.c \
