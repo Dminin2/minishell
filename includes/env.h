@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:13:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/09 15:05:46 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/10 23:31:33 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_status	replace_env_value(t_env *env, char *line);
 t_status	get_env_from_line(t_env *env, char *line);
 t_status	create_and_addlst(t_list **head, char *line);
 
+char		*pack_line(char *key, char *value);
 int			is_valid_key_first_char(char c);
 int			is_valid_key_char(char c);
 
