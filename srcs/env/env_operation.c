@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_env.c                                          :+:      :+:    :+:   */
+/*   env_operation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 22:17:15 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/10 11:16:57 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/10 11:33:28 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	remove_env(t_list **head, char *key)
 	t_env	*env;
 
 	current = *head;
+	prev = NULL;
 	while (current)
 	{
 		env = current->content;
