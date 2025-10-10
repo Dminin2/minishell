@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:50:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/08/27 18:19:41 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:19:14 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ char	*get_command_line(void)
 {
 	char	*line;
 
-	line = readline("minishell$ ");
+	if (isatty(STDERR_FILENO) && isatty(STDIN_FILENO))
+		ft_putstr_fd("minishell$ ", STDERR_FILENO);
+	line = readline("");
 	if (line)
 		add_history(line);
 	return (line);
