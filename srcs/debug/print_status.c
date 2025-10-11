@@ -12,8 +12,9 @@
 
 #include "minishell.h"
 
-void	print_status(int status)
+void	print_status(int status, int fd)
 {
-	printf("\n=== last status ===\n");
-	printf("%d\n", status);
+	dprintf(fd, "\n=== last status ===\n");
+	dprintf(fd, "%d\n", status);
+	dprintf(fd, "\n");
 }

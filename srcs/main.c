@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/09 22:26:55 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/11 15:59:58 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,39 @@ int	main(int argc, char **argv, char **envp)
 	if (!minishell.env_lst)
 		exit(1);
 #ifdef DEBUG
-	print_env_lst(minishell.env_lst);
+	int				fd;
+	fd = open("playground/log", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		printf("log file error\n");
+		exit(1);
+	}
+	print_env_lst(minishell.env_lst, fd);
 #endif
 	while (1)
 	{
 #ifdef DEBUG
-		print_status(minishell.last_status);
+		print_status(minishell.last_status, fd);
 #endif
 		line = get_command_line();
 		if (!line)
 			break ;
+#ifdef DEBUG
+		print_line(line, fd);
+#endif
 		token_lst = tokenize(line);
 		free(line);
 		if (!token_lst)
 			continue ;
 #ifdef DEBUG
-		print_token(token_lst);
+		print_token(token_lst, fd);
 #endif
 		pipeline_ir = parse(token_lst);
 		ft_lstclear(&token_lst, &free_token_wrapper);
 		if (!pipeline_ir)
 			continue ;
 #ifdef DEBUG
-		print_pipeline_ir(pipeline_ir);
+		print_pipeline_ir(pipeline_ir, fd);
 #endif
 		pipeline = expand(&minishell, pipeline_ir);
 		if (!pipeline)
@@ -60,7 +70,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 			free_pipeline_ir_after_expand(pipeline_ir);
 #ifdef DEBUG
-		print_pipeline(pipeline);
+		print_pipeline(pipeline, fd);
 #endif
 		if (read_heredoc(pipeline->cmd_lst) == FAILURE)
 		{
@@ -72,5 +82,8 @@ int	main(int argc, char **argv, char **envp)
 	}
 	rl_clear_history();
 	ft_lstclear(&(minishell.env_lst), free_env_wrapper);
+#ifdef DEBUG
+	close(fd);
+#endif
 	return (0);
 }
