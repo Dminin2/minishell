@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/11 18:47:36 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/11 18:55:56 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,9 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 	t_redir	*redir;
 	char	*new_value;
 	int		is_quoted;
-	t_list	*head;
 
 #ifdef DEBUG
+	t_list	*head;
 	head = redir_lst;
 #endif
 	while (redir_lst)
