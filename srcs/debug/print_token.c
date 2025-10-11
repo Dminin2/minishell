@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 20:57:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/11 15:40:11 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/11 19:09:45 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_token(t_list *head, int fd)
 		if (tok->type == TK_WORD)
 			dprintf(fd, "[WORD: %s]\n", tok->value);
 		else if (tok->type == TK_PIPE)
-			dprintf(fd, "[PIPPE: |]\n");
+			dprintf(fd, "[PIPE: |]\n");
 		else if (tok->type == TK_REDIR_IN)
 			dprintf(fd, "[R_IN: <]\n");
 		else if (tok->type == TK_REDIR_OUT)
