@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 10:19:15 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/11 18:47:36 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,11 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 	t_redir	*redir;
 	char	*new_value;
 	int		is_quoted;
+	t_list	*head;
 
+#ifdef DEBUG
+	head = redir_lst;
+#endif
 	while (redir_lst)
 	{
 		is_quoted = 0;
@@ -103,14 +107,14 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 			if (!new_value)
 			{
 				err->status = ERR_MALLOC;
-				return ;
+				break ;
 			}
 			if (!is_quoted && new_value[0] == '\0')
 			{
 				free(new_value);
 				err->redir_err = redir;
 				err->status = ERR_AMB_REDIR;
-				return ;
+				break ;
 			}
 			free(redir->value);
 			redir->value = new_value;
@@ -124,7 +128,11 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 		else
 			redir_append(redir, err);
 		if (err->status != SUCCESS)
-			return ;
+			break ;
 		redir_lst = redir_lst->next;
 	}
+#ifdef DEBUG
+	dprintf(g_fd, "=== after expand ===\n");
+	print_redir_lst(head, g_fd);
+#endif
 }
