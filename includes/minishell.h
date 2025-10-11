@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/11 17:02:33 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/11 19:05:07 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "builtin.h"
 # include "common.h"
+# include "debug.h"
 # include "env.h"
 # include "execute.h"
 # include "expander.h"
@@ -27,7 +28,6 @@
 
 # ifdef DEBUG
 extern int	g_fd;
-#  include "debug.h"
 # endif
 
 #endif
