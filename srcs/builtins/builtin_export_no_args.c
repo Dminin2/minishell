@@ -20,7 +20,7 @@ static void	print_no_args(t_list **env_array, size_t env_count)
 	i = 0;
 	while (i < env_count)
 	{
-		env = ((t_env *)(env_array[i]->content));
+		env = (t_env *)(env_array[i]->content);
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
 		ft_putstr_fd(env->key, STDOUT_FILENO);
 		if (env->value)
