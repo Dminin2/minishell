@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/12 16:16:54 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:18:37 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,8 @@ int		return_error(char *msg, t_status status);
 void	print_escape_value(char *str);
 bool	is_valid_identifier(char *key);
 void	bubble_sort_env_array(t_list **env_array, size_t env_count);
+
+int		handle_args(t_minishell *minishell, char **args);
+int		handle_no_args(t_minishell *minishell);
 
 #endif
