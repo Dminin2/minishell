@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:50:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/12 23:35:29 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/12 23:46:18 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*gnl_and_remove_new_line(void)
 	if (line)
 	{
 		i = 0;
-		while (line[i] != '\n')
+		while (line[i] && line[i] != '\n')
 			i++;
 		if (line[i] == '\n')
 		{
