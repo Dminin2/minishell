@@ -59,6 +59,8 @@ SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_cd.c \
 	$(BUILTINS_DIR)/builtin_utils.c \
 	$(BUILTINS_DIR)/builtin_export.c \
+	$(BUILTINS_DIR)/builtin_export_args.c \
+	$(BUILTINS_DIR)/builtin_export_no_args.c \
 	$(BUILTINS_DIR)/builtin_export_utils.c \
 
 
