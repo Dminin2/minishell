@@ -37,6 +37,7 @@ int		builtin_pwd(t_minishell *minishell);
 int		builtin_echo(char **args);
 int		builtin_cd(t_minishell *minishell, char **args);
 int		builtin_export(t_minishell *minishell, char **args);
+int		builtin_env(t_minishell *minishell);
 int		builtin_unset(t_minishell *minishell, char **args);
 int		builtin_exit(t_minishell *minishell, char **args, t_status *status);
 

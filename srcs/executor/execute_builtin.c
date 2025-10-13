@@ -59,7 +59,7 @@ t_status	execute_builtin(t_minishell *minishell, t_cmd *cmd,
 	else if (type == BLT_UNSET)
 		minishell->last_status = builtin_unset(minishell, cmd->args);
 	else if (type == BLT_ENV)
-		printf("todo:env\n");
+		minishell->last_status = builtin_env(minishell);
 	else if (type == BLT_EXIT)
 		minishell->last_status = builtin_exit(minishell, cmd->args, &status);
 	return (status);
