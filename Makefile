@@ -69,7 +69,8 @@ SRCS_DEBUG = $(DEBUG_DIR)/print_pipeline_ir.c \
 	$(DEBUG_DIR)/print_pipeline.c \
 	$(DEBUG_DIR)/print_redir_lst.c \
 	$(DEBUG_DIR)/print_env_lst.c \
-	$(DEBUG_DIR)/print_status.c
+	$(DEBUG_DIR)/print_status.c \
+	$(DEBUG_DIR)/print_line.c
 
 
 SRCS = $(SRCS_MAIN) \
