@@ -1,33 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   print_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/11 19:05:07 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/10/11 15:50:29 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/10/11 15:53:30 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "builtin.h"
-# include "common.h"
-# include "debug.h"
-# include "env.h"
-# include "execute.h"
-# include "expander.h"
-# include "lexer.h"
-# include "libft.h"
-# include "parser.h"
-# include "readline.h"
-# include "redirection.h"
-# include "utils.h"
-
-# ifdef DEBUG
-extern int	g_fd;
-# endif
-
-#endif
+void	print_line(char *line, int fd)
+{
+	dprintf(fd, "***** line *****\n");
+	dprintf(fd, "%s\n\n", line);
+}

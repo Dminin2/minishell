@@ -45,6 +45,9 @@ void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
 		else if (error == BLTERR_NUM_ARG)
 			dprintf(STDERR_FILENO, "minishell: %s: %s: %s\n", cmd, context,
 				NUMARG_ERR);
+		else if (error == BLTERR_NOT_VALID)
+			dprintf(STDERR_FILENO, "minishell: %s: `%s': %s\n", cmd, context,
+				ENV_ERR);
 	}
 	else
 	{
