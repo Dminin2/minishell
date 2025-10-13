@@ -48,6 +48,7 @@ SRCS_ENV = $(ENV_DIR)/env_init.c \
 	$(ENV_DIR)/search_env.c \
 	$(ENV_DIR)/free_env.c \
 	$(ENV_DIR)/pack_env.c \
+	$(ENV_DIR)/env_lst.c \
 	$(ENV_DIR)/env_operation.c
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c \

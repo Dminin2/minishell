@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:42:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 10:47:41 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/10 15:40:48 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_status	process_env_line(t_list **head, char *line)
-{
-	t_env		*existing_env;
-	t_status	status;
-
-	existing_env = find_existing_env(*head, line);
-	if (existing_env)
-		status = replace_env_value(existing_env, line);
-	else
-		status = create_and_addlst(head, line);
-	return (status);
-}
 
 t_list	*env_init(char **envp)
 {

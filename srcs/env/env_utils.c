@@ -6,50 +6,11 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:27:13 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/08 22:47:53 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/10 16:07:33 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_env	*find_existing_env(t_list *env_lst, char *line)
-{
-	t_env	*env;
-	size_t	key_len;
-
-	while (env_lst)
-	{
-		env = env_lst->content;
-		key_len = ft_strlen(env->key);
-		if (ft_strncmp(env->key, line, key_len) == 0 && (line[key_len] == '='
-				|| line[key_len] == '\0'))
-			return (env);
-		env_lst = env_lst->next;
-	}
-	return (NULL);
-}
-
-t_status	replace_env_value(t_env *env, char *line)
-{
-	size_t	key_len;
-	char	*new_value;
-
-	key_len = ft_strlen(env->key);
-	if (line[key_len] == '\0')
-	{
-		if (env->value)
-			new_value = ft_strdup("");
-		else
-			return (SUCCESS);
-	}
-	else
-		new_value = ft_strdup(line + key_len + 1);
-	if (!new_value)
-		return (ERR_MALLOC);
-	free(env->value);
-	env->value = new_value;
-	return (SUCCESS);
-}
 
 t_status	get_env_from_line(t_env *env, char *line)
 {
@@ -74,18 +35,31 @@ t_status	get_env_from_line(t_env *env, char *line)
 	return (SUCCESS);
 }
 
-t_status	create_and_addlst(t_list **head, char *line)
+char	*pack_line(char *key, char *value)
 {
-	t_env		*env;
-	t_status	status;
+	char	*tmp;
+	char	*line;
 
-	env = ft_calloc(1, sizeof(t_env));
-	if (!env)
-		return (ERR_MALLOC);
-	status = get_env_from_line(env, line);
-	if (status == SUCCESS)
-		status = add_newlst(head, env);
-	if (status != SUCCESS)
-		free_env(env);
-	return (status);
+	tmp = ft_strjoin(key, "=");
+	if (!tmp)
+		return (NULL);
+	line = ft_strjoin(tmp, value);
+	free(tmp);
+	return (line);
+}
+
+int	is_valid_key_first_char(char c)
+{
+	if (ft_isalpha(c) || c == '_')
+		return (1);
+	else
+		return (0);
+}
+
+int	is_valid_key_char(char c)
+{
+	if (ft_isalnum(c) || c == '_')
+		return (1);
+	else
+		return (0);
 }
