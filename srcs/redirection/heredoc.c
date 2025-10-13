@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 15:19:15 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:50:30 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ t_status	loop_heredoc(t_minishell *minishell, t_list *redir_lst)
 	return (SUCCESS);
 }
 
-t_status	read_heredoc(t_minishell *minishell, t_list *cmd_lst)
+t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline, t_list *cmd_lst)
 {
 	t_cmd		*cmd;
 	t_status	status;
@@ -143,10 +143,9 @@ t_status	read_heredoc(t_minishell *minishell, t_list *cmd_lst)
 		if (status != SUCCESS)
 		{
 			if (status == ERR_FILE)
-				minishell->last_status = assert_error_lst(NULL, "/tmp/minishell_heredoc", ERR_FILE,
-					NULL);
+				minishell->last_status = assert_error_parent(pipeline, "/tmp/minishell_heredoc", ERR_FILE);
 			else if (status == ERR_MALLOC)
-				minishell->last_status = assert_error_lst(NULL, "malloc", ERR_SYSTEM, NULL);
+				minishell->last_status = assert_error_parent(pipeline, "malloc", ERR_SYSTEM);
 			return (FAILURE);
 		}
 		cmd_lst = cmd_lst->next;
