@@ -6,26 +6,31 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:35:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 16:07:30 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/13 16:31:13 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_redir_err_in_parent(t_minishell *minishell, t_pipeline *pipeline, t_redir_err err,
-		int *saved)
+void	handle_redir_err_in_parent(t_minishell *minishell, t_pipeline *pipeline,
+		t_redir_err err, int *saved)
 {
 	t_status	status;
 
 	status = restore_stdio_fd(saved);
 	if (status != SUCCESS)
+	{
 		minishell->last_status = assert_error_parent(pipeline, "dup", status);
-	else if (err.status == ERR_FILE)
-		minishell->last_status = assert_error_parent(pipeline, err.redir_err->value, ERR_FILE);
+		return ;
+	}
+	if (err.status == ERR_FILE)
+		minishell->last_status = assert_error_parent(pipeline,
+				err.redir_err->value, ERR_FILE);
 	else if (err.status == ERR_DUP)
 		minishell->last_status = assert_error_parent(pipeline, "dup", ERR_DUP);
 	else if (err.status == ERR_AMB_REDIR)
-		minishell->last_status = assert_error_parent(pipeline, err.redir_err->value, ERR_AMB_REDIR);
+		minishell->last_status = assert_error_parent(pipeline,
+				err.redir_err->value, ERR_AMB_REDIR);
 }
 
 t_status	save_fd_and_redirect(t_minishell *minishell, t_pipeline *pipeline,
