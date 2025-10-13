@@ -35,10 +35,10 @@ int		builtin_echo(char **args);
 int		builtin_cd(t_minishell *minishell, char **args);
 int		builtin_export(t_minishell *minishell, char **args);
 int		builtin_env(t_minishell *minishell);
+int		builtin_unset(t_minishell *minishell, char **args);
 
 int		return_error(char *msg, t_status status);
 
-int		ft_strcmp(char *s1, char *s2);
 void	print_escape_value(char *str);
 bool	is_valid_identifier(char *key);
 void	bubble_sort_env_array(t_list **env_array, size_t env_count);
