@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:35:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 15:23:42 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/13 16:07:30 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	handle_redir_err_in_parent(t_minishell *minishell, t_pipeline *pipeline, t_
 	status = restore_stdio_fd(saved);
 	if (status != SUCCESS)
 		minishell->last_status = assert_error_parent(pipeline, "dup", status);
-	if (err.status == ERR_FILE)
+	else if (err.status == ERR_FILE)
 		minishell->last_status = assert_error_parent(pipeline, err.redir_err->value, ERR_FILE);
 	else if (err.status == ERR_DUP)
 		minishell->last_status = assert_error_parent(pipeline, "dup", ERR_DUP);
