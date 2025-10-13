@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
 /*   Updated: 2025/10/10 12:05:55 by hmaruyam         ###   ########.fr       */
@@ -18,7 +18,9 @@ t_command_type	scan_command_type(t_cmd *cmd)
 
 	if (cmd->args)
 	{
-		if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
+		if (!cmd->args[0])
+			type = NO_CMD;
+		else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
 			type = BLT_ECHO;
 		else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
 			type = BLT_CD;
@@ -50,7 +52,7 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 	else if (type == BLT_PWD)
 		minishell->last_status = builtin_pwd(minishell);
 	else if (type == BLT_EXPORT)
-		printf("todo:export\n");
+		minishell->last_status = builtin_export(minishell, cmd->args);
 	else if (type == BLT_UNSET)
 		printf("todo:unset\n");
 	else if (type == BLT_ENV)

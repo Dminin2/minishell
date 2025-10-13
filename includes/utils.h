@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 21:55:29 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/10 10:48:04 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void						close_heredoc(t_list *cmd_lst);
 void						close_pipes(int **pipes, int n);
 
 t_status					add_newlst(t_list **head, void *content);
+
+int							ft_strcmp(char *s1, char *s2);
 
 void						print_error_msg(char *context, t_status status);
 void						print_error_msg_builtin(char *cmd, char *context,

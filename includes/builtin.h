@@ -20,19 +20,30 @@
 # include <unistd.h>
 
 # define GETCWD_ERR "error retrieving current directory: getcwd: cannot access parent directories"
-
+# define ENV_ERR "not a valid identifier"
 typedef enum e_blt_error
 {
 	BLTERR_NO_SET_HOME,
 	BLTERR_NO_SET_OLDPWD,
 	BLTERR_MANY_ARG,
+	BLTERR_NOT_VALID,
 	BLTERR_ERRNO
-}	t_blt_error;
+}		t_blt_error;
+
+int		builtin_pwd(t_minishell *minishell);
+int		builtin_echo(char **args);
+int		builtin_cd(t_minishell *minishell, char **args);
+int		builtin_export(t_minishell *minishell, char **args);
+
+int		return_error(char *msg, t_status status);
 
 int	builtin_pwd(t_minishell *minishell);
 int	builtin_echo(char **args);
 int	builtin_cd(t_minishell *minishell, char **args);
 int	builtin_env(t_minishell *minishell);
+int		ft_strcmp(char *s1, char *s2);
+void	print_escape_value(char *str);
+bool	is_valid_identifier(char *key);
+void	bubble_sort_env_array(t_list **env_array, size_t env_count);
 
-int	return_error(char *msg, t_status status);
 #endif
