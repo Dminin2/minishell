@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/11 18:55:56 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/13 18:06:32 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ void	redir_heredoc(t_redir *redir, t_redir_err *err)
 	if (dup2(redir->fd_hd, STDIN_FILENO) < 0)
 	{
 		close(redir->fd_hd);
+		redir->fd_hd = -1;
 		err->status = ERR_DUP;
 		err->redir_err = NULL;
 		return ;
 	}
 	close(redir->fd_hd);
+	redir->fd_hd = -1;
 }
 
 void	redir_append(t_redir *redir, t_redir_err *err)
