@@ -3,25 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:43:55 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 23:15:49 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/09 11:18:46 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*handle_special_word(t_minishell *minishell, char *old, int *i)
+char	*handle_special_word(t_minishell *minishell, char *old, int *i,
+		int *is_quoted)
 {
 	char	*word;
 
-	if (old[*i] == '\'')
-		word = handle_single_quote(old, i);
-	else if (old[*i] == '\"')
-		word = handle_double_quote(minishell, old, i);
-	else
+	if (old[*i] == '$')
 		word = expand_parameter(minishell, old, i);
+	else
+	{
+		if (old[*i] == '\'')
+			word = handle_single_quote(old, i);
+		else
+			word = handle_double_quote(minishell, old, i);
+		*is_quoted = 1;
+	}
 	return (word);
 }
 
@@ -43,16 +48,18 @@ t_status	expand_args_lst(t_minishell *minishell, t_list *args_lst)
 	int		i;
 	char	*word;
 	char	*new_args;
+	int		is_quoted;
 
 	while (args_lst)
 	{
+		is_quoted = 0;
 		new_args = NULL;
 		old_args = args_lst->content;
 		i = 0;
 		while (old_args[i])
 		{
 			if (is_to_expand(old_args[i]))
-				word = handle_special_word(minishell, old_args, &i);
+				word = handle_special_word(minishell, old_args, &i, &is_quoted);
 			else
 				word = handle_normal_word(old_args, &i);
 			if (!word)
@@ -66,6 +73,11 @@ t_status	expand_args_lst(t_minishell *minishell, t_list *args_lst)
 				new_args = word;
 			if (!new_args)
 				return (ERR_MALLOC);
+		}
+		if (!is_quoted && new_args[0] == '\0')
+		{
+			free(new_args);
+			new_args = NULL;
 		}
 		free(old_args);
 		args_lst->content = new_args;

@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_env_lst.c                                    :+:      :+:    :+:   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 16:27:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/11 15:41:00 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/10/10 10:30:54 by hmaruyam          #+#    #+#             */
+/*   Updated: 2025/10/10 11:27:32 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env_lst(t_list *env_lst, int fd)
+int	builtin_unset(t_minishell *minishell, char **args)
 {
-	t_env	*env;
+	int	i;
 
-	dprintf(fd, "=== env_lst ===\n");
-	while (env_lst)
+	i = 1;
+	while (args[i])
 	{
-		env = env_lst->content;
-		dprintf(fd, "%s=%s\n", env->key, env->value);
-		env_lst = env_lst->next;
+		remove_env(&minishell->env_lst, args[i]);
+		i++;
 	}
+	return (0);
 }

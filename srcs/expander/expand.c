@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:14:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 11:27:50 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:53:43 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,20 @@ t_list	*get_cmd_lst(t_minishell *minishell, t_list *cmd_ir_lst)
 			status = expand_and_convert_args(minishell, cmd_ir->args_lst, cmd);
 			if (status != SUCCESS)
 			{
-				free(cmd);
+				free_cmd(cmd);
 				assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_wrapper);
 				return (NULL);
 			}
 		}
+		cmd->redir_lst = cmd_ir->redir_lst;
+		cmd_ir->redir_lst = NULL;
 		status = add_newlst(&head, cmd);
 		if (status != SUCCESS)
 		{
-			free(cmd);
+			free_cmd(cmd);
 			assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_wrapper);
 			return (NULL);
 		}
-		cmd->redir_lst = cmd_ir->redir_lst;
 		cmd_ir_lst = cmd_ir_lst->next;
 	}
 	return (head);

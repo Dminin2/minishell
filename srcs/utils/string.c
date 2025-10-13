@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_env_lst.c                                    :+:      :+:    :+:   */
+/*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/16 16:27:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/11 15:41:00 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/10/10 10:47:37 by hmaruyam          #+#    #+#             */
+/*   Updated: 2025/10/10 10:47:54 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env_lst(t_list *env_lst, int fd)
+int	ft_strcmp(char *s1, char *s2)
 {
-	t_env	*env;
-
-	dprintf(fd, "=== env_lst ===\n");
-	while (env_lst)
+	while (*s1 != '\0' && *s1 == *s2)
 	{
-		env = env_lst->content;
-		dprintf(fd, "%s=%s\n", env->key, env->value);
-		env_lst = env_lst->next;
+		s1++;
+		s2++;
 	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

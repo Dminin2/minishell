@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:03:44 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 01:17:02 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/08 00:02:47 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ typedef struct s_redir_err
 	t_redir			*redir_err;
 }					t_redir_err;
 
-void				redirect(t_list *redir_lst, t_redir_err *err);
+void				redirect(t_minishell *minishell, t_list *redir_lst,
+						t_redir_err *err);
 t_status			read_heredoc(t_list *cmd_lst);
 
 void				free_redir_wrapper(void *redir);

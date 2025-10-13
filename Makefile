@@ -39,6 +39,7 @@ SRCS_EXPANDER = $(EXPANDER_DIR)/expand.c \
 	$(EXPANDER_DIR)/expand_param.c \
 	$(EXPANDER_DIR)/build_args.c \
 	$(EXPANDER_DIR)/expand_utils.c \
+	$(EXPANDER_DIR)/build_redir.c \
 	$(EXPANDER_DIR)/free_pipeline.c \
 	$(EXPANDER_DIR)/free_pipeline_ir_in_expander.c
 SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
@@ -47,14 +48,23 @@ SRCS_ENV = $(ENV_DIR)/env_init.c \
 	$(ENV_DIR)/env_utils.c \
 	$(ENV_DIR)/search_env.c \
 	$(ENV_DIR)/free_env.c \
-	$(ENV_DIR)/pack_env.c
+	$(ENV_DIR)/pack_env.c \
+	$(ENV_DIR)/env_operation.c
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c \
 	$(UTILS_DIR)/close.c \
-	$(UTILS_DIR)/list.c
+	$(UTILS_DIR)/list.c \
+	$(UTILS_DIR)/string.c
 SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_echo.c \
 	$(BUILTINS_DIR)/builtin_cd.c \
+	$(BUILTINS_DIR)/builtin_exit.c \
+	$(BUILTINS_DIR)/builtin_exit_utils.c \
+	$(BUILTINS_DIR)/builtin_utils.c \
+	$(BUILTINS_DIR)/builtin_env.c \
+	$(BUILTINS_DIR)/builtin_export.c \
+	$(BUILTINS_DIR)/builtin_export_utils.c \
+	$(BUILTINS_DIR)/builtin_unset.c \
 
 
 # debug用
@@ -64,7 +74,8 @@ SRCS_DEBUG = $(DEBUG_DIR)/print_pipeline_ir.c \
 	$(DEBUG_DIR)/print_pipeline.c \
 	$(DEBUG_DIR)/print_redir_lst.c \
 	$(DEBUG_DIR)/print_env_lst.c \
-	$(DEBUG_DIR)/print_status.c
+	$(DEBUG_DIR)/print_status.c \
+	$(DEBUG_DIR)/print_line.c
 
 
 SRCS = $(SRCS_MAIN) \

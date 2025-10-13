@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 11:54:22 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/11 01:38:56 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ t_command_type	scan_command_type(t_cmd *cmd)
 
 	if (cmd->args)
 	{
-		if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
+		if (!cmd->args[0])
+			type = NO_CMD;
+		else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
 			type = BLT_ECHO;
 		else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
 			type = BLT_CD;
@@ -40,10 +42,12 @@ t_command_type	scan_command_type(t_cmd *cmd)
 	return (type);
 }
 
-void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
+t_status	execute_builtin(t_minishell *minishell, t_cmd *cmd,
+		t_command_type type)
 {
-	(void)cmd;
-	(void)minishell;
+	t_status	status;
+
+	status = SUCCESS;
 	if (type == BLT_ECHO)
 		minishell->last_status = builtin_echo(cmd->args);
 	else if (type == BLT_CD)
@@ -51,11 +55,12 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 	else if (type == BLT_PWD)
 		minishell->last_status = builtin_pwd(minishell);
 	else if (type == BLT_EXPORT)
-		printf("todo:export\n");
+		minishell->last_status = builtin_export(minishell, cmd->args);
 	else if (type == BLT_UNSET)
-		printf("todo:unset\n");
+		minishell->last_status = builtin_unset(minishell, cmd->args);
 	else if (type == BLT_ENV)
-		printf("todo:env\n");
+		minishell->last_status = builtin_env(minishell);
 	else if (type == BLT_EXIT)
-		printf("todo:exit\n");
+		minishell->last_status = builtin_exit(minishell, cmd->args, &status);
+	return (status);
 }

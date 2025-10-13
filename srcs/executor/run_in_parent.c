@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_in_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:35:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 09:50:47 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/10 23:44:49 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,34 +24,50 @@ void	handle_redir_err_in_parent(t_pipeline *pipeline, t_redir_err err,
 		assert_error_parent(pipeline, err.redir_err->value, ERR_FILE);
 	else if (err.status == ERR_DUP)
 		assert_error_parent(pipeline, "dup", ERR_DUP);
+	else if (err.status == ERR_AMB_REDIR)
+		assert_error_parent(pipeline, err.redir_err->value, ERR_AMB_REDIR);
+}
+
+t_status	save_fd_and_redirect(t_minishell *minishell, t_pipeline *pipeline,
+		t_cmd *cmd, int *saved)
+{
+	t_status	status;
+	t_redir_err	err;
+
+	saved[0] = -1;
+	saved[1] = -1;
+	err.redir_err = NULL;
+	err.status = SUCCESS;
+	status = save_stdio_fd(cmd->redir_lst, saved);
+	if (status != SUCCESS)
+	{
+		assert_error_parent(pipeline, "dup", status);
+		return (ERR_DUP);
+	}
+	redirect(minishell, cmd->redir_lst, &err);
+	if (err.status != SUCCESS)
+	{
+		handle_redir_err_in_parent(pipeline, err, saved);
+		return (err.status);
+	}
+	return (SUCCESS);
 }
 
 void	run_builtin_in_parent(t_minishell *minishell, t_pipeline *pipeline,
 		t_command_type type)
 {
 	int			saved[2];
-	t_redir_err	err;
 	t_cmd		*cmd;
 	t_status	status;
 
-	saved[0] = -1;
-	saved[1] = -1;
-	err.redir_err = NULL;
-	err.status = SUCCESS;
 	cmd = pipeline->cmd_lst->content;
-	status = save_stdio_fd(cmd->redir_lst, saved);
+	status = save_fd_and_redirect(minishell, pipeline, cmd, saved);
 	if (status != SUCCESS)
-	{
-		assert_error_parent(pipeline, "dup", status);
 		return ;
-	}
-	redirect(cmd->redir_lst, &err);
-	if (err.status != SUCCESS)
-	{
-		handle_redir_err_in_parent(pipeline, err, saved);
-		return ;
-	}
-	execute_builtin(minishell, cmd, type);
+	if (type == NO_CMD)
+		minishell->last_status = 0;
+	else
+		execute_builtin(minishell, cmd, type);
 	status = restore_stdio_fd(saved);
 	if (status != SUCCESS)
 	{

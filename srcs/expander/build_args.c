@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:33:54 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/26 21:34:36 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/09 12:56:46 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	count_args(t_list *args_lst)
 	n = 0;
 	while (args_lst)
 	{
-		n++;
+		if (args_lst->content)
+			n++;
 		args_lst = args_lst->next;
 	}
 	return (n);
@@ -28,7 +29,6 @@ int	count_args(t_list *args_lst)
 t_status	get_args_from_lst(t_list *args_lst, t_cmd *cmd)
 {
 	char	**new_args;
-	char	*old;
 	int		n;
 	int		i;
 
@@ -39,9 +39,12 @@ t_status	get_args_from_lst(t_list *args_lst, t_cmd *cmd)
 	i = 0;
 	while (args_lst)
 	{
-		old = args_lst->content;
-		new_args[i] = old;
-		i++;
+		if (args_lst->content)
+		{
+			new_args[i] = args_lst->content;
+			args_lst->content = NULL;
+			i++;
+		}
 		args_lst = args_lst->next;
 	}
 	cmd->args = new_args;

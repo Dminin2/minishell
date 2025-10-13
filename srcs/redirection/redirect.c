@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/09/05 13:45:28 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/11 18:55:56 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,38 @@ void	redir_append(t_redir *redir, t_redir_err *err)
 	close(fd);
 }
 
-void	redirect(t_list *redir_lst, t_redir_err *err)
+void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 {
 	t_redir	*redir;
+	char	*new_value;
+	int		is_quoted;
 
+#ifdef DEBUG
+	t_list	*head;
+	head = redir_lst;
+#endif
 	while (redir_lst)
 	{
+		is_quoted = 0;
 		redir = redir_lst->content;
+		if (redir->type != R_HEREDOC)
+		{
+			new_value = expand_filename(minishell, redir->value, &is_quoted);
+			if (!new_value)
+			{
+				err->status = ERR_MALLOC;
+				break ;
+			}
+			if (!is_quoted && new_value[0] == '\0')
+			{
+				free(new_value);
+				err->redir_err = redir;
+				err->status = ERR_AMB_REDIR;
+				break ;
+			}
+			free(redir->value);
+			redir->value = new_value;
+		}
 		if (redir->type == R_IN)
 			redir_in(redir, err);
 		else if (redir->type == R_OUT)
@@ -103,7 +128,11 @@ void	redirect(t_list *redir_lst, t_redir_err *err)
 		else
 			redir_append(redir, err);
 		if (err->status != SUCCESS)
-			return ;
+			break ;
 		redir_lst = redir_lst->next;
 	}
+#ifdef DEBUG
+	dprintf(g_fd, "=== after expand ===\n");
+	print_redir_lst(head, g_fd);
+#endif
 }
