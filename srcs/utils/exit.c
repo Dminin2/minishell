@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 15:07:42 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/13 16:07:56 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
 	}
 }
 
-int	get_exit_status(t_status status)
+static int	get_exit_status(t_status status)
 {
 	if (status == SUCCESS)
 		return (0);
