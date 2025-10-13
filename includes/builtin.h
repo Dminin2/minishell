@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/13 14:17:31 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:24:02 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,16 @@
 # include <unistd.h>
 
 # define GETCWD_ERR "error retrieving current directory: getcwd: cannot access parent directories"
+# define NUMARG_ERR "numeric argument required"
 # define ENV_ERR "not a valid identifier"
+
 typedef enum e_blt_error
 {
 	BLTERR_NO_SET_HOME,
 	BLTERR_NO_SET_OLDPWD,
 	BLTERR_MANY_ARG,
 	BLTERR_NOT_VALID,
+	BLTERR_NUM_ARG,
 	BLTERR_ERRNO
 }		t_blt_error;
 
@@ -36,11 +39,14 @@ int		builtin_cd(t_minishell *minishell, char **args);
 int		builtin_export(t_minishell *minishell, char **args);
 int		builtin_env(t_minishell *minishell);
 int		builtin_unset(t_minishell *minishell, char **args);
+int		builtin_exit(t_minishell *minishell, char **args, t_status *status);
 
 int		return_error(char *msg, t_status status);
 
 void	print_escape_value(char *str);
 bool	is_valid_identifier(char *key);
 void	bubble_sort_env_array(t_list **env_array, size_t env_count);
+
+int		strtouc_and_validate(char *str, unsigned char *last_status);
 
 #endif

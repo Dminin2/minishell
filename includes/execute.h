@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/05 14:56:47 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/11 01:39:11 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void			run_builtin_in_parent(t_minishell *minishell,
 t_cmd			*get_cmd_from_lst(t_list *head, int target);
 
 t_command_type	scan_command_type(t_cmd *cmd);
-void			execute_builtin(t_minishell *minishell, t_cmd *cmd,
+t_status		execute_builtin(t_minishell *minishell, t_cmd *cmd,
 					t_command_type type);
 
 t_status		resolve_command_path(t_cmd *cmd, t_list *env_lst);
