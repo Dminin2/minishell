@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 16:07:56 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/13 18:20:43 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,11 @@ int	assert_error_parent(t_pipeline *pipeline, char *context, t_status status)
 	return (get_exit_status(status));
 }
 
-void	exit_error(t_pipeline *pipeline, char *context, t_status status,
-		int exit_status)
+void	exit_error(t_pipeline *pipeline, char *context, t_status status)
 {
 	print_error_msg(context, status);
 	free_pipeline(pipeline);
-	exit(exit_status);
+	exit(get_exit_status(status));
 }
 
 void	exit_success(t_pipeline *pipeline)
