@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/11 01:32:34 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:20:27 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ void	print_escape_value(char *str);
 bool	is_valid_identifier(char *key);
 void	bubble_sort_env_array(t_list **env_array, size_t env_count);
 
-int	strtouc_and_validate(char *str, unsigned char *last_status);
+int		strtouc_and_validate(char *str, unsigned char *last_status);
 
 #endif
