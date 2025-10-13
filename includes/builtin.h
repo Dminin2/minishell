@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/10 11:27:27 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:17:31 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		builtin_pwd(t_minishell *minishell);
 int		builtin_echo(char **args);
 int		builtin_cd(t_minishell *minishell, char **args);
 int		builtin_export(t_minishell *minishell, char **args);
+int		builtin_env(t_minishell *minishell);
 int		builtin_unset(t_minishell *minishell, char **args);
 
 int		return_error(char *msg, t_status status);

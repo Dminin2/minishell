@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/10 11:26:33 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/10 12:05:55 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 	else if (type == BLT_UNSET)
 		minishell->last_status = builtin_unset(minishell, cmd->args);
 	else if (type == BLT_ENV)
-		printf("todo:env\n");
+		minishell->last_status = builtin_env(minishell);
 	else if (type == BLT_EXIT)
 		printf("todo:exit\n");
 }
