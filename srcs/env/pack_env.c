@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 02:14:31 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/10 19:59:47 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/13 16:19:47 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 int	count_env_lst(t_list *env_lst)
 {
-	int	n;
+	int		n;
+	t_env	*env;
 
 	n = 0;
 	while (env_lst)
 	{
-		n++;
+		env = env_lst->content;
+		if (env->value)
+			n++;
 		env_lst = env_lst->next;
 	}
 	return (n);
@@ -40,14 +43,17 @@ char	**pack_env(t_list *env_lst)
 	while (env_lst)
 	{
 		env = env_lst->content;
-		envp[i] = pack_line(env->key, env->value);
-		if (!envp[i])
+		if (env->value)
 		{
-			free_args(envp);
-			return (NULL);
+			envp[i] = pack_line(env->key, env->value);
+			if (!envp[i])
+			{
+				free_args(envp);
+				return (NULL);
+			}
+			i++;
 		}
 		env_lst = env_lst->next;
-		i++;
 	}
 	return (envp);
 }
