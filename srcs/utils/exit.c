@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 15:17:33 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/11 01:10:28 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
 		if (error == BLTERR_ERRNO)
 			dprintf(STDERR_FILENO, "minishell: %s: %s: %s\n", cmd, context,
 				strerror(errno));
+		else if (error == BLTERR_NUM_ARG)
+			dprintf(STDERR_FILENO, "minishell: %s: %s: %s\n", cmd, context,
+				NUMARG_ERR);
+		else if (error == BLTERR_NOT_VALID)
+			dprintf(STDERR_FILENO, "minishell: %s: `%s': %s\n", cmd, context,
+				ENV_ERR);
 	}
 	else
 	{
