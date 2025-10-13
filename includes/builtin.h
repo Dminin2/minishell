@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/10 12:05:14 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:17:31 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,10 @@ int		builtin_pwd(t_minishell *minishell);
 int		builtin_echo(char **args);
 int		builtin_cd(t_minishell *minishell, char **args);
 int		builtin_export(t_minishell *minishell, char **args);
+int		builtin_env(t_minishell *minishell);
 
 int		return_error(char *msg, t_status status);
 
-int	builtin_pwd(t_minishell *minishell);
-int	builtin_echo(char **args);
-int	builtin_cd(t_minishell *minishell, char **args);
-int	builtin_env(t_minishell *minishell);
 int		ft_strcmp(char *s1, char *s2);
 void	print_escape_value(char *str);
 bool	is_valid_identifier(char *key);
