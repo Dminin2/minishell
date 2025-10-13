@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:13:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 22:19:59 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/10 11:18:31 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_status	get_env_from_line(t_env *env, char *line);
 t_status	create_and_addlst(t_list **head, char *line);
 
 t_status	add_env(t_list **head, char *key, char *value);
+void		remove_env(t_list **head, char *key);
 
 char		*search_env(t_list *env_lst, char *key);
 
