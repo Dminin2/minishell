@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/11 01:10:28 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:07:42 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,33 @@ void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
 	}
 }
 
-void	assert_error_lst(t_list *lst, char *context, t_status status,
+int	get_exit_status(t_status status)
+{
+	if (status == SUCCESS)
+		return (0);
+	else if (status == ERR_SYNTAX)
+		return (2);
+	else if (status == ERR_CMD_NOT_FOUND || status == ERR_NOT_VALID_PATH)
+		return (127);
+	else if (status == ERR_ISDIR)
+		return (126);
+	else
+		return (1);
+}
+
+int	assert_error_lst(t_list *lst, char *context, t_status status,
 		void (*del)(void *))
 {
 	print_error_msg(context, status);
 	ft_lstclear(&lst, del);
+	return (get_exit_status(status));
 }
 
-void	assert_error_parent(t_pipeline *pipeline, char *context,
-		t_status status)
+int	assert_error_parent(t_pipeline *pipeline, char *context, t_status status)
 {
 	print_error_msg(context, status);
 	free_pipeline(pipeline);
+	return (get_exit_status(status));
 }
 
 void	exit_error(t_pipeline *pipeline, char *context, t_status status,

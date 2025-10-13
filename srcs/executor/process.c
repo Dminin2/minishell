@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 11:52:19 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:22:17 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,19 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline)
 	status = create_pipes(pipeline);
 	if (status != SUCCESS)
 	{
-		assert_error_parent(pipeline, "malloc", ERR_SYSTEM);
+		minishell->last_status = assert_error_parent(pipeline, "malloc", ERR_SYSTEM);
 		return ;
 	}
 	status = pipe_pipes(pipeline->pipes, pipeline->n - 1);
 	if (status != SUCCESS)
 	{
-		assert_error_parent(pipeline, "pipe", ERR_SYSTEM);
+		minishell->last_status = assert_error_parent(pipeline, "pipe", ERR_SYSTEM);
 		return ;
 	}
 	pids = ft_calloc(pipeline->n, sizeof(pid_t));
 	if (!pids)
 	{
-		assert_error_parent(pipeline, "malloc", ERR_SYSTEM);
+		minishell->last_status = assert_error_parent(pipeline, "malloc", ERR_SYSTEM);
 		return ;
 	}
 	fork_pos = fork_all_children(minishell, pipeline, pids);
@@ -100,7 +100,7 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline)
 	{
 		wait_child(minishell, pipeline, pids, fork_pos);
 		minishell->last_status = 1;
-		assert_error_parent(pipeline, "fork", ERR_SYSTEM);
+		minishell->last_status = assert_error_parent(pipeline, "fork", ERR_SYSTEM);
 		return ;
 	}
 	wait_child(minishell, pipeline, pids, pipeline->n);

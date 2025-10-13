@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/10 10:48:04 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:12:35 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int							ft_strcmp(char *s1, char *s2);
 void						print_error_msg(char *context, t_status status);
 void						print_error_msg_builtin(char *cmd, char *context,
 								t_blt_error error);
-void						assert_error_lst(t_list *lst, char *context,
+int							assert_error_lst(t_list *lst, char *context,
 								t_status status, void (*del)(void *));
-void						assert_error_parent(t_pipeline *pipeline,
+int							assert_error_parent(t_pipeline *pipeline,
 								char *context, t_status status);
 void						exit_error(t_pipeline *pipeline, char *context,
 								t_status status, int exit_status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 14:21:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 01:16:22 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:15:52 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_lexer
 	int			pos;
 }				t_lexer;
 
-t_list			*tokenize(char *line);
+t_list			*tokenize(t_minishell *minishell, char *line);
 
 void			free_token_wrapper(void *tok);
 void			free_token(t_token *tok);
