@@ -50,6 +50,7 @@ t_command_type	scan_command_type(t_cmd *cmd);
 t_status		execute_builtin(t_minishell *minishell, t_cmd *cmd,
 					t_command_type type);
 
+char			**split_path_value(char *path_value);
 t_status		resolve_command_path(t_cmd *cmd, t_list *env_lst);
 
 t_status		create_pipes(t_pipeline *pipeline);
