@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 22:55:01 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:18:54 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_error(t_list *tok_lst, t_list *head, t_status status)
+void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head, t_status status)
 {
 	t_token	*tok;
 	char	*token_str;
 
 	if (status == ERR_SYSTEM)
-		assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_ir_wrapper);
+		minishell->last_status = assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_ir_wrapper);
 	else if (status == ERR_SYNTAX)
 	{
 		if (tok_lst)
 		{
 			tok = tok_lst->content;
 			if (tok->value)
-				assert_error_lst(head, tok->value, ERR_SYNTAX,
+				minishell->last_status = assert_error_lst(head, tok->value, ERR_SYNTAX,
 					free_cmd_ir_wrapper);
 			else
 			{
@@ -39,11 +39,11 @@ void	handle_error(t_list *tok_lst, t_list *head, t_status status)
 					token_str = ">>";
 				else
 					token_str = "|";
-				assert_error_lst(head, token_str, ERR_SYNTAX,
+				minishell->last_status = assert_error_lst(head, token_str, ERR_SYNTAX,
 					free_cmd_ir_wrapper);
 			}
 		}
 		else
-			assert_error_lst(head, "newline", ERR_SYNTAX, free_cmd_ir_wrapper);
+			minishell->last_status = assert_error_lst(head, "newline", ERR_SYNTAX, free_cmd_ir_wrapper);
 	}
 }

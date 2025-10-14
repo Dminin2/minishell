@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:13:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/10 23:31:33 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:11:40 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_env
 	char	*value;
 }			t_env;
 
-t_list		*env_init(char **envp);
+t_list		*env_init(t_minishell *minishell, char **envp);
 
 t_status	process_env_line(t_list **head, char *line);
 t_env		*find_existing_env(t_list *env_lst, char *line);

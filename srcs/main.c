@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	minishell.should_exit = false;
 	minishell.last_status = 0;
-	minishell.env_lst = env_init(envp);
+	minishell.env_lst = env_init(&minishell, envp);
 	if (!minishell.env_lst)
 		exit(1);
 #ifdef DEBUG
@@ -52,14 +52,14 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_line(line, g_fd);
 #endif
-		token_lst = tokenize(line);
+		token_lst = tokenize(&minishell, line);
 		free(line);
 		if (!token_lst)
 			continue ;
 #ifdef DEBUG
 		print_token(token_lst, g_fd);
 #endif
-		pipeline_ir = parse(token_lst);
+		pipeline_ir = parse(&minishell, token_lst);
 		ft_lstclear(&token_lst, &free_token_wrapper);
 		if (!pipeline_ir)
 			continue ;

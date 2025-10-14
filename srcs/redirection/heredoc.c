@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/11 00:03:18 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:19:15 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,10 +143,10 @@ t_status	read_heredoc(t_minishell *minishell, t_list *cmd_lst)
 		if (status != SUCCESS)
 		{
 			if (status == ERR_FILE)
-				assert_error_lst(NULL, "/tmp/minishell_heredoc", ERR_FILE,
+				minishell->last_status = assert_error_lst(NULL, "/tmp/minishell_heredoc", ERR_FILE,
 					NULL);
 			else if (status == ERR_MALLOC)
-				assert_error_lst(NULL, "malloc", ERR_SYSTEM, NULL);
+				minishell->last_status = assert_error_lst(NULL, "malloc", ERR_SYSTEM, NULL);
 			return (FAILURE);
 		}
 		cmd_lst = cmd_lst->next;
