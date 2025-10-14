@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:13:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 15:11:40 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:27:18 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 
 # include "libft.h"
 # include <stdlib.h>
+# include <unistd.h>
 
+# define INIT_GETCWD_ERR "shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory"
+# define SHLVL_ERR "minishell: warning: "
 typedef struct s_env
 {
 	char	*key;
