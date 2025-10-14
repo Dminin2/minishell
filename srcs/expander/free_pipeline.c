@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 01:17:52 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/03 22:11:47 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:46:12 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	free_pipeline(t_pipeline *pipeline)
 	if (pipeline)
 	{
 		if (pipeline->cmd_lst)
+		{
+			close_heredoc(pipeline->cmd_lst);
 			ft_lstclear(&(pipeline->cmd_lst), &free_cmd_wrapper);
+		}
 		if (pipeline->pipes)
 		{
 			close_pipes(pipeline->pipes, pipeline->n - 1);

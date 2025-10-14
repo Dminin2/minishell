@@ -77,12 +77,8 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_pipeline(pipeline, g_fd);
 #endif
-		if (read_heredoc(&minishell, pipeline->cmd_lst) == FAILURE)
-		{
-			close_heredoc(pipeline->cmd_lst);
-			free_pipeline(pipeline);
+		if (read_heredoc(&minishell, pipeline) == FAILURE)
 			continue ;
-		}
 		execute(&minishell, pipeline);
 		if (minishell.should_exit)
 			break ;
