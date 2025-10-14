@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:43:55 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/06 15:43:18 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/09 11:18:46 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ t_status	expand_args_lst(t_minishell *minishell, t_list *args_lst)
 				new_args = word;
 			if (!new_args)
 				return (ERR_MALLOC);
+		}
+		if (!is_quoted && new_args[0] == '\0')
+		{
+			free(new_args);
+			new_args = NULL;
 		}
 		free(old_args);
 		args_lst->content = new_args;
