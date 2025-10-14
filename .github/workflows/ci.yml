@@ -22,7 +22,8 @@ jobs:
               echo "--- Running command: $cmd ---"
               echo "$cmd" | valgrind \
                   --leak-check=full \
-                  --show-leak-kinds=definite,indirect,possible \
+                  --show-leak-kinds=all \
+                  --errors-for-leak-kinds=definite,indirect,possible \
                   --track-origins=yes \
                   --trace-children=yes \
                   --track-fds=yes \
