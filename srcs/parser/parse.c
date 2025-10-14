@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 12:23:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 11:45:59 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:19:36 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_status	skip_pipe(t_list **tok_lst)
 		return (SUCCESS);
 }
 
-t_list	*get_cmd_ir_lst(t_list *tok_lst)
+t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 {
 	t_cmd_ir	*cmd_ir;
 	t_status	status;
@@ -33,21 +33,21 @@ t_list	*get_cmd_ir_lst(t_list *tok_lst)
 		cmd_ir = ft_calloc(1, sizeof(t_cmd_ir));
 		if (!cmd_ir)
 		{
-			assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_ir_wrapper);
+			minishell->last_status = assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_ir_wrapper);
 			return (NULL);
 		}
 		status = get_simple_command(&tok_lst, cmd_ir);
 		if (status != SUCCESS)
 		{
 			free_cmd_ir(cmd_ir);
-			handle_error(tok_lst, head, status);
+			handle_error(minishell, tok_lst, head, status);
 			return (NULL);
 		}
 		status = add_newlst(&head, (void *)cmd_ir);
 		if (status == ERR_SYSTEM)
 		{
 			free_cmd_ir(cmd_ir);
-			assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_ir_wrapper);
+			minishell->last_status = assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_ir_wrapper);
 			return (NULL);
 		}
 		if (tok_lst)
@@ -55,7 +55,7 @@ t_list	*get_cmd_ir_lst(t_list *tok_lst)
 			status = skip_pipe(&tok_lst);
 			if (status == ERR_SYNTAX)
 			{
-				assert_error_lst(head, "newline", ERR_SYNTAX,
+				minishell->last_status = assert_error_lst(head, "newline", ERR_SYNTAX,
 					free_cmd_ir_wrapper);
 				return (NULL);
 			}
@@ -77,17 +77,17 @@ int	count_cmd_irs(t_list *cmd_ir_lst)
 	return (n);
 }
 
-t_pipeline_ir	*parse(t_list *tok_lst)
+t_pipeline_ir	*parse(t_minishell *minishell, t_list *tok_lst)
 {
 	t_pipeline_ir	*pipeline_ir;
 
 	pipeline_ir = ft_calloc(1, sizeof(t_pipeline_ir));
 	if (!pipeline_ir)
 	{
-		assert_error_lst(NULL, "malloc", ERR_SYSTEM, NULL);
+		minishell->last_status = assert_error_lst(NULL, "malloc", ERR_SYSTEM, NULL);
 		return (NULL);
 	}
-	pipeline_ir->cmd_ir_lst = get_cmd_ir_lst(tok_lst);
+	pipeline_ir->cmd_ir_lst = get_cmd_ir_lst(minishell, tok_lst);
 	if (!pipeline_ir->cmd_ir_lst)
 	{
 		free(pipeline_ir);
