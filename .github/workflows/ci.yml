@@ -17,7 +17,7 @@ jobs:
       - name: Run Valgrind leak check
         run: |
           set +e
-          valgrind_error_code=1
+          valgrind_error_code=43
           while read -r cmd || [ -n "$cmd" ]; do
               echo "--- Running command: $cmd ---"
               echo "$cmd" | valgrind \
