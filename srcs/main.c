@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/14 13:22:41 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/14 13:44:44 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,13 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		execute(&minishell, pipeline);
+		if (minishell.should_exit)
+			break ;
 	}
 	rl_clear_history();
 	ft_lstclear(&(minishell.env_lst), free_env_wrapper);
 #ifdef DEBUG
 	close(g_fd);
 #endif
-	return (0);
+	return (minishell.last_status);
 }
