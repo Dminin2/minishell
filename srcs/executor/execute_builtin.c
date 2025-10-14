@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/14 13:22:28 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:45:14 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,4 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 		minishell->last_status = builtin_env(minishell);
 	else if (type == BLT_EXIT)
 		minishell->last_status = builtin_exit(minishell, cmd->args);
-	return ;
 }
