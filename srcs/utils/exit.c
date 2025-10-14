@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 18:20:43 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/14 15:33:51 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,17 @@ int	assert_error_parent(t_pipeline *pipeline, char *context, t_status status)
 	return (get_exit_status(status));
 }
 
-void	exit_error(t_pipeline *pipeline, char *context, t_status status)
+void	exit_error(t_minishell *minishell, t_pipeline *pipeline, char *context, t_status status)
 {
 	print_error_msg(context, status);
 	free_pipeline(pipeline);
+	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
 	exit(get_exit_status(status));
 }
 
-void	exit_success(t_pipeline *pipeline)
+void	exit_success(t_minishell *minishell, t_pipeline *pipeline)
 {
 	free_pipeline(pipeline);
+	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
 	exit(0);
 }
