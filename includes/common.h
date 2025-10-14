@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/11 01:29:03 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/14 13:20:48 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define COMMON_H
 
 # include "libft.h"
+# include <stdbool.h>
 
 typedef enum e_status
 {
 	SUCCESS,
 	FAILURE,
-	SHOULD_EXIT,
 	ERR_SYSTEM,
 	ERR_SYNTAX,
 	ERR_CMD_NOT_FOUND,
@@ -39,6 +39,7 @@ typedef struct s_minishell
 {
 	t_list	*env_lst;
 	int		last_status;
+	bool	should_exit;
 }			t_minishell;
 
 #endif
