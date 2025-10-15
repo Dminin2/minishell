@@ -25,7 +25,7 @@ static t_status	init_shell_vars(t_list **head)
 		return (ERR_INIT_GETCWD);
 	status = add_env(head, "PWD", cwd);
 	free(cwd);
-	if (!status)
+	if (status == ERR_MALLOC)
 		return (ERR_MALLOC);
 	shlvl_num = 1;
 	existing_shlvl = search_env(*head, "SHLVL");
@@ -42,7 +42,7 @@ static t_status	init_shell_vars(t_list **head)
 		return (ERR_MALLOC);
 	status = add_env(head, "SHLVL", shlvl_str);
 	free(shlvl_str);
-	if (!status)
+	if (status == ERR_MALLOC)
 		return (ERR_MALLOC);
 	return (SUCCESS);
 }
