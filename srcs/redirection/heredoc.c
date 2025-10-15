@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/14 13:14:21 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:20:48 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 						"/tmp/minishell_heredoc", ERR_FILE);
 			else if (status == ERR_MALLOC)
 				minishell->last_status = assert_error_parent(pipeline, "malloc",
-						ERR_SYSTEM);
+						ERR_MALLOC);
 			return (FAILURE);
 		}
 		cur_node = cur_node->next;

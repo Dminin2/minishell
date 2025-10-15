@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 15:18:54 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:20:37 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head, t_statu
 	t_token	*tok;
 	char	*token_str;
 
-	if (status == ERR_SYSTEM)
-		minishell->last_status = assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_ir_wrapper);
+	if (status == ERR_MALLOC)
+		minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC, free_cmd_ir_wrapper);
 	else if (status == ERR_SYNTAX)
 	{
 		if (tok_lst)
