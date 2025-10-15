@@ -75,8 +75,8 @@ t_list	*env_init(t_minishell *minishell, char **envp)
 	status = init_shell_vars(&head);
 	if (status == ERR_MALLOC)
 	{
-		ft_lstclear(&head, free_env_wrapper);
-		print_error_msg("malloc", ERR_MALLOC);
+		minishell->last_status = assert_error_lst(head, "malloc", ERR_SYSTEM,
+				free_env_wrapper);
 		return (NULL);
 	}
 	return (head);
