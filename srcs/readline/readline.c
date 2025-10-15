@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:50:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 22:11:13 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:00:24 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_status	gnl_and_remove_new_line(char **line)
 	return (status);
 }
 
-t_status	get_command_line(char **line)
+t_status	get_command_line(t_minishell *minishell, char **line)
 {
 	t_status	status;
 
@@ -50,11 +50,13 @@ t_status	get_command_line(char **line)
 			*line = readline("minishell$ ");
 		else
 			*line = readline("");
-		status = SUCCESS;
-		if (*line)
+		if (*line && *line[0])
 			add_history(*line);
+		status = SUCCESS;
 	}
 	else
 		status = gnl_and_remove_new_line(line);
+	if (status != SUCCESS)
+		minishell->last_status = 1;
 	return (status);
 }

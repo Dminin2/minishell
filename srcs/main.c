@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 22:31:47 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 22:57:10 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_status(minishell.last_status, g_fd);
 #endif
-		status = get_command_line(&line);
+		status = get_command_line(&minishell, &line);
 		if (status != SUCCESS)
 			continue ;
 		if (!line)
