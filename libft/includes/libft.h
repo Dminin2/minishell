@@ -6,13 +6,14 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:12:11 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/12 17:20:47 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/16 01:53:25 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "ft_dprintf.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
 # include <limits.h>
