@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/14 15:39:35 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/14 13:23:31 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void			run_builtin_in_parent(t_minishell *minishell,
 t_cmd			*get_cmd_from_lst(t_list *head, int target);
 
 t_command_type	scan_command_type(t_cmd *cmd);
-t_status		execute_builtin(t_minishell *minishell, t_cmd *cmd,
+void			execute_builtin(t_minishell *minishell, t_cmd *cmd,
 					t_command_type type);
 
 char			**split_path_value(char *path_value);
