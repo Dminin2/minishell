@@ -36,8 +36,7 @@ static t_status	init_shell_vars(t_list **head)
 		shlvl_num = ft_atoi(existing_shlvl) + 1;
 	if (shlvl_num > 999)
 	{
-		dprintf(STDERR_FILENO, SHLVL_ERR "(%d) too high, resetting to 1\n",
-			shlvl_num);
+		dprintf(STDERR_FILENO, SHLVL_ERR, shlvl_num);
 		shlvl_num = 1;
 	}
 	shlvl_str = ft_itoa(shlvl_num);
