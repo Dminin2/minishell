@@ -75,7 +75,7 @@ void	run_builtin_in_parent(t_minishell *minishell, t_pipeline *pipeline,
 	if (type == NO_CMD)
 		minishell->last_status = 0;
 	else
-		execute_builtin(minishell, cmd, type);
+		execute_builtin(minishell, cmd, type, pipeline->n);
 	status = restore_stdio_fd(saved);
 	if (status != SUCCESS)
 	{
