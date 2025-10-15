@@ -58,5 +58,5 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type,
 	else if (type == BLT_ENV)
 		minishell->last_status = builtin_env(minishell);
 	else if (type == BLT_EXIT)
-		minishell->last_status = builtin_exit(minishell, cmd->args);
+		minishell->last_status = builtin_exit(minishell, cmd->args, cmd_count);
 }
