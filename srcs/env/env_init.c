@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:42:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 15:12:13 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:13:31 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_list	*env_init(t_minishell *minishell, char **envp)
 			if (status == ERR_MALLOC)
 			{
 				minishell->last_status = assert_error_lst(head, "malloc",
-						ERR_SYSTEM, free_env_wrapper);
+						ERR_MALLOC, free_env_wrapper);
 				return (NULL);
 			}
 			i++;

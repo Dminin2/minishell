@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 16:06:34 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:15:37 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,21 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline)
 	if (status != SUCCESS)
 	{
 		minishell->last_status = assert_error_parent(pipeline, "malloc",
-				ERR_SYSTEM);
+				ERR_MALLOC);
 		return ;
 	}
 	status = pipe_pipes(pipeline->pipes, pipeline->n - 1);
 	if (status != SUCCESS)
 	{
 		minishell->last_status = assert_error_parent(pipeline, "pipe",
-				ERR_SYSTEM);
+				ERR_MALLOC);
 		return ;
 	}
 	pids = ft_calloc(pipeline->n, sizeof(pid_t));
 	if (!pids)
 	{
 		minishell->last_status = assert_error_parent(pipeline, "malloc",
-				ERR_SYSTEM);
+				ERR_MALLOC);
 		return ;
 	}
 	fork_pos = fork_all_children(minishell, pipeline, pids);
@@ -103,7 +103,7 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline)
 	{
 		wait_child(minishell, pipeline, pids, fork_pos);
 		minishell->last_status = assert_error_parent(pipeline, "fork",
-				ERR_SYSTEM);
+				ERR_FORK);
 		return ;
 	}
 	wait_child(minishell, pipeline, pids, pipeline->n);
