@@ -22,7 +22,8 @@ static t_status	init_shell_vars(t_list **head)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		dprintf(STDERR_FILENO, INIT_GETCWD_ERR);
+		dprintf(STDERR_FILENO, "shell-init: %s: %s\n", GETCWD_ERR,
+			strerror(errno));
 	else
 	{
 		status = add_env(head, "PWD", cwd);
@@ -36,7 +37,7 @@ static t_status	init_shell_vars(t_list **head)
 		shlvl_num = ft_atoi(existing_shlvl) + 1;
 	if (shlvl_num > 999)
 	{
-		dprintf(STDERR_FILENO, SHLVL_ERR, shlvl_num);
+		dprintf(STDERR_FILENO, "minishell: warning: " SHLVL_ERR, shlvl_num);
 		shlvl_num = 1;
 	}
 	shlvl_str = ft_itoa(shlvl_num);
