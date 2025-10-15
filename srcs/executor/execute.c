@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:38:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 14:05:41 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:22:13 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,14 @@ static char	*get_last_arg(t_cmd *cmd, t_command_type type)
 	char	*last_arg;
 
 	if (type == NO_CMD)
-		return ("");
-	i = 0;
-	while (cmd->args[i + 1])
-		i++;
-	last_arg = ft_strdup(cmd->args[i]);
+		last_arg = ft_strdup("");
+	else
+	{
+		i = 0;
+		while (cmd->args[i + 1])
+			i++;
+		last_arg = ft_strdup(cmd->args[i]);
+	}
 	return (last_arg);
 }
 
@@ -65,9 +68,17 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	cmd = pipeline->cmd_lst->content;
 	type = scan_command_type(cmd);
 	last_arg = get_last_arg(cmd, type);
-	status = set_underscore_for_invocation(minishell, cmd, type);
+	if (!last_arg)
+	{
+		minishell->last_status = assert_error_parent(pipeline, "malloc",
+				ERR_SYSTEM);
+		return ;
+	}
+	if (type != NO_CMD)
+		status = set_underscore_for_invocation(minishell, cmd, type);
 	if (status == ERR_SYSTEM)
 	{
+		free(last_arg);
 		minishell->last_status = assert_error_parent(pipeline, "malloc",
 				ERR_MALLOC);
 		return ;
@@ -80,5 +91,5 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	free(last_arg);
 	if (status == ERR_SYSTEM)
 		minishell->last_status = assert_error_parent(pipeline, "malloc",
-				ERR_MALLOC);
+				ERR_SYSTEM);
 }
