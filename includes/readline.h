@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:17:56 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/09 16:13:00 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 21:57:31 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 # include <stdio.h>
 # include <unistd.h>
 
-char	*get_command_line(void);
+t_status	get_command_line(char **line);
 
 #endif
