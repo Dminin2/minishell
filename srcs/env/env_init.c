@@ -39,8 +39,7 @@ static t_status	init_shell_vars(t_list **head)
 	}
 	shlvl_str = ft_itoa(shlvl_num);
 	if (!shlvl_str)
-		print_error_msg("malloc", ERR_MALLOC);
-	return (ERR_MALLOC);
+		return (ERR_MALLOC);
 	status = add_env(head, "SHLVL", shlvl_str);
 	free(shlvl_str);
 	if (!status)
