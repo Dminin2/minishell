@@ -33,7 +33,6 @@ typedef enum e_status
 	ERR_FORK,
 	ERR_WAITPID,
 	ERR_ERRNO,
-	ERR_INIT_GETCWD
 }			t_status;
 
 typedef struct s_minishell

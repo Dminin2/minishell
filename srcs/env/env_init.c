@@ -22,11 +22,14 @@ static t_status	init_shell_vars(t_list **head)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		return (ERR_INIT_GETCWD);
-	status = add_env(head, "PWD", cwd);
-	free(cwd);
-	if (status == ERR_MALLOC)
-		return (ERR_MALLOC);
+		dprintf(STDERR_FILENO, INIT_GETCWD_ERR, "\n");
+	else
+	{
+		status = add_env(head, "PWD", cwd);
+		free(cwd);
+		if (status == ERR_MALLOC)
+			return (ERR_MALLOC);
+	}
 	shlvl_num = 1;
 	existing_shlvl = search_env(*head, "SHLVL");
 	if (existing_shlvl)
@@ -70,19 +73,11 @@ t_list	*env_init(t_minishell *minishell, char **envp)
 		}
 	}
 	status = init_shell_vars(&head);
-	if (status != SUCCESS)
+	if (status == ERR_MALLOC)
 	{
 		ft_lstclear(&head, free_env_wrapper);
-		if (status == ERR_INIT_GETCWD)
-		{
-			ft_putendl_fd(INIT_GETCWD_ERR, STDERR_FILENO);
-			exit(0);
-		}
-		else if (status == ERR_MALLOC)
-		{
-			print_error_msg("malloc", ERR_MALLOC);
-			return (NULL);
-		}
+		print_error_msg("malloc", ERR_MALLOC);
+		return (NULL);
 	}
 	return (head);
 }
