@@ -30,7 +30,8 @@ t_cmd	*get_cmd_from_lst(t_list *head, int target)
 		return (lst->content);
 }
 
-void	handle_redir_err(t_minishell *minishell, t_pipeline *pipeline, t_redir_err err)
+void	handle_redir_err(t_minishell *minishell, t_pipeline *pipeline,
+		t_redir_err err)
 {
 	if (err.status == ERR_FILE)
 		exit_error(minishell, pipeline, err.redir_err->value, ERR_FILE);
@@ -40,7 +41,8 @@ void	handle_redir_err(t_minishell *minishell, t_pipeline *pipeline, t_redir_err 
 		exit_error(minishell, pipeline, err.redir_err->value, ERR_AMB_REDIR);
 }
 
-void	handle_execve_error(t_minishell *minishell, t_pipeline *pipeline, t_cmd *cmd)
+void	handle_execve_error(t_minishell *minishell, t_pipeline *pipeline,
+		t_cmd *cmd)
 {
 	if (errno == EISDIR)
 		exit_error(minishell, pipeline, cmd->args[0], ERR_ISDIR);
@@ -70,7 +72,7 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	type = scan_command_type(cmd);
 	if (type != EXTERNAL && type != NO_CMD)
 	{
-		execute_builtin(minishell, cmd, type);
+		execute_builtin(minishell, cmd, type, pipeline->n);
 		free_pipeline(pipeline);
 		exit(minishell->last_status);
 	}

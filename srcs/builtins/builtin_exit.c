@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-int	builtin_exit(t_minishell *minishell, char **args)
+int	builtin_exit(t_minishell *minishell, char **args, int cmd_count)
 {
 	unsigned char	last_status;
 
-	if (isatty(STDERR_FILENO) && isatty(STDIN_FILENO))
+	if (isatty(STDERR_FILENO) && isatty(STDIN_FILENO) && cmd_count == 1)
 		ft_putendl_fd("exit", STDOUT_FILENO);
 	if (!args[1])
 	{
