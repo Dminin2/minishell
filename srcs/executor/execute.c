@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:38:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 14:22:13 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:31:29 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	t_status		status;
 	char			*last_arg;
 
+	status = SUCCESS;
 	if (pipeline->n != 1)
 	{
 		child_process(minishell, pipeline);
@@ -90,6 +91,6 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	status = add_env(&(minishell->env_lst), "_", last_arg);
 	free(last_arg);
 	if (status == ERR_SYSTEM)
-		minishell->last_status = assert_error_parent(pipeline, "malloc",
+		minishell->last_status = assert_error_parent(NULL, "malloc",
 				ERR_SYSTEM);
 }
