@@ -25,7 +25,7 @@ static t_status	process_append_arg(t_minishell *minishell, char *key,
 	new_value = ft_strjoin(old_value, to_append_value);
 	if (!new_value)
 		return (ERR_MALLOC);
-	status = add_env(&(minishell->env_lst), key, new_value);
+	status = process_env_key_value(&(minishell->env_lst), key, new_value);
 	free(new_value);
 	return (status);
 }
