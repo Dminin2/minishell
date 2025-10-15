@@ -26,15 +26,14 @@ static void	print_no_args(t_list **env_array, size_t env_count)
 			i++;
 			continue ;
 		}
-		ft_putstr_fd("declare -x ", STDOUT_FILENO);
-		ft_putstr_fd(env->key, STDOUT_FILENO);
+		printf("declare -x %s", env->key);
 		if (env->value)
 		{
-			ft_putstr_fd("=\"", STDOUT_FILENO);
+			printf("=\"");
 			print_escape_value(env->value);
-			ft_putstr_fd("\"", STDOUT_FILENO);
+			printf("\"");
 		}
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		printf("\n");
 		i++;
 	}
 }

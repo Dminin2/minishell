@@ -17,7 +17,7 @@ int	builtin_exit(t_minishell *minishell, char **args, int cmd_count)
 	unsigned char	last_status;
 
 	if (isatty(STDERR_FILENO) && isatty(STDIN_FILENO) && cmd_count == 1)
-		ft_putendl_fd("exit", STDOUT_FILENO);
+		printf("exit\n");
 	if (!args[1])
 	{
 		minishell->should_exit = true;

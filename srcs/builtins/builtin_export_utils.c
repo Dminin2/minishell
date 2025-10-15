@@ -20,8 +20,8 @@ void	print_escape_value(char *str)
 	while (str[i])
 	{
 		if (str[i] == '\"' || str[i] == '`' || str[i] == '$' || str[i] == '\\')
-			ft_putchar_fd('\\', STDOUT_FILENO);
-		ft_putchar_fd(str[i], STDOUT_FILENO);
+			printf("\\");
+		printf("%c", str[i]);
 		i++;
 	}
 }
