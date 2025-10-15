@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define INIT_GETCWD_ERR "shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory"
+# define INIT_GETCWD_ERR "shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n"
 # define SHLVL_ERR "minishell: warning: shell level "
 typedef struct s_env
 {

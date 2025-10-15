@@ -22,7 +22,7 @@ static t_status	init_shell_vars(t_list **head)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		dprintf(STDERR_FILENO, INIT_GETCWD_ERR, "\n");
+		dprintf(STDERR_FILENO, INIT_GETCWD_ERR);
 	else
 	{
 		status = add_env(head, "PWD", cwd);
