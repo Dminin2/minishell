@@ -16,6 +16,25 @@ jobs:
 
       - name: Run Valgrind leak check
         run: |
+          set +e
+          valgrind_error_code=43
           while read -r cmd || [ -n "$cmd" ]; do
-            echo "$cmd" | valgrind --leak-check=full --show-leak-kinds=definite,indirect,possible --track-origins=yes --trace-children=yes --track-fds=yes --error-exitcode=1 ./minishell
+              echo "--- Running command: $cmd ---"
+              echo "$cmd" | valgrind \
+                  --leak-check=full \
+                  --show-leak-kinds=all \
+                  --errors-for-leak-kinds=definite,indirect,possible \
+                  --track-origins=yes \
+                  --trace-children=yes \
+                  --track-fds=yes \
+                  --error-exitcode=$valgrind_error_code \
+                  ./minishell
+              status=$?
+              if [ $status -eq $valgrind_error_code ]; then
+                  echo "Valgrind detected an error for command: '$cmd'"
+                  exit $valgrind_error_code
+              else
+                  echo "Command '$cmd' finished with status $status (Valgrind error not detected)"
+              fi
           done < tests/ci_commands.txt
+          exit 0

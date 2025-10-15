@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/11 01:38:56 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:45:14 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,8 @@ t_command_type	scan_command_type(t_cmd *cmd)
 	return (type);
 }
 
-t_status	execute_builtin(t_minishell *minishell, t_cmd *cmd,
-		t_command_type type)
+void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type)
 {
-	t_status	status;
-
-	status = SUCCESS;
 	if (type == BLT_ECHO)
 		minishell->last_status = builtin_echo(cmd->args);
 	else if (type == BLT_CD)
@@ -61,6 +57,5 @@ t_status	execute_builtin(t_minishell *minishell, t_cmd *cmd,
 	else if (type == BLT_ENV)
 		minishell->last_status = builtin_env(minishell);
 	else if (type == BLT_EXIT)
-		minishell->last_status = builtin_exit(minishell, cmd->args, &status);
-	return (status);
+		minishell->last_status = builtin_exit(minishell, cmd->args);
 }
