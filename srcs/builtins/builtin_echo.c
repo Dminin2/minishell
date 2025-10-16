@@ -29,14 +29,14 @@ int	is_n_option(char *arg)
 }
 int	builtin_echo(char **args)
 {
-	bool	n_option;
-	int		i;
+	int	n_option;
+	int	i;
 
 	i = 1;
-	n_option = false;
+	n_option = 0;
 	while (args[i] && is_n_option(args[i]))
 	{
-		n_option = true;
+		n_option = 1;
 		i++;
 	}
 	while (args[i])
