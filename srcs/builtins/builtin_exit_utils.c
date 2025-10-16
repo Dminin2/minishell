@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	is_space(char c)
+static int	is_whitespace(char c)
 {
 	return (c == ' ' || (c >= '\t' && c <= '\r'));
 }
