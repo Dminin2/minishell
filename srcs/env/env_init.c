@@ -52,9 +52,7 @@ static t_status	set_shlvl(t_list **head)
 		return (ERR_MALLOC);
 	status = process_env_key_value(head, "SHLVL", shlvl_str);
 	free(shlvl_str);
-	if (status == ERR_MALLOC)
-		return (ERR_MALLOC);
-	return (SUCCESS);
+	return (status);
 }
 
 static t_status	init_shell_vars(t_list **head)
@@ -65,9 +63,7 @@ static t_status	init_shell_vars(t_list **head)
 	if (status != SUCCESS)
 		return (status);
 	status = set_shlvl(head);
-	if (status != SUCCESS)
-		return (status);
-	return (SUCCESS);
+	return (status);
 }
 
 static t_status	create_env_list(t_list **head, char **envp)
