@@ -6,13 +6,15 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/15 23:20:53 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:53:43 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COMMON_H
 # define COMMON_H
 
+# include "ft_dprintf.h"
+# include "get_next_line.h"
 # include "libft.h"
 
 typedef enum e_status

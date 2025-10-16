@@ -6,7 +6,7 @@
 #    By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 16:09:47 by aomatsud          #+#    #+#              #
-#    Updated: 2025/07/24 11:33:39 by aomatsud         ###   ########.fr        #
+#    Updated: 2025/10/16 00:30:21 by aomatsud         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,14 @@ print_hexadecimal.c \
 put_fd_utils.c
 FT_PRINTF_OBJS = $(addprefix $(OBJS_DIR)/$(FT_PRINTF_DIR)/, $(FT_PRINTF_SRCS:.c=.o))
 
+FT_DPRINTF_DIR = ft_dprintf
+FT_DPRINTF_SRCS = ft_dprintf.c \
+dprint_char_string_percent.c \
+dprint_decimal.c \
+dprint_hexadecimal.c \
+dput_fd_utils.c
+FT_DPRINTF_OBJS = $(addprefix $(OBJS_DIR)/$(FT_DPRINTF_DIR)/, $(FT_DPRINTF_SRCS:.c=.o))
+
 
 GNL_DIR = get_next_line
 GNL_SRCS = get_next_line.c \
@@ -75,10 +83,10 @@ get_next_line_utils.c
 GNL_OBJS = $(addprefix $(OBJS_DIR)/$(GNL_DIR)/, $(GNL_SRCS:.c=.o))
 
 SRCS_DIR = srcs
-SRCS = $(LIBFT_SRCS) $(FT_PRINTF_SRCS) $(GNL_SRCS)
+SRCS = $(LIBFT_SRCS) $(FT_PRINTF_SRCS) $(FT_DPRINTF_SRCS) $(GNL_SRCS)
 
 OBJS_DIR = objs
-OBJS = $(LIBFT_OBJS) $(FT_PRINTF_OBJS) $(GNL_OBJS)
+OBJS = $(LIBFT_OBJS) $(FT_PRINTF_OBJS) $(FT_DPRINTF_OBJS) $(GNL_OBJS)
 
 INCLUDES = includes
 
@@ -97,6 +105,7 @@ $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)
 	mkdir -p $(OBJS_DIR)/$(LIBFT_DIR)
 	mkdir -p $(OBJS_DIR)/$(FT_PRINTF_DIR)
+	mkdir -p $(OBJS_DIR)/$(FT_DPRINTF_DIR)
 	mkdir -p $(OBJS_DIR)/$(GNL_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)

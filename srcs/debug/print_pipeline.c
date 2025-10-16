@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 20:58:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/11 15:42:50 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/16 01:51:38 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	print_cmd_lst(t_list *head, int fd)
 	i = 1;
 	while (head)
 	{
-		dprintf(fd, "\nCommand #%d\n", i);
+		ft_dprintf(fd, "\nCommand #%d\n", i);
 		cmd = head->content;
 		j = 0;
 		if (cmd->args)
 		{
-			dprintf(fd, "  Args:\n");
+			ft_dprintf(fd, "  Args:\n");
 			while (cmd->args[j])
 			{
-				dprintf(fd, "  -(%s)\n", cmd->args[j]);
+				ft_dprintf(fd, "  -(%s)\n", cmd->args[j]);
 				j++;
 			}
 		}
@@ -42,8 +42,8 @@ void	print_cmd_lst(t_list *head, int fd)
 
 void	print_pipeline(t_pipeline *pipeline, int fd)
 {
-	dprintf(fd, "=== pipeline ===\n");
-	dprintf(fd, "cmd count : %d\n", pipeline->n);
+	ft_dprintf(fd, "=== pipeline ===\n");
+	ft_dprintf(fd, "cmd count : %d\n", pipeline->n);
 	print_cmd_lst(pipeline->cmd_lst, fd);
-	dprintf(fd, "\n");
+	ft_dprintf(fd, "\n");
 }

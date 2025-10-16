@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 18:06:32 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/16 01:52:23 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 		redir_lst = redir_lst->next;
 	}
 #ifdef DEBUG
-	dprintf(g_fd, "=== after expand ===\n");
+	ft_dprintf(g_fd, "=== after expand ===\n");
 	print_redir_lst(head, g_fd);
 #endif
 }
