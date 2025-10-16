@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/17 05:23:23 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/17 05:39:26 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_status	read_line_and_write_fd(t_minishell *minishell, char *delimiter,
 		if (g_sig == SIGINT)
 		{
 			free(line);
-			return (SUCCESS);
+			return (FAILURE);
 		}
 		if (status != SUCCESS)
 			return (status);
@@ -114,7 +114,7 @@ t_status	handle_heredoc(t_minishell *minishell, t_redir *redir)
 	if (status != SUCCESS)
 	{
 		unlink(tmp_file);
-		return (ERR_MALLOC);
+		return (status);
 	}
 	redir->fd_hd = open(tmp_file, O_RDONLY);
 	unlink(tmp_file);
@@ -136,8 +136,6 @@ t_status	loop_heredoc(t_minishell *minishell, t_list *redir_lst)
 			status = handle_heredoc(minishell, redir);
 		else
 			redir->fd_hd = -1;
-		if (g_sig == SIGINT)
-			break ;
 		if (status != SUCCESS)
 			return (status);
 		redir_lst = redir_lst->next;
@@ -169,7 +167,6 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 			free_pipeline(pipeline);
 			minishell->last_status = 130;
 			g_sig = 0;
-			status = FAILURE;
 			break ;
 		}
 		if (status != SUCCESS)
