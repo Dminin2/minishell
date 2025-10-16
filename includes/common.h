@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/14 13:20:48 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:20:53 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ typedef enum e_status
 {
 	SUCCESS,
 	FAILURE,
-	ERR_SYSTEM,
 	ERR_SYNTAX,
 	ERR_CMD_NOT_FOUND,
 	ERR_NOT_VALID_PATH,
