@@ -32,6 +32,8 @@ void						close_pipes(int **pipes, int n);
 t_status					add_newlst(t_list **head, void *content);
 
 int							ft_strcmp(char *s1, char *s2);
+int							is_blank(char c);
+int							is_whitespace(char c);
 
 void						print_error_msg(char *context, t_status status);
 void						print_error_msg_builtin(char *cmd, char *context,

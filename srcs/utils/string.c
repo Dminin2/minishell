@@ -21,3 +21,13 @@ int	ft_strcmp(char *s1, char *s2)
 	}
 	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
+
+int	is_blank(char c)
+{
+	return (c == ' ' || c == '\t');
+}
+
+int	is_whitespace(char c)
+{
+	return (c == ' ' || (c >= '\t' && c <= '\r'));
+}
