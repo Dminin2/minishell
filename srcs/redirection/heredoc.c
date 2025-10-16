@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/17 05:10:47 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/17 05:23:23 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ t_status	loop_heredoc(t_minishell *minishell, t_list *redir_lst)
 			status = handle_heredoc(minishell, redir);
 		else
 			redir->fd_hd = -1;
+		if (g_sig == SIGINT)
+			break ;
 		if (status != SUCCESS)
 			return (status);
 		redir_lst = redir_lst->next;
