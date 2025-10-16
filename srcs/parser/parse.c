@@ -33,7 +33,8 @@ t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 		cmd_ir = ft_calloc(1, sizeof(t_cmd_ir));
 		if (!cmd_ir)
 		{
-			minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC, free_cmd_ir_wrapper);
+			minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
+					free_cmd_ir_wrapper);
 			return (NULL);
 		}
 		status = get_simple_command(&tok_lst, cmd_ir);
@@ -47,7 +48,8 @@ t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 		if (status == ERR_MALLOC)
 		{
 			free_cmd_ir(cmd_ir);
-			minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC, free_cmd_ir_wrapper);
+			minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
+					free_cmd_ir_wrapper);
 			return (NULL);
 		}
 		if (tok_lst)
@@ -55,8 +57,8 @@ t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 			status = skip_pipe(&tok_lst);
 			if (status == ERR_SYNTAX)
 			{
-				minishell->last_status = assert_error_lst(head, "newline", ERR_SYNTAX,
-					free_cmd_ir_wrapper);
+				minishell->last_status = error_lst(head, "newline", ERR_SYNTAX,
+						free_cmd_ir_wrapper);
 				return (NULL);
 			}
 		}
@@ -84,7 +86,7 @@ t_pipeline_ir	*parse(t_minishell *minishell, t_list *tok_lst)
 	pipeline_ir = ft_calloc(1, sizeof(t_pipeline_ir));
 	if (!pipeline_ir)
 	{
-		minishell->last_status = assert_error_lst(NULL, "malloc", ERR_MALLOC, NULL);
+		minishell->last_status = error_lst(NULL, "malloc", ERR_MALLOC, NULL);
 		return (NULL);
 	}
 	pipeline_ir->cmd_ir_lst = get_cmd_ir_lst(minishell, tok_lst);

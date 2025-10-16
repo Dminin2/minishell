@@ -36,9 +36,9 @@ int							ft_strcmp(char *s1, char *s2);
 void						print_error_msg(char *context, t_status status);
 void						print_error_msg_builtin(char *cmd, char *context,
 								t_blt_error error);
-int							assert_error_lst(t_list *lst, char *context,
+int							error_lst(t_list *lst, char *context,
 								t_status status, void (*del)(void *));
-int							assert_error_parent(t_pipeline *pipeline,
+int							error_parent(t_pipeline *pipeline,
 								char *context, t_status status);
 void						exit_error(t_minishell *minishell,
 								t_pipeline *pipeline, char *context,
