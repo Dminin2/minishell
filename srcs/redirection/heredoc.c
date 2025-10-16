@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/17 05:03:37 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/17 05:10:47 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ t_status	read_line_and_write_fd(t_minishell *minishell, char *delimiter,
 		if (status != SUCCESS)
 			return (status);
 		if (!line)
+		{
+			print_error_msg(delimiter, ERR_HEREDOC);
 			break ;
+		}
 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0)
 		{
 			free(line);

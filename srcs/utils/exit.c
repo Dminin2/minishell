@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/16 01:52:31 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/17 05:13:09 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	print_error_msg(char *context, t_status status)
 		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
 	else if (status == ERR_ISDIR)
 		ft_dprintf(STDERR_FILENO, "minishell: %s: Is a directory\n", context);
+	else if(status == ERR_HEREDOC)
+		ft_dprintf(STDERR_FILENO, "\nminishell: warning: here-document delimited by end-of-file (wanted `%s')\n", context);
 	else
 		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
 }
