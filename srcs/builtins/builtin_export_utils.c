@@ -54,18 +54,18 @@ void	bubble_sort_env_array(t_list **env_array, size_t env_count)
 	}
 }
 
-bool	is_valid_identifier(char *key)
+int	is_valid_identifier(char *key)
 {
 	int	i;
 
 	if (!is_valid_key_first_char(key[0]))
-		return (false);
+		return (0);
 	i = 1;
 	while (key[i])
 	{
 		if (!is_valid_key_char(key[i]))
-			return (false);
+			return (0);
 		i++;
 	}
-	return (true);
+	return (1);
 }

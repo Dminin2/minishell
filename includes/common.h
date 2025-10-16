@@ -14,7 +14,6 @@
 # define COMMON_H
 
 # include "libft.h"
-# include <stdbool.h>
 
 typedef enum e_status
 {
@@ -39,7 +38,7 @@ typedef struct s_minishell
 {
 	t_list	*env_lst;
 	int		last_status;
-	bool	should_exit;
+	int		should_exit;
 }			t_minishell;
 
 #endif

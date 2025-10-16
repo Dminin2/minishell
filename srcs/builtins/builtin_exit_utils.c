@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-static bool	is_space(char c)
+static int	is_space(char c)
 {
 	return (c == ' ' || (c >= '\t' && c <= '\r'));
 }
 
-static bool	is_overflow(unsigned long long result, int digit, int sign)
+static int	is_overflow(unsigned long long result, int digit, int sign)
 {
 	unsigned long long	limit;
 
@@ -27,8 +27,8 @@ static bool	is_overflow(unsigned long long result, int digit, int sign)
 		limit = (unsigned long long)LLONG_MAX + 1;
 	if (result > limit / 10 || (result == limit / 10
 			&& (unsigned long long)digit > limit % 10))
-		return (true);
-	return (false);
+		return (1);
+	return (0);
 }
 
 int	execute_conversion(char *str, int sign, unsigned char *last_status)
