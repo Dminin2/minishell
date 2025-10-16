@@ -14,7 +14,7 @@
 
 void	consume_blank(t_lexer *lex)
 {
-	while (lex->line[lex->pos] && isspace(lex->line[lex->pos]))
+	while (lex->line[lex->pos] && is_blank(lex->line[lex->pos]))
 		lex->pos++;
 }
 
@@ -86,7 +86,7 @@ t_status	handle_word(t_lexer *lex, t_list **head)
 
 	start = lex->pos;
 	status = SUCCESS;
-	while (lex->line[lex->pos] && !isspace(lex->line[lex->pos]))
+	while (lex->line[lex->pos] && !is_blank(lex->line[lex->pos]))
 	{
 		if (lex->line[lex->pos] == '\'' || lex->line[lex->pos] == '\"')
 		{
@@ -131,7 +131,7 @@ t_list	*tokenize(t_minishell *minishell, char *line)
 	status = SUCCESS;
 	while (lex.line[lex.pos])
 	{
-		if (isspace(lex.line[lex.pos]))
+		if (is_blank(lex.line[lex.pos]))
 			consume_blank(&lex);
 		else if (scan_operator(&lex, &op_type))
 			status = handle_operator(&lex, &head, &op_type);
