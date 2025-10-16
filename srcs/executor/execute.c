@@ -30,7 +30,7 @@ static t_status	set_underscore_for_invocation(t_minishell *minishell,
 		if (underscore_cmd.path)
 			value = underscore_cmd.path;
 	}
-	status = add_env(&(minishell->env_lst), "_", value);
+	status = process_env_key_value(&(minishell->env_lst), "_", value);
 	if (type == EXTERNAL && value != cmd->args[0])
 		free(value);
 	return (status);
@@ -88,7 +88,7 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 		child_process(minishell, pipeline);
 	else
 		run_builtin_in_parent(minishell, pipeline, type);
-	status = add_env(&(minishell->env_lst), "_", last_arg);
+	status = process_env_key_value(&(minishell->env_lst), "_", last_arg);
 	free(last_arg);
 	if (status == ERR_SYSTEM)
 		minishell->last_status = assert_error_parent(NULL, "malloc",
