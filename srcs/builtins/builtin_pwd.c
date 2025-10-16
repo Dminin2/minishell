@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	is_pwd_valid(char *env_pwd)
+static int	is_pwd_valid(char *env_pwd)
 {
 	struct stat	stat_of_current;
 	struct stat	stat_of_pwd;

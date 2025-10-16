@@ -30,24 +30,20 @@ typedef enum e_blt_error
 	BLTERR_NOT_VALID,
 	BLTERR_NUM_ARG,
 	BLTERR_ERRNO
-}		t_blt_error;
+}	t_blt_error;
 
-int		builtin_pwd(t_minishell *minishell);
-int		builtin_echo(char **args);
-int		builtin_cd(t_minishell *minishell, char **args);
-int		builtin_export(t_minishell *minishell, char **args);
-int		builtin_env(t_minishell *minishell);
-int		builtin_unset(t_minishell *minishell, char **args);
-int		builtin_exit(t_minishell *minishell, char **args, int cmd_count);
+int	builtin_pwd(t_minishell *minishell);
+int	builtin_echo(char **args);
+int	builtin_cd(t_minishell *minishell, char **args);
+int	builtin_export(t_minishell *minishell, char **args);
+int	builtin_env(t_minishell *minishell);
+int	builtin_unset(t_minishell *minishell, char **args);
+int	builtin_exit(t_minishell *minishell, char **args, int cmd_count);
 
-int		return_error(char *msg, t_status status);
+int	return_error(char *msg, t_status status);
 
-void	print_escape_value(char *str);
-int		is_valid_identifier(char *key);
-void	bubble_sort_env_array(t_list **env_array, size_t env_count);
-
-int		handle_args(t_minishell *minishell, char **args);
-int		handle_no_args(t_minishell *minishell);
-int		strtouc_and_validate(char *str, unsigned char *last_status);
+int	handle_args(t_minishell *minishell, char **args);
+int	handle_no_args(t_minishell *minishell);
+int	strtouc_and_validate(char *str, unsigned char *last_status);
 
 #endif

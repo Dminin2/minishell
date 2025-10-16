@@ -12,6 +12,20 @@
 
 #include "minishell.h"
 
+static void	print_escape_value(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"' || str[i] == '`' || str[i] == '$' || str[i] == '\\')
+			printf("\\");
+		printf("%c", str[i]);
+		i++;
+	}
+}
+
 static void	print_no_args(t_list **env_array, size_t env_count)
 {
 	t_env	*env;
@@ -34,6 +48,34 @@ static void	print_no_args(t_list **env_array, size_t env_count)
 			printf("\"");
 		}
 		printf("\n");
+		i++;
+	}
+}
+
+static void	bubble_sort_env_array(t_list **env_array, size_t env_count)
+{
+	size_t	i;
+	size_t	j;
+	t_list	*tmp;
+	char	*key1;
+	char	*key2;
+
+	i = 0;
+	while (i < env_count - 1)
+	{
+		j = 0;
+		while (j < env_count - i - 1)
+		{
+			key1 = ((t_env *)(env_array[j]->content))->key;
+			key2 = ((t_env *)(env_array[j + 1]->content))->key;
+			if (ft_strcmp(key1, key2) > 0)
+			{
+				tmp = env_array[j];
+				env_array[j] = env_array[j + 1];
+				env_array[j + 1] = tmp;
+			}
+			j++;
+		}
 		i++;
 	}
 }

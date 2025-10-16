@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	is_n_option(char *arg)
+static int	is_n_option(char *arg)
 {
 	int	i;
 
@@ -27,6 +27,7 @@ int	is_n_option(char *arg)
 	}
 	return (1);
 }
+
 int	builtin_echo(char **args)
 {
 	int	n_option;
