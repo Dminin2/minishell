@@ -103,6 +103,6 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	if (!target_path)
 		return (1);
 	if (args[1] && ft_strncmp(args[1], "-", 2) == 0)
-		printf("%s\n", target_path);
+		ft_printf("%s\n", target_path);
 	return (perform_chdir(&minishell->env_lst, target_path));
 }
