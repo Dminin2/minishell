@@ -15,7 +15,9 @@
 
 # include "builtin.h"
 # include "libft.h"
+# include <errno.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
 
 # define SHLVL_ERR "shell level (%d) too high, resetting to 1\n"
