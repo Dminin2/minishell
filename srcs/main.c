@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/14 13:44:44 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/15 22:57:10 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,18 @@ int	main(int argc, char **argv, char **envp)
 	t_pipeline_ir	*pipeline_ir;
 	t_minishell		minishell;
 	t_pipeline		*pipeline;
+	t_status		status;
 
 	(void)argc;
 	(void)argv;
-	minishell.should_exit = false;
+	minishell.should_exit = 0;
 	minishell.last_status = 0;
 	minishell.env_lst = env_init(&minishell, envp);
 	if (!minishell.env_lst)
 		exit(1);
+	rl_outstream = stderr;
 #ifdef DEBUG
-	g_fd = open("playground/log", O_WRONLY | O_CREAT | O_TRUNC | __O_CLOEXEC,
+	g_fd = open("playground/log", O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC,
 			0644);
 	if (g_fd < 0)
 	{
@@ -46,7 +48,9 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_status(minishell.last_status, g_fd);
 #endif
-		line = get_command_line();
+		status = get_command_line(&minishell, &line);
+		if (status != SUCCESS)
+			continue ;
 		if (!line)
 			break ;
 #ifdef DEBUG

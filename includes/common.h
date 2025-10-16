@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   common.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
 /*   Updated: 2025/10/14 20:19:27 by hmaruyam         ###   ########.fr       */
@@ -13,14 +13,14 @@
 #ifndef COMMON_H
 # define COMMON_H
 
+# include "ft_dprintf.h"
+# include "get_next_line.h"
 # include "libft.h"
-# include <stdbool.h>
 
 typedef enum e_status
 {
 	SUCCESS,
 	FAILURE,
-	ERR_SYSTEM,
 	ERR_SYNTAX,
 	ERR_CMD_NOT_FOUND,
 	ERR_NOT_VALID_PATH,
@@ -39,7 +39,7 @@ typedef struct s_minishell
 {
 	t_list	*env_lst;
 	int		last_status;
-	bool	should_exit;
+	int		should_exit;
 }			t_minishell;
 
 #endif

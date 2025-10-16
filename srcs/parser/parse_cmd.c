@@ -21,7 +21,7 @@ t_status	get_cmd_ir_args(t_list **tok_lst, t_cmd_ir *cmd_ir)
 	tok = (*tok_lst)->content;
 	args = ft_strdup(tok->value);
 	if (!args)
-		return (ERR_SYSTEM);
+		return (ERR_MALLOC);
 	status = add_newlst(&(cmd_ir->args_lst), args);
 	if (status != SUCCESS)
 	{

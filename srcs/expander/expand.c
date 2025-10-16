@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:14:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 15:14:50 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:17:19 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_list	*get_cmd_lst(t_minishell *minishell, t_list *cmd_ir_lst)
 		cmd = ft_calloc(1, sizeof(t_cmd));
 		if (!cmd)
 		{
-			minishell->last_status = assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_wrapper);
+			minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC, free_cmd_wrapper);
 			return (NULL);
 		}
 		if (cmd_ir->args_lst)
@@ -47,7 +47,7 @@ t_list	*get_cmd_lst(t_minishell *minishell, t_list *cmd_ir_lst)
 			if (status != SUCCESS)
 			{
 				free_cmd(cmd);
-				minishell->last_status = assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_wrapper);
+				minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC, free_cmd_wrapper);
 				return (NULL);
 			}
 		}
@@ -57,7 +57,7 @@ t_list	*get_cmd_lst(t_minishell *minishell, t_list *cmd_ir_lst)
 		if (status != SUCCESS)
 		{
 			free_cmd(cmd);
-			minishell->last_status = assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_wrapper);
+			minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC, free_cmd_wrapper);
 			return (NULL);
 		}
 		cmd_ir_lst = cmd_ir_lst->next;
@@ -72,7 +72,7 @@ t_pipeline	*expand(t_minishell *minishell, t_pipeline_ir *pipeline_ir)
 	pipeline = ft_calloc(1, sizeof(t_pipeline));
 	if (!pipeline)
 	{
-		minishell->last_status = assert_error_lst(NULL, "malloc", ERR_SYSTEM, NULL);
+		minishell->last_status = assert_error_lst(NULL, "malloc", ERR_MALLOC, NULL);
 		return (NULL);
 	}
 	pipeline->cmd_lst = get_cmd_lst(minishell, pipeline_ir->cmd_ir_lst);

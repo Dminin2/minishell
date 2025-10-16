@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:32:03 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 21:18:54 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:14:22 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ t_status	search_path(t_cmd *cmd, char **paths)
 		else
 			tmp = ft_strdup(paths[i]);
 		if (!tmp)
-			return (ERR_SYSTEM);
+			return (ERR_MALLOC);
 		full_path = ft_strjoin(tmp, cmd->args[0]);
 		free(tmp);
 		if (!full_path)
-			return (ERR_SYSTEM);
+			return (ERR_MALLOC);
 		if (stat(full_path, &st_buf) != -1 && !S_ISDIR(st_buf.st_mode))
 		{
 			cmd->path = full_path;
@@ -72,7 +72,7 @@ t_status	assign_direct_path(t_cmd *cmd, char *path_value)
 	{
 		cmd->path = ft_strdup(cmd->args[0]);
 		if (!cmd->path)
-			return (ERR_SYSTEM);
+			return (ERR_MALLOC);
 		status = SUCCESS;
 	}
 	return (status);
@@ -92,7 +92,7 @@ t_status	resolve_command_path(t_cmd *cmd, t_list *env_lst)
 	{
 		paths = split_path_value(path_value);
 		if (!paths)
-			return (ERR_SYSTEM);
+			return (ERR_MALLOC);
 		status = search_path(cmd, paths);
 		free_args(paths);
 	}

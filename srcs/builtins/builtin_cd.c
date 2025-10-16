@@ -37,10 +37,10 @@ static int	update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd)
 {
 	t_status	status;
 
-	status = add_env(env_lst, "OLDPWD", old_pwd);
+	status = process_env_key_value(env_lst, "OLDPWD", old_pwd);
 	if (status == ERR_MALLOC)
 		return (return_error("malloc", ERR_MALLOC));
-	status = add_env(env_lst, "PWD", new_pwd);
+	status = process_env_key_value(env_lst, "PWD", new_pwd);
 	if (status == ERR_MALLOC)
 		return (return_error("malloc", ERR_MALLOC));
 	return (0);
@@ -103,6 +103,6 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	if (!target_path)
 		return (1);
 	if (args[1] && ft_strncmp(args[1], "-", 2) == 0)
-		ft_putendl_fd(target_path, STDOUT_FILENO);
+		printf("%s\n", target_path);
 	return (perform_chdir(&minishell->env_lst, target_path));
 }

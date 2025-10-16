@@ -14,7 +14,7 @@
 
 void	print_status(int status, int fd)
 {
-	dprintf(fd, "\n=== last status ===\n");
-	dprintf(fd, "%d\n", status);
-	dprintf(fd, "\n");
+	ft_dprintf(fd, "\n=== last status ===\n");
+	ft_dprintf(fd, "%d\n", status);
+	ft_dprintf(fd, "\n");
 }

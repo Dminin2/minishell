@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/14 15:38:42 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:16:48 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,19 @@ t_cmd	*get_cmd_from_lst(t_list *head, int target)
 		return (lst->content);
 }
 
-void	handle_redir_err(t_minishell *minishell, t_pipeline *pipeline, t_redir_err err)
+void	handle_redir_err(t_minishell *minishell, t_pipeline *pipeline,
+		t_redir_err err)
 {
 	if (err.status == ERR_FILE)
 		exit_error(minishell, pipeline, err.redir_err->value, ERR_FILE);
 	else if (err.status == ERR_DUP)
-		exit_error(minishell, pipeline, "dup", ERR_SYSTEM);
+		exit_error(minishell, pipeline, "dup", ERR_DUP);
 	else if (err.status == ERR_AMB_REDIR)
 		exit_error(minishell, pipeline, err.redir_err->value, ERR_AMB_REDIR);
 }
 
-void	handle_execve_error(t_minishell *minishell, t_pipeline *pipeline, t_cmd *cmd)
+void	handle_execve_error(t_minishell *minishell, t_pipeline *pipeline,
+		t_cmd *cmd)
 {
 	if (errno == EISDIR)
 		exit_error(minishell, pipeline, cmd->args[0], ERR_ISDIR);
@@ -70,7 +72,7 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	type = scan_command_type(cmd);
 	if (type != EXTERNAL && type != NO_CMD)
 	{
-		execute_builtin(minishell, cmd, type);
+		execute_builtin(minishell, cmd, type, pipeline->n);
 		free_pipeline(pipeline);
 		exit(minishell->last_status);
 	}
@@ -79,7 +81,7 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	status = resolve_command_path(cmd, minishell->env_lst);
 	if (status != SUCCESS)
 	{
-		if (status == ERR_SYSTEM)
+		if (status == ERR_MALLOC)
 			exit_error(minishell, pipeline, "malloc", status);
 		else
 			exit_error(minishell, pipeline, cmd->args[0], status);
@@ -89,7 +91,7 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	if (S_ISDIR(st_buf.st_mode))
 		exit_error(minishell, pipeline, cmd->path, ERR_ISDIR);
 	if (access(cmd->path, X_OK) == -1)
-		exit_error(minishell, pipeline, cmd->path, ERR_SYSTEM);
+		exit_error(minishell, pipeline, cmd->path, ERR_ERRNO);
 	envp = pack_env(minishell->env_lst);
 	if (!envp)
 		exit_error(minishell, pipeline, "malloc", ERR_MALLOC);
