@@ -151,10 +151,10 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 		if (status != SUCCESS)
 		{
 			if (status == ERR_FILE)
-				minishell->last_status = assert_error_parent(pipeline,
+				minishell->last_status = error_parent(pipeline,
 						"/tmp/minishell_heredoc", ERR_FILE);
 			else if (status == ERR_MALLOC)
-				minishell->last_status = assert_error_parent(pipeline, "malloc",
+				minishell->last_status = error_parent(pipeline, "malloc",
 						ERR_MALLOC);
 			return (FAILURE);
 		}

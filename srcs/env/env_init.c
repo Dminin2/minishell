@@ -65,8 +65,8 @@ t_list	*env_init(t_minishell *minishell, char **envp)
 			status = process_env_line(&head, envp[i]);
 			if (status == ERR_MALLOC)
 			{
-				minishell->last_status = assert_error_lst(head, "malloc",
-						ERR_MALLOC, free_env_wrapper);
+				minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
+						free_env_wrapper);
 				return (NULL);
 			}
 			i++;
@@ -75,7 +75,7 @@ t_list	*env_init(t_minishell *minishell, char **envp)
 	status = init_shell_vars(&head);
 	if (status == ERR_MALLOC)
 	{
-		minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC,
+		minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
 				free_env_wrapper);
 		return (NULL);
 	}

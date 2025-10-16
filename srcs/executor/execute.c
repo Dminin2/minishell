@@ -71,8 +71,7 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	last_arg = get_last_arg(cmd, type);
 	if (!last_arg)
 	{
-		minishell->last_status = assert_error_parent(pipeline, "malloc",
-				ERR_MALLOC);
+		minishell->last_status = error_parent(pipeline, "malloc", ERR_MALLOC);
 		return ;
 	}
 	if (type != NO_CMD)
@@ -80,8 +79,7 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	if (status == ERR_MALLOC)
 	{
 		free(last_arg);
-		minishell->last_status = assert_error_parent(pipeline, "malloc",
-				ERR_MALLOC);
+		minishell->last_status = error_parent(pipeline, "malloc", ERR_MALLOC);
 		return ;
 	}
 	if (type == EXTERNAL)
@@ -91,6 +89,5 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	status = process_env_key_value(&(minishell->env_lst), "_", last_arg);
 	free(last_arg);
 	if (status == ERR_MALLOC)
-		minishell->last_status = assert_error_parent(NULL, "malloc",
-				ERR_MALLOC);
+		minishell->last_status = error_parent(NULL, "malloc", ERR_MALLOC);
 }
