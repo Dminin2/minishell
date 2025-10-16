@@ -12,6 +12,7 @@ REDIRECTION_DIR = redirection
 ENV_DIR = env
 UTILS_DIR = utils
 BUILTINS_DIR = builtins
+SIGNALS_DIR = signals
 
 SRCS_MAIN = main.c
 SRCS_READLINE = $(READLINE_DIR)/readline.c
@@ -67,7 +68,8 @@ SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_export.c \
 	$(BUILTINS_DIR)/builtin_export_args.c \
 	$(BUILTINS_DIR)/builtin_export_no_args.c \
-	$(BUILTINS_DIR)/builtin_unset.c \
+	$(BUILTINS_DIR)/builtin_unset.c
+SRCS_SIGNALS = $(SIGNALS_DIR)/signal_setup.c
 
 
 # debug用
@@ -91,7 +93,8 @@ $(SRCS_EXECUTOR) \
 $(SRCS_ENV) \
 $(SRCS_UTILS) \
 $(SRCS_DEBUG) \
-$(SRCS_BUILTINS)
+$(SRCS_BUILTINS) \
+$(SRCS_SIGNALS)
 
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
@@ -128,6 +131,7 @@ $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)/$(UTILS_DIR)
 	mkdir -p $(OBJS_DIR)/$(DEBUG_DIR)
 	mkdir -p $(OBJS_DIR)/$(BUILTINS_DIR)
+	mkdir -p $(OBJS_DIR)/$(SIGNALS_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	$(CC) $(CFLAGS) -I$(INCLUDES) -I$(LIBFT_INCLUDES) -c $< -o $@
