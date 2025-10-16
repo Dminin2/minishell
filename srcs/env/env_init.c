@@ -22,11 +22,11 @@ static t_status	init_shell_vars(t_list **head)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		dprintf(STDERR_FILENO, "shell-init: %s: %s\n", GETCWD_ERR,
+		ft_dprintf(STDERR_FILENO, "shell-init: %s: %s\n", GETCWD_ERR,
 			strerror(errno));
 	else
 	{
-		status = add_env(head, "PWD", cwd);
+		status = process_env_key_value(head, "PWD", cwd);
 		free(cwd);
 		if (status == ERR_MALLOC)
 			return (ERR_MALLOC);
@@ -37,13 +37,13 @@ static t_status	init_shell_vars(t_list **head)
 		shlvl_num = ft_atoi(existing_shlvl) + 1;
 	if (shlvl_num > 999)
 	{
-		dprintf(STDERR_FILENO, "minishell: warning: " SHLVL_ERR, shlvl_num);
+		ft_dprintf(STDERR_FILENO, "minishell: warning: " SHLVL_ERR, shlvl_num);
 		shlvl_num = 1;
 	}
 	shlvl_str = ft_itoa(shlvl_num);
 	if (!shlvl_str)
 		return (ERR_MALLOC);
-	status = add_env(head, "SHLVL", shlvl_str);
+	status = process_env_key_value(head, "SHLVL", shlvl_str);
 	free(shlvl_str);
 	if (status == ERR_MALLOC)
 		return (ERR_MALLOC);
@@ -75,7 +75,7 @@ t_list	*env_init(t_minishell *minishell, char **envp)
 	status = init_shell_vars(&head);
 	if (status == ERR_MALLOC)
 	{
-		minishell->last_status = assert_error_lst(head, "malloc", ERR_SYSTEM,
+		minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC,
 				free_env_wrapper);
 		return (NULL);
 	}
