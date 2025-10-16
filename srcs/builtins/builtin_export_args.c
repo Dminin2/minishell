@@ -30,9 +30,20 @@ static t_status	process_append_arg(t_minishell *minishell, char *key,
 	return (status);
 }
 
-static t_status	process_export_arg(t_minishell *minishell, char *arg)
+static int	is_valid_identifier(char *key)
 {
-	return (process_env_line(&(minishell->env_lst), arg));
+	int	i;
+
+	if (!is_valid_key_first_char(key[0]))
+		return (0);
+	i = 1;
+	while (key[i])
+	{
+		if (!is_valid_key_char(key[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 static char	*extract_key(char *arg, int *is_append, char *equal_pos)
@@ -74,7 +85,7 @@ static t_status	handle_arg(t_minishell *minishell, char *arg, int *last_status)
 		if (is_append)
 			status = process_append_arg(minishell, key, equal_pos + 1);
 		else
-			status = process_export_arg(minishell, arg);
+			status = process_env_line(&(minishell->env_lst), arg);
 	}
 	free(key);
 	return (status);

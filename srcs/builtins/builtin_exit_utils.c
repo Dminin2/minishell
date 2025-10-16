@@ -31,7 +31,7 @@ static int	is_overflow(unsigned long long result, int digit, int sign)
 	return (0);
 }
 
-int	execute_conversion(char *str, int sign, unsigned char *last_status)
+static int	execute_conversion(char *str, int sign, unsigned char *last_status)
 {
 	unsigned long long	result;
 	int					digit;
