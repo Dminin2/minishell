@@ -34,7 +34,7 @@ char		*pack_line(char *key, char *value);
 int			is_valid_key_first_char(char c);
 int			is_valid_key_char(char c);
 
-t_status	add_env(t_list **head, char *key, char *value);
+t_status	process_env_key_value(t_list **head, char *key, char *value);
 void		remove_env(t_list **head, char *key);
 
 char		*search_env(t_list *env_lst, char *key);

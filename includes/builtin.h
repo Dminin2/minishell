@@ -15,7 +15,6 @@
 
 # include "common.h"
 # include <limits.h>
-# include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -44,7 +43,7 @@ int		builtin_exit(t_minishell *minishell, char **args, int cmd_count);
 int		return_error(char *msg, t_status status);
 
 void	print_escape_value(char *str);
-bool	is_valid_identifier(char *key);
+int		is_valid_identifier(char *key);
 void	bubble_sort_env_array(t_list **env_array, size_t env_count);
 
 int		handle_args(t_minishell *minishell, char **args);

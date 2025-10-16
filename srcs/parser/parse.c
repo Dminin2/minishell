@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 12:23:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 15:19:36 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:20:13 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 		cmd_ir = ft_calloc(1, sizeof(t_cmd_ir));
 		if (!cmd_ir)
 		{
-			minishell->last_status = assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_ir_wrapper);
+			minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC, free_cmd_ir_wrapper);
 			return (NULL);
 		}
 		status = get_simple_command(&tok_lst, cmd_ir);
@@ -44,10 +44,10 @@ t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 			return (NULL);
 		}
 		status = add_newlst(&head, (void *)cmd_ir);
-		if (status == ERR_SYSTEM)
+		if (status == ERR_MALLOC)
 		{
 			free_cmd_ir(cmd_ir);
-			minishell->last_status = assert_error_lst(head, "malloc", ERR_SYSTEM, free_cmd_ir_wrapper);
+			minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC, free_cmd_ir_wrapper);
 			return (NULL);
 		}
 		if (tok_lst)
@@ -84,7 +84,7 @@ t_pipeline_ir	*parse(t_minishell *minishell, t_list *tok_lst)
 	pipeline_ir = ft_calloc(1, sizeof(t_pipeline_ir));
 	if (!pipeline_ir)
 	{
-		minishell->last_status = assert_error_lst(NULL, "malloc", ERR_SYSTEM, NULL);
+		minishell->last_status = assert_error_lst(NULL, "malloc", ERR_MALLOC, NULL);
 		return (NULL);
 	}
 	pipeline_ir->cmd_ir_lst = get_cmd_ir_lst(minishell, tok_lst);

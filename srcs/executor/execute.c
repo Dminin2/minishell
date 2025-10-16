@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:38:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 14:31:29 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:21:38 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ static t_status	set_underscore_for_invocation(t_minishell *minishell,
 		underscore_cmd.args = cmd->args;
 		underscore_cmd.path = NULL;
 		status = resolve_command_path(&underscore_cmd, minishell->env_lst);
-		if (status == ERR_SYSTEM)
-			return (ERR_SYSTEM);
+		if (status == ERR_MALLOC)
+			return (ERR_MALLOC);
 		if (underscore_cmd.path)
 			value = underscore_cmd.path;
 	}
-	status = add_env(&(minishell->env_lst), "_", value);
+	status = process_env_key_value(&(minishell->env_lst), "_", value);
 	if (type == EXTERNAL && value != cmd->args[0])
 		free(value);
 	return (status);
@@ -72,12 +72,12 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	if (!last_arg)
 	{
 		minishell->last_status = assert_error_parent(pipeline, "malloc",
-				ERR_SYSTEM);
+				ERR_MALLOC);
 		return ;
 	}
 	if (type != NO_CMD)
 		status = set_underscore_for_invocation(minishell, cmd, type);
-	if (status == ERR_SYSTEM)
+	if (status == ERR_MALLOC)
 	{
 		free(last_arg);
 		minishell->last_status = assert_error_parent(pipeline, "malloc",
@@ -88,9 +88,9 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 		child_process(minishell, pipeline);
 	else
 		run_builtin_in_parent(minishell, pipeline, type);
-	status = add_env(&(minishell->env_lst), "_", last_arg);
+	status = process_env_key_value(&(minishell->env_lst), "_", last_arg);
 	free(last_arg);
-	if (status == ERR_SYSTEM)
+	if (status == ERR_MALLOC)
 		minishell->last_status = assert_error_parent(NULL, "malloc",
-				ERR_SYSTEM);
+				ERR_MALLOC);
 }

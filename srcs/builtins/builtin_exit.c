@@ -17,16 +17,16 @@ int	builtin_exit(t_minishell *minishell, char **args, int cmd_count)
 	unsigned char	last_status;
 
 	if (isatty(STDERR_FILENO) && isatty(STDIN_FILENO) && cmd_count == 1)
-		ft_putendl_fd("exit", STDOUT_FILENO);
+		printf("exit\n");
 	if (!args[1])
 	{
-		minishell->should_exit = true;
+		minishell->should_exit = 1;
 		return (minishell->last_status);
 	}
 	if (strtouc_and_validate(args[1], &last_status))
 	{
 		print_error_msg_builtin("exit", args[1], BLTERR_NUM_ARG);
-		minishell->should_exit = true;
+		minishell->should_exit = 1;
 		return (2);
 	}
 	if (args[2])
@@ -34,6 +34,6 @@ int	builtin_exit(t_minishell *minishell, char **args, int cmd_count)
 		print_error_msg_builtin("exit", NULL, BLTERR_MANY_ARG);
 		return (1);
 	}
-	minishell->should_exit = true;
+	minishell->should_exit = 1;
 	return ((int)last_status);
 }

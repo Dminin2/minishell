@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	minishell.should_exit = false;
+	minishell.should_exit = 0;
 	minishell.last_status = 0;
 	minishell.env_lst = env_init(&minishell, envp);
 	if (!minishell.env_lst)

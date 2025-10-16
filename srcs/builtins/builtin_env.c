@@ -22,11 +22,7 @@ int	builtin_env(t_minishell *minishell)
 	{
 		env = (t_env *)(cur_node->content);
 		if (env->value)
-		{
-			ft_putstr_fd(env->key, STDOUT_FILENO);
-			ft_putstr_fd("=", STDOUT_FILENO);
-			ft_putendl_fd(env->value, STDOUT_FILENO);
-		}
+			printf("%s=%s\n", env->key, env->value);
 		cur_node = cur_node->next;
 	}
 	return (0);

@@ -25,7 +25,7 @@ static t_status	process_append_arg(t_minishell *minishell, char *key,
 	new_value = ft_strjoin(old_value, to_append_value);
 	if (!new_value)
 		return (ERR_MALLOC);
-	status = add_env(&(minishell->env_lst), key, new_value);
+	status = process_env_key_value(&(minishell->env_lst), key, new_value);
 	free(new_value);
 	return (status);
 }
@@ -35,16 +35,16 @@ static t_status	process_export_arg(t_minishell *minishell, char *arg)
 	return (process_env_line(&(minishell->env_lst), arg));
 }
 
-static char	*extract_key(char *arg, bool *is_append, char *equal_pos)
+static char	*extract_key(char *arg, int *is_append, char *equal_pos)
 {
 	if (equal_pos && equal_pos > arg && *(equal_pos - 1) == '+')
 	{
-		*is_append = true;
+		*is_append = 1;
 		return (ft_substr(arg, 0, equal_pos - arg - 1));
 	}
 	else
 	{
-		*is_append = false;
+		*is_append = 0;
 		if (!equal_pos)
 			return (ft_strdup(arg));
 		else
@@ -54,7 +54,7 @@ static char	*extract_key(char *arg, bool *is_append, char *equal_pos)
 
 static t_status	handle_arg(t_minishell *minishell, char *arg, int *last_status)
 {
-	bool		is_append;
+	int			is_append;
 	char		*equal_pos;
 	char		*key;
 	t_status	status;

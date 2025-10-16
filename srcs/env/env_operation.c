@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_status	add_env(t_list **head, char *key, char *value)
+t_status	process_env_key_value(t_list **head, char *key, char *value)
 {
 	char		*line;
 	char		*tmp;

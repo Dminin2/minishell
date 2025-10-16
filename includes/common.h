@@ -16,13 +16,11 @@
 # include "ft_dprintf.h"
 # include "get_next_line.h"
 # include "libft.h"
-# include <stdbool.h>
 
 typedef enum e_status
 {
 	SUCCESS,
 	FAILURE,
-	ERR_SYSTEM,
 	ERR_SYNTAX,
 	ERR_CMD_NOT_FOUND,
 	ERR_NOT_VALID_PATH,
@@ -41,7 +39,7 @@ typedef struct s_minishell
 {
 	t_list	*env_lst;
 	int		last_status;
-	bool	should_exit;
+	int		should_exit;
 }			t_minishell;
 
 #endif
