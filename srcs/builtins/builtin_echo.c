@@ -27,6 +27,7 @@ int	is_n_option(char *arg)
 	}
 	return (1);
 }
+
 int	builtin_echo(char **args)
 {
 	int	n_option;
