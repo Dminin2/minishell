@@ -93,14 +93,14 @@ t_list	*env_init(t_minishell *minishell, char **envp)
 	status = create_env_list(&head, envp);
 	if (status == ERR_MALLOC)
 	{
-		minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC,
+		minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
 				free_env_wrapper);
 		return (NULL);
 	}
 	status = init_shell_vars(&head);
 	if (status == ERR_MALLOC)
 	{
-		minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC,
+		minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
 				free_env_wrapper);
 		return (NULL);
 	}

@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 23:20:48 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/16 19:01:05 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,17 @@ char	*expand_heredoc(t_minishell *minishell, char *line)
 t_status	read_line_and_write_fd(t_minishell *minishell, char *delimiter,
 		int fd, int is_quoted)
 {
-	char	*line;
+	char		*line;
+	t_status	status;
 
 	while (1)
 	{
-		line = readline("> ");
+		line = NULL;
+		if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
+			ft_putstr_fd("> ", STDERR_FILENO);
+		status = gnl_and_remove_new_line(&line);
+		if (status != SUCCESS)
+			return (status);
 		if (!line)
 			break ;
 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0)
@@ -145,10 +151,10 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 		if (status != SUCCESS)
 		{
 			if (status == ERR_FILE)
-				minishell->last_status = assert_error_parent(pipeline,
+				minishell->last_status = error_parent(pipeline,
 						"/tmp/minishell_heredoc", ERR_FILE);
 			else if (status == ERR_MALLOC)
-				minishell->last_status = assert_error_parent(pipeline, "malloc",
+				minishell->last_status = error_parent(pipeline, "malloc",
 						ERR_MALLOC);
 			return (FAILURE);
 		}

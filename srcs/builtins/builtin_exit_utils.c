@@ -12,11 +12,6 @@
 
 #include "minishell.h"
 
-static int	is_space(char c)
-{
-	return (c == ' ' || (c >= '\t' && c <= '\r'));
-}
-
 static int	is_overflow(unsigned long long result, int digit, int sign)
 {
 	unsigned long long	limit;
@@ -47,7 +42,7 @@ static int	execute_conversion(char *str, int sign, unsigned char *last_status)
 		result = result * 10 + digit;
 		str++;
 	}
-	while (is_space(*str))
+	while (is_whitespace(*str))
 		str++;
 	if (*str != '\0')
 		return (1);
@@ -60,7 +55,7 @@ int	strtouc_and_validate(char *str, unsigned char *last_status)
 	int	sign;
 
 	sign = 1;
-	while (is_space(*str))
+	while (is_whitespace(*str))
 		str++;
 	if (*str == '-' || *str == '+')
 	{
