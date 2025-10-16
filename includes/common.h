@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/16 12:53:43 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:19:27 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef enum e_status
 	ERR_PIPE,
 	ERR_FORK,
 	ERR_WAITPID,
-	ERR_ERRNO
+	ERR_ERRNO,
 }			t_status;
 
 typedef struct s_minishell

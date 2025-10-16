@@ -3,18 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:13:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 15:11:40 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 21:56:16 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
 
+# include "builtin.h"
 # include "libft.h"
+# include <errno.h>
 # include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
+
+# define SHLVL_ERR "shell level (%d) too high, resetting to 1\n"
 
 typedef struct s_env
 {
