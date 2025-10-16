@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:58:42 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/16 18:59:01 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/16 22:30:50 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 t_status	gnl_and_remove_new_line(char **line)
 {
-	int i;
-	char *removed_new_line;
-	t_status status;
+	int			i;
+	char		*removed_new_line;
+	t_status	status;
 
 	status = SUCCESS;
 	*line = get_next_line(STDIN_FILENO);
