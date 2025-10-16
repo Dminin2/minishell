@@ -6,18 +6,19 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:17:56 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/09 16:13:00 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 22:57:22 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef READLINE_H
 # define READLINE_H
 
+# include "common.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
 # include <unistd.h>
 
-char	*get_command_line(void);
+t_status	get_command_line(t_minishell *minishell, char **line);
 
 #endif
