@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:46:49 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/17 04:29:06 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:31:50 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,24 @@ t_status	set_signal_noninteractive(void)
 t_status	set_signal_heredoc(void)
 {
 	if (set_action(SIGINT, sigint_handler_in_heredoc) == ERR_SIG)
+		return (ERR_SIG);
+	if (set_action(SIGQUIT, SIG_IGN) == ERR_SIG)
+		return (ERR_SIG);
+	return (SUCCESS);
+}
+
+t_status	set_signal_default(void)
+{
+	if (set_action(SIGINT, SIG_DFL) == ERR_SIG)
+		return (ERR_SIG);
+	if (set_action(SIGQUIT, SIG_DFL) == ERR_SIG)
+		return (ERR_SIG);
+	return (SUCCESS);
+}
+
+t_status	set_signal_wait_child(void)
+{
+	if (set_action(SIGINT, SIG_IGN) == ERR_SIG)
 		return (ERR_SIG);
 	if (set_action(SIGQUIT, SIG_IGN) == ERR_SIG)
 		return (ERR_SIG);
