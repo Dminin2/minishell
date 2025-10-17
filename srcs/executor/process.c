@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 23:50:11 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/17 15:01:37 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
 		free(pids);
 		return ;
 	}
+	if (isatty(STDIN_FILENO) && set_signal_wait_child() != SUCCESS)
+		print_error_msg("sigaction", ERR_SIG);
 	while (i < pids_count)
 	{
 		if (waitpid(pids[i], &status, 0) == -1)
@@ -38,16 +40,32 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
 			if (i == pids_count - 1)
 				err = 1;
 		}
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+			g_sig = SIGINT;
 		i++;
+	}
+	if (g_sig == SIGINT)
+	{
+		ft_dprintf(STDERR_FILENO, "\n");
+		g_sig = 0;
 	}
 	if (err)
 		minishell->last_status = 1;
 	else if (WIFEXITED(status))
 		minishell->last_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			ft_dprintf(STDERR_FILENO, "Quit (core dumped)\n");
 		minishell->last_status = 128 + WTERMSIG(status);
+	}
 	else
 		minishell->last_status = 1;
+	if (isatty(STDIN_FILENO) && set_signal_interactive() != SUCCESS)
+	{
+		print_error_msg("sigaction", ERR_SIG);
+		minishell->should_exit = 1;
+	}
 	free(pids);
 }
 
@@ -64,6 +82,8 @@ int	fork_all_children(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids)
 		if (pids[i] == 0)
 		{
 			free(pids);
+			if (set_signal_default() != SUCCESS)
+				exit_error(minishell, pipeline, "sigaction", ERR_SIG);
 			run_in_child(minishell, pipeline, i);
 		}
 		i++;
