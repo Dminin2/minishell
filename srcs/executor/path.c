@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:32:03 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 23:14:22 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/17 19:38:23 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,12 @@ t_status	search_path(t_cmd *cmd, char **paths)
 	return (ERR_CMD_NOT_FOUND);
 }
 
-t_status	assign_direct_path(t_cmd *cmd, char *path_value)
+t_status	assign_direct_path(t_cmd *cmd)
 {
-	t_status	status;
-
-	if (!cmd->args[0])
-	{
-		if (!path_value)
-			status = ERR_NOT_VALID_PATH;
-		else
-			status = ERR_CMD_NOT_FOUND;
-	}
-	else
-	{
-		cmd->path = ft_strdup(cmd->args[0]);
-		if (!cmd->path)
-			return (ERR_MALLOC);
-		status = SUCCESS;
-	}
-	return (status);
+	cmd->path = ft_strdup(cmd->args[0]);
+	if (!cmd->path)
+		return (ERR_MALLOC);
+	return (SUCCESS);
 }
 
 t_status	resolve_command_path(t_cmd *cmd, t_list *env_lst)
@@ -85,9 +72,8 @@ t_status	resolve_command_path(t_cmd *cmd, t_list *env_lst)
 	t_status	status;
 
 	path_value = search_env(env_lst, "PATH");
-	if (!path_value || path_value[0] == '\0' || !cmd->args[0]
-		|| has_slash(cmd->args[0]))
-		status = assign_direct_path(cmd, path_value);
+	if (!path_value || path_value[0] == '\0' || has_slash(cmd->args[0]))
+		status = assign_direct_path(cmd);
 	else
 	{
 		paths = split_path_value(path_value);
