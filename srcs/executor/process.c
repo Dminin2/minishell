@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/17 15:01:37 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/17 19:14:30 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
 			if (i == pids_count - 1)
 				err = 1;
 		}
-		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 			g_sig = SIGINT;
 		i++;
 	}
