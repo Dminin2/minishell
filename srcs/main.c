@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 22:57:10 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/17 04:17:55 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	if (isatty(STDIN_FILENO))
+		status = set_signal_interactive();
+	else
+		status = set_signal_noninteractive();
+	if (status != SUCCESS)
+	{
+		print_error_msg("sigaction", status);
+		exit(1);
+	}
 	minishell.should_exit = 0;
 	minishell.last_status = 0;
 	minishell.env_lst = env_init(&minishell, envp);
@@ -52,7 +61,11 @@ int	main(int argc, char **argv, char **envp)
 		if (status != SUCCESS)
 			continue ;
 		if (!line)
+		{
+			if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
+				ft_dprintf(STDERR_FILENO, "exit\n");
 			break ;
+		}
 #ifdef DEBUG
 		print_line(line, g_fd);
 #endif
