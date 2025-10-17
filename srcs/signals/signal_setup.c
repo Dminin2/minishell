@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:46:49 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/17 03:53:13 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/17 04:29:06 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ void	sigint_handler_in_readline(int signo)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+}
+
+void	sigint_handler_in_heredoc(int signo)
+{
+	(void)signo;
+	g_sig = SIGINT;
+	write(STDERR_FILENO, "\n", 1);
 }
 
 t_status	set_action(int sig, void (*handler)(int))
@@ -48,6 +55,15 @@ t_status	set_signal_interactive(void)
 t_status	set_signal_noninteractive(void)
 {
 	if (set_action(SIGINT, SIG_DFL) == ERR_SIG)
+		return (ERR_SIG);
+	if (set_action(SIGQUIT, SIG_IGN) == ERR_SIG)
+		return (ERR_SIG);
+	return (SUCCESS);
+}
+
+t_status	set_signal_heredoc(void)
+{
+	if (set_action(SIGINT, sigint_handler_in_heredoc) == ERR_SIG)
 		return (ERR_SIG);
 	if (set_action(SIGQUIT, SIG_IGN) == ERR_SIG)
 		return (ERR_SIG);

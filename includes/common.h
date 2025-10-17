@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/17 02:55:03 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/17 05:10:42 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef enum e_status
 	ERR_FORK,
 	ERR_WAITPID,
 	ERR_SIG,
+	ERR_HEREDOC,
 	ERR_ERRNO,
 }			t_status;
 

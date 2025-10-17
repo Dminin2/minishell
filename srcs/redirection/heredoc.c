@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/16 19:01:05 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/18 00:15:31 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,18 @@ t_status	read_line_and_write_fd(t_minishell *minishell, char *delimiter,
 		if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
 			ft_putstr_fd("> ", STDERR_FILENO);
 		status = gnl_and_remove_new_line(&line);
+		if (g_sig == SIGINT)
+		{
+			free(line);
+			return (FAILURE);
+		}
 		if (status != SUCCESS)
 			return (status);
 		if (!line)
+		{
+			print_error_msg(delimiter, ERR_HEREDOC);
 			break ;
+		}
 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0)
 		{
 			free(line);
@@ -106,7 +114,7 @@ t_status	handle_heredoc(t_minishell *minishell, t_redir *redir)
 	if (status != SUCCESS)
 	{
 		unlink(tmp_file);
-		return (ERR_MALLOC);
+		return (status);
 	}
 	redir->fd_hd = open(tmp_file, O_RDONLY);
 	unlink(tmp_file);
@@ -143,11 +151,23 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 
 	status = SUCCESS;
 	cur_node = pipeline->cmd_lst;
+	if (isatty(STDIN_FILENO) && set_signal_heredoc() != SUCCESS)
+	{
+		minishell->last_status = error_parent(pipeline, "sigaction", ERR_SIG);
+		return (FAILURE);
+	}
 	while (cur_node)
 	{
 		cmd = cur_node->content;
 		if (cmd->redir_lst)
 			status = loop_heredoc(minishell, cmd->redir_lst);
+		if (g_sig == SIGINT)
+		{
+			free_pipeline(pipeline);
+			minishell->last_status = 130;
+			g_sig = 0;
+			break ;
+		}
 		if (status != SUCCESS)
 		{
 			if (status == ERR_FILE)
@@ -156,9 +176,20 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 			else if (status == ERR_MALLOC)
 				minishell->last_status = error_parent(pipeline, "malloc",
 						ERR_MALLOC);
-			return (FAILURE);
+			status = FAILURE;
+			break ;
 		}
 		cur_node = cur_node->next;
 	}
-	return (SUCCESS);
+	if (isatty(STDIN_FILENO) && set_signal_interactive() != SUCCESS)
+	{
+		if (status == SUCCESS)
+			minishell->last_status = error_parent(pipeline, "sigaction",
+					ERR_SIG);
+		else
+			minishell->last_status = error_parent(NULL, "sigaction", ERR_SIG);
+		minishell->should_exit = 1;
+		return (FAILURE);
+	}
+	return (status);
 }
