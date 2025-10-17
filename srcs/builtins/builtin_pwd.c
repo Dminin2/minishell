@@ -33,7 +33,7 @@ int	builtin_pwd(t_minishell *minishell)
 
 	env_pwd = search_env(minishell->env_lst, "PWD");
 	if (env_pwd && is_pwd_valid(env_pwd))
-		printf("%s\n", env_pwd);
+		ft_printf("%s\n", env_pwd);
 	else
 	{
 		cwd = getcwd(NULL, 0);
@@ -42,7 +42,7 @@ int	builtin_pwd(t_minishell *minishell)
 			print_error_msg_builtin("pwd", GETCWD_ERR, BLTERR_ERRNO);
 			return (1);
 		}
-		printf("%s\n", cwd);
+		ft_printf("%s\n", cwd);
 		free(cwd);
 	}
 	return (0);

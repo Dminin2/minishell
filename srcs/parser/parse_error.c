@@ -12,21 +12,23 @@
 
 #include "minishell.h"
 
-void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head, t_status status)
+void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
+		t_status status)
 {
 	t_token	*tok;
 	char	*token_str;
 
 	if (status == ERR_MALLOC)
-		minishell->last_status = assert_error_lst(head, "malloc", ERR_MALLOC, free_cmd_ir_wrapper);
+		minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
+				free_cmd_ir_wrapper);
 	else if (status == ERR_SYNTAX)
 	{
 		if (tok_lst)
 		{
 			tok = tok_lst->content;
 			if (tok->value)
-				minishell->last_status = assert_error_lst(head, tok->value, ERR_SYNTAX,
-					free_cmd_ir_wrapper);
+				minishell->last_status = error_lst(head, tok->value, ERR_SYNTAX,
+						free_cmd_ir_wrapper);
 			else
 			{
 				if (tok->type == TK_REDIR_IN)
@@ -39,11 +41,12 @@ void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head, t_statu
 					token_str = ">>";
 				else
 					token_str = "|";
-				minishell->last_status = assert_error_lst(head, token_str, ERR_SYNTAX,
-					free_cmd_ir_wrapper);
+				minishell->last_status = error_lst(head, token_str, ERR_SYNTAX,
+						free_cmd_ir_wrapper);
 			}
 		}
 		else
-			minishell->last_status = assert_error_lst(head, "newline", ERR_SYNTAX, free_cmd_ir_wrapper);
+			minishell->last_status = error_lst(head, "newline", ERR_SYNTAX,
+					free_cmd_ir_wrapper);
 	}
 }

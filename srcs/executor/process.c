@@ -80,30 +80,26 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline)
 	status = create_pipes(pipeline);
 	if (status != SUCCESS)
 	{
-		minishell->last_status = assert_error_parent(pipeline, "malloc",
-				ERR_MALLOC);
+		minishell->last_status = error_parent(pipeline, "malloc", ERR_MALLOC);
 		return ;
 	}
 	status = pipe_pipes(pipeline->pipes, pipeline->n - 1);
 	if (status != SUCCESS)
 	{
-		minishell->last_status = assert_error_parent(pipeline, "pipe",
-				ERR_PIPE);
+		minishell->last_status = error_parent(pipeline, "pipe", ERR_PIPE);
 		return ;
 	}
 	pids = ft_calloc(pipeline->n, sizeof(pid_t));
 	if (!pids)
 	{
-		minishell->last_status = assert_error_parent(pipeline, "malloc",
-				ERR_MALLOC);
+		minishell->last_status = error_parent(pipeline, "malloc", ERR_MALLOC);
 		return ;
 	}
 	fork_pos = fork_all_children(minishell, pipeline, pids);
 	if (fork_pos != pipeline->n)
 	{
 		wait_child(minishell, pipeline, pids, fork_pos);
-		minishell->last_status = assert_error_parent(pipeline, "fork",
-				ERR_FORK);
+		minishell->last_status = error_parent(pipeline, "fork", ERR_FORK);
 		return ;
 	}
 	wait_child(minishell, pipeline, pids, pipeline->n);

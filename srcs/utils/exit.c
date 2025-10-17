@@ -78,7 +78,7 @@ static int	get_exit_status(t_status status)
 		return (1);
 }
 
-int	assert_error_lst(t_list *lst, char *context, t_status status,
+int	error_lst(t_list *lst, char *context, t_status status,
 		void (*del)(void *))
 {
 	print_error_msg(context, status);
@@ -86,7 +86,7 @@ int	assert_error_lst(t_list *lst, char *context, t_status status,
 	return (get_exit_status(status));
 }
 
-int	assert_error_parent(t_pipeline *pipeline, char *context, t_status status)
+int	error_parent(t_pipeline *pipeline, char *context, t_status status)
 {
 	print_error_msg(context, status);
 	free_pipeline(pipeline);

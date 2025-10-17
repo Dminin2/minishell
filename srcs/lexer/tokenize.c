@@ -140,11 +140,11 @@ t_list	*tokenize(t_minishell *minishell, char *line)
 		if (status != SUCCESS)
 		{
 			if (status == ERR_MALLOC)
-				minishell->last_status = assert_error_lst(head, "malloc",
-						ERR_MALLOC, free_token_wrapper);
+				minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
+						free_token_wrapper);
 			else if (status == ERR_SYNTAX)
-				minishell->last_status = assert_error_lst(head,
-						"Unclosed quote", ERR_SYNTAX, free_token_wrapper);
+				minishell->last_status = error_lst(head, "Unclosed quote",
+						ERR_SYNTAX, free_token_wrapper);
 			return (NULL);
 		}
 	}

@@ -20,20 +20,19 @@ void	handle_redir_err_in_parent(t_minishell *minishell, t_pipeline *pipeline,
 	status = restore_stdio_fd(saved);
 	if (status != SUCCESS)
 	{
-		minishell->last_status = assert_error_parent(pipeline, "dup", status);
+		minishell->last_status = error_parent(pipeline, "dup", status);
 		return ;
 	}
 	if (err.status == ERR_FILE)
-		minishell->last_status = assert_error_parent(pipeline,
-				err.redir_err->value, ERR_FILE);
+		minishell->last_status = error_parent(pipeline, err.redir_err->value,
+				ERR_FILE);
 	else if (err.status == ERR_DUP)
-		minishell->last_status = assert_error_parent(pipeline, "dup", ERR_DUP);
+		minishell->last_status = error_parent(pipeline, "dup", ERR_DUP);
 	else if (err.status == ERR_AMB_REDIR)
-		minishell->last_status = assert_error_parent(pipeline,
-				err.redir_err->value, ERR_AMB_REDIR);
+		minishell->last_status = error_parent(pipeline, err.redir_err->value,
+				ERR_AMB_REDIR);
 	else if (err.status == ERR_MALLOC)
-		minishell->last_status = assert_error_parent(pipeline, "malloc",
-				ERR_MALLOC);
+		minishell->last_status = error_parent(pipeline, "malloc", ERR_MALLOC);
 }
 
 t_status	save_fd_and_redirect(t_minishell *minishell, t_pipeline *pipeline,
@@ -49,7 +48,7 @@ t_status	save_fd_and_redirect(t_minishell *minishell, t_pipeline *pipeline,
 	status = save_stdio_fd(cmd->redir_lst, saved);
 	if (status != SUCCESS)
 	{
-		minishell->last_status = assert_error_parent(pipeline, "dup", status);
+		minishell->last_status = error_parent(pipeline, "dup", status);
 		return (ERR_DUP);
 	}
 	redirect(minishell, cmd->redir_lst, &err);
@@ -79,7 +78,7 @@ void	run_builtin_in_parent(t_minishell *minishell, t_pipeline *pipeline,
 	status = restore_stdio_fd(saved);
 	if (status != SUCCESS)
 	{
-		minishell->last_status = assert_error_parent(pipeline, "dup", status);
+		minishell->last_status = error_parent(pipeline, "dup", status);
 		return ;
 	}
 	free_pipeline(pipeline);
