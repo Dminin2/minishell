@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/18 12:53:03 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/18 12:58:47 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,13 +161,6 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 		cmd = cur_node->content;
 		if (cmd->redir_lst)
 			status = loop_heredoc(minishell, cmd->redir_lst);
-		// if (g_sig == SIGINT)
-		// {
-		// 	free_pipeline(pipeline);
-		// 	minishell->last_status = 130;
-		// 	g_sig = 0;
-		// 	break ;
-		// }
 		if (status != SUCCESS)
 		{
 			if (status == ERR_FILE)
