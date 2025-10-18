@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/18 00:15:31 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/18 12:53:03 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_status	read_line_and_write_fd(t_minishell *minishell, char *delimiter,
 		if (g_sig == SIGINT)
 		{
 			free(line);
-			return (FAILURE);
+			return (RCV_SIGINT);
 		}
 		if (status != SUCCESS)
 			return (status);
@@ -154,20 +154,20 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 	if (isatty(STDIN_FILENO) && set_signal_heredoc() != SUCCESS)
 	{
 		minishell->last_status = error_parent(pipeline, "sigaction", ERR_SIG);
-		return (FAILURE);
+		return (ERR_SIG);
 	}
 	while (cur_node)
 	{
 		cmd = cur_node->content;
 		if (cmd->redir_lst)
 			status = loop_heredoc(minishell, cmd->redir_lst);
-		if (g_sig == SIGINT)
-		{
-			free_pipeline(pipeline);
-			minishell->last_status = 130;
-			g_sig = 0;
-			break ;
-		}
+		// if (g_sig == SIGINT)
+		// {
+		// 	free_pipeline(pipeline);
+		// 	minishell->last_status = 130;
+		// 	g_sig = 0;
+		// 	break ;
+		// }
 		if (status != SUCCESS)
 		{
 			if (status == ERR_FILE)
@@ -176,7 +176,11 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 			else if (status == ERR_MALLOC)
 				minishell->last_status = error_parent(pipeline, "malloc",
 						ERR_MALLOC);
-			status = FAILURE;
+			else if(status == RCV_SIGINT){
+				free_pipeline(pipeline);
+				minishell->last_status = 130;
+				g_sig = 0;
+			}
 			break ;
 		}
 		cur_node = cur_node->next;
@@ -189,7 +193,7 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 		else
 			minishell->last_status = error_parent(NULL, "sigaction", ERR_SIG);
 		minishell->should_exit = 1;
-		return (FAILURE);
+		return (ERR_SIG);
 	}
 	return (status);
 }
