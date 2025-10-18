@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:27:13 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/10 16:07:33 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/18 12:53:41 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_status	get_env_from_line(t_env *env, char *line)
 	while (line[i] && line[i] != '=')
 		i++;
 	if (i == 0)
-		return (FAILURE);
+		return (ERR_NOKEY);
 	env->key = ft_substr(line, 0, i);
 	if (!env->key)
 		return (ERR_MALLOC);

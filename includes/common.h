@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/17 05:10:42 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/18 12:49:53 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 typedef enum e_status
 {
 	SUCCESS,
-	FAILURE,
 	ERR_SYNTAX,
 	ERR_CMD_NOT_FOUND,
 	ERR_NOT_VALID_PATH,
@@ -34,6 +33,8 @@ typedef enum e_status
 	ERR_WAITPID,
 	ERR_SIG,
 	ERR_HEREDOC,
+	ERR_NOKEY,
+	RCV_SIGINT,
 	ERR_ERRNO,
 }			t_status;
 
