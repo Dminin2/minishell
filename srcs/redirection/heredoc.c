@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/18 16:11:15 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/19 23:22:30 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ t_status	read_line_and_write_fd(t_minishell *minishell, char *delimiter,
 
 	while (1)
 	{
+		input.line = NULL;
+		input.is_eof = 0;
 		if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
 			ft_putstr_fd("> ", STDERR_FILENO);
 		status = gnl_and_remove_new_line(&input);
