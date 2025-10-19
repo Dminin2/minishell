@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 12:23:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 23:20:13 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:34:25 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_status	skip_pipe(t_list **tok_lst)
 		return (SUCCESS);
 }
 
-t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
+t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst, int is_eof)
 {
 	t_cmd_ir	*cmd_ir;
 	t_status	status;
@@ -41,7 +41,8 @@ t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 		if (status != SUCCESS)
 		{
 			free_cmd_ir(cmd_ir);
-			handle_error(minishell, tok_lst, head, status);
+			minishell->last_status = handle_error(tok_lst, head, status,
+					is_eof);
 			return (NULL);
 		}
 		status = add_newlst(&head, (void *)cmd_ir);
@@ -79,7 +80,7 @@ int	count_cmd_irs(t_list *cmd_ir_lst)
 	return (n);
 }
 
-t_pipeline_ir	*parse(t_minishell *minishell, t_list *tok_lst)
+t_pipeline_ir	*parse(t_minishell *minishell, t_list *tok_lst, int is_eof)
 {
 	t_pipeline_ir	*pipeline_ir;
 
@@ -89,7 +90,7 @@ t_pipeline_ir	*parse(t_minishell *minishell, t_list *tok_lst)
 		minishell->last_status = error_lst(NULL, "malloc", ERR_MALLOC, NULL);
 		return (NULL);
 	}
-	pipeline_ir->cmd_ir_lst = get_cmd_ir_lst(minishell, tok_lst);
+	pipeline_ir->cmd_ir_lst = get_cmd_ir_lst(minishell, tok_lst, is_eof);
 	if (!pipeline_ir->cmd_ir_lst)
 	{
 		free(pipeline_ir);

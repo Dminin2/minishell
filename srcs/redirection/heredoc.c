@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/18 00:15:31 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/18 16:11:15 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,38 +55,37 @@ char	*expand_heredoc(t_minishell *minishell, char *line)
 t_status	read_line_and_write_fd(t_minishell *minishell, char *delimiter,
 		int fd, int is_quoted)
 {
-	char		*line;
 	t_status	status;
+	t_input		input;
 
 	while (1)
 	{
-		line = NULL;
 		if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
 			ft_putstr_fd("> ", STDERR_FILENO);
-		status = gnl_and_remove_new_line(&line);
+		status = gnl_and_remove_new_line(&input);
 		if (g_sig == SIGINT)
 		{
-			free(line);
+			free(input.line);
 			return (FAILURE);
 		}
 		if (status != SUCCESS)
 			return (status);
-		if (!line)
+		if (!(input.line))
 		{
 			print_error_msg(delimiter, ERR_HEREDOC);
 			break ;
 		}
-		if (ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) == 0)
+		if (ft_strncmp(input.line, delimiter, ft_strlen(delimiter) + 1) == 0)
 		{
-			free(line);
+			free(input.line);
 			return (SUCCESS);
 		}
-		if (line[0] != '\0' && !is_quoted)
-			line = expand_heredoc(minishell, line);
-		if (!line)
+		if (input.line[0] != '\0' && !is_quoted)
+			input.line = expand_heredoc(minishell, input.line);
+		if (!(input.line))
 			return (ERR_MALLOC);
-		ft_putendl_fd(line, fd);
-		free(line);
+		ft_putendl_fd(input.line, fd);
+		free(input.line);
 	}
 	return (SUCCESS);
 }
