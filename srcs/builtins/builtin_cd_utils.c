@@ -40,7 +40,10 @@ char	*get_arg_path(t_list *env_lst, char *arg)
 	else
 		result = ft_strdup(arg);
 	if (!result)
+	{
 		return_error("malloc", ERR_MALLOC);
+		return (NULL);
+	}
 	return (result);
 }
 
