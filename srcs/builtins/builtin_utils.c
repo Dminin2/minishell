@@ -20,11 +20,9 @@ int	return_error(char *msg, t_status status)
 
 int	is_pwd_valid(char *env_pwd)
 {
-	struct stat stat_of_current;
-	struct stat stat_of_pwd;
+	struct stat	stat_of_current;
+	struct stat	stat_of_pwd;
 
-	if (!env_pwd)
-		return (0);
 	if (stat(".", &stat_of_current) == -1)
 		return (0);
 	if (stat(env_pwd, &stat_of_pwd) == -1)
