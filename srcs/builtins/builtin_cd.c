@@ -25,7 +25,7 @@ static int	update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd)
 	return (0);
 }
 
-static int	perform_chdir(t_list **env_lst, char *path, char *error_path,
+static int	exec_chdir(t_list **env_lst, char *path, char *error_path,
 		char *fallback_path)
 {
 	char	*old_pwd;
@@ -55,14 +55,14 @@ static int	perform_chdir(t_list **env_lst, char *path, char *error_path,
 
 static int	handle_absolute_path(t_list **env_lst, char *arg_path)
 {
-	char	*normalized_path;
+	char	*clean_path;
 	int		exit_status;
 
-	normalized_path = normalize_path(arg_path);
-	if (!normalized_path)
+	clean_path = normalize_path(arg_path);
+	if (!clean_path)
 		return (return_error("malloc", ERR_MALLOC));
-	exit_status = perform_chdir(env_lst, normalized_path, arg_path, NULL);
-	free(normalized_path);
+	exit_status = exec_chdir(env_lst, clean_path, arg_path, clean_path);
+	free(clean_path);
 	return (exit_status);
 }
 
@@ -70,7 +70,7 @@ static int	handle_relative_path(t_list **env_lst, char *arg_path)
 {
 	char			*cwd;
 	char			*abs_path;
-	char			*normalized_path;
+	char			*clean_path;
 	int				exit_status;
 	t_cwd_status	status;
 
@@ -78,7 +78,7 @@ static int	handle_relative_path(t_list **env_lst, char *arg_path)
 	if (status == CWD_MALLOC_ERROR)
 		return (return_error("malloc", ERR_MALLOC));
 	if (status == CWD_NOT_AVAILABLE)
-		return (perform_chdir(env_lst, arg_path, arg_path, arg_path));
+		return (exec_chdir(env_lst, arg_path, arg_path, arg_path));
 	cwd = append_slash(cwd);
 	if (!cwd)
 		return (return_error("malloc", ERR_MALLOC));
@@ -86,17 +86,17 @@ static int	handle_relative_path(t_list **env_lst, char *arg_path)
 	free(cwd);
 	if (!abs_path)
 		return (return_error("malloc", ERR_MALLOC));
-	normalized_path = normalize_path(abs_path);
-	if (!normalized_path)
+	clean_path = normalize_path(abs_path);
+	if (!clean_path)
 	{
 		free(abs_path);
 		return (return_error("malloc", ERR_MALLOC));
 	}
 	if (status == CWD_FROM_PWD)
-		exit_status = perform_chdir(env_lst, arg_path, arg_path, abs_path);
+		exit_status = exec_chdir(env_lst, arg_path, arg_path, abs_path);
 	else
-		exit_status = perform_chdir(env_lst, normalized_path, arg_path, NULL);
-	free(normalized_path);
+		exit_status = exec_chdir(env_lst, clean_path, arg_path, clean_path);
+	free(clean_path);
 	free(abs_path);
 	return (exit_status);
 }
