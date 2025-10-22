@@ -34,10 +34,10 @@ typedef enum e_blt_error
 
 typedef enum e_cwd_status
 {
-	CWD_SUCCESS,
-	CWD_SUCCESS_WITH_PWD,
+	CWD_FROM_GETCWD,
+	CWD_FROM_PWD,
 	CWD_MALLOC_ERROR,
-	CWD_GETCWD_ERROR
+	CWD_NOT_AVAILABLE
 }	t_cwd_status;
 
 int	builtin_pwd(t_minishell *minishell);
