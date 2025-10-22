@@ -108,7 +108,7 @@ static char	*reconstruct_path(char **components, int count)
 	return (path);
 }
 
-char	*normalize_path(const char *unnormalized_abs_path)
+char	*normalize_path(const char *unnormalized_path)
 {
 	char	**split_path;
 	char	**components;
@@ -116,7 +116,7 @@ char	*normalize_path(const char *unnormalized_abs_path)
 	int		i;
 	int		count;
 
-	split_path = ft_split(unnormalized_abs_path, '/');
+	split_path = ft_split(unnormalized_path, '/');
 	if (!split_path)
 		return (NULL);
 	i = 0;
