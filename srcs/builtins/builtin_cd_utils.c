@@ -48,6 +48,8 @@ char	*append_slash(char *path)
 {
 	char	*tmp;
 
+	if (ft_strlen(path) == 0)
+		return (path);
 	if (path[ft_strlen(path) - 1] != '/')
 	{
 		tmp = ft_strjoin(path, "/");
