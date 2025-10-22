@@ -104,6 +104,7 @@ static int	handle_relative_path(t_list **env_lst, char *arg_path)
 int	builtin_cd(t_minishell *minishell, char **args)
 {
 	char	*arg_path;
+	int		exit_status;
 
 	if (args[1] && args[2])
 	{
@@ -113,10 +114,11 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	arg_path = get_arg_path(minishell->env_lst, args[1]);
 	if (!arg_path)
 		return (1);
-	if (args[1] && ft_strncmp(args[1], "-", 2) == 0)
-		ft_printf("%s\n", arg_path);
 	if (arg_path[0] == '/')
-		return (handle_absolute_path(&minishell->env_lst, arg_path));
+		exit_status = handle_absolute_path(&minishell->env_lst, arg_path);
 	else
-		return (handle_relative_path(&minishell->env_lst, arg_path));
+		exit_status = handle_relative_path(&minishell->env_lst, arg_path);
+	if (exit_status == 0 && args[1] && ft_strncmp(args[1], "-", 2) == 0)
+		ft_printf("%s\n", arg_path);
+	return (exit_status);
 }
