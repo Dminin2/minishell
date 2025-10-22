@@ -74,6 +74,19 @@ static int	perform_chdir(t_list **env_lst, char *path, char *error_path,
 	return (exit_status);
 }
 
+static char	*append_slash(char *path)
+{
+	char	*tmp;
+
+	if (path[ft_strlen(path) - 1] != '/')
+	{
+		tmp = ft_strjoin(path, "/");
+		free(path);
+		return (tmp);
+	}
+	return (path);
+}
+
 static t_cwd_status	get_cwd_for_abs(t_list *env_lst, char **cwd_out)
 {
 	char	*env_pwd;
@@ -185,7 +198,6 @@ static int	handle_absolute_path(t_list **env_lst, char *arg_path)
 static int	handle_relative_path(t_list **env_lst, char *arg_path)
 {
 	char			*cwd;
-	char			*tmp;
 	char			*abs_path;
 	char			*normalized_path;
 	int				exit_status;
@@ -196,14 +208,9 @@ static int	handle_relative_path(t_list **env_lst, char *arg_path)
 		return (return_error("malloc", ERR_MALLOC));
 	if (status == CWD_NOT_AVAILABLE)
 		return (perform_chdir(env_lst, arg_path, arg_path, arg_path));
-	if (cwd[ft_strlen(cwd) - 1] != '/')
-	{
-		tmp = ft_strjoin(cwd, "/");
-		free(cwd);
-		if (!tmp)
-			return (return_error("malloc", ERR_MALLOC));
-		cwd = tmp;
-	}
+	cwd = append_slash(cwd);
+	if (!cwd)
+		return (return_error("malloc", ERR_MALLOC));
 	abs_path = ft_strjoin(cwd, arg_path);
 	free(cwd);
 	if (!abs_path)
