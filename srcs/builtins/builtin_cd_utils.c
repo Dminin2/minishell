@@ -14,23 +14,34 @@
 
 char	*get_arg_path(t_list *env_lst, char *arg)
 {
-	char	*arg_path;
+	char	*env_value;
+	char	*result;
 
 	if (!arg)
 	{
-		arg_path = search_env(env_lst, "HOME");
-		if (!arg_path)
+		env_value = search_env(env_lst, "HOME");
+		if (!env_value)
+		{
 			print_error_msg_builtin("cd", NULL, BLTERR_NO_SET_HOME);
+			return (NULL);
+		}
+		result = ft_strdup(env_value);
 	}
 	else if (ft_strncmp(arg, "-", 2) == 0)
 	{
-		arg_path = search_env(env_lst, "OLDPWD");
-		if (!arg_path)
+		env_value = search_env(env_lst, "OLDPWD");
+		if (!env_value)
+		{
 			print_error_msg_builtin("cd", NULL, BLTERR_NO_SET_OLDPWD);
+			return (NULL);
+		}
+		result = ft_strdup(env_value);
 	}
 	else
-		arg_path = arg;
-	return (arg_path);
+		result = ft_strdup(arg);
+	if (!result)
+		return_error("malloc", ERR_MALLOC);
+	return (result);
 }
 
 char	*append_slash(char *path)

@@ -120,5 +120,6 @@ int	builtin_cd(t_minishell *minishell, char **args)
 		exit_status = handle_relative_path(&minishell->env_lst, arg_path);
 	if (exit_status == 0 && args[1] && ft_strncmp(args[1], "-", 2) == 0)
 		ft_printf("%s\n", arg_path);
+	free(arg_path);
 	return (exit_status);
 }
