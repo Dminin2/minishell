@@ -63,6 +63,16 @@ static char	*join_with_slash(char *old_pwd, char *path)
 	return (new_pwd);
 }
 
+static char	*convert_to_absolute_path(t_list *env_lst, char *path)
+{
+	char	*pwd;
+
+	pwd = search_env(env_lst, "PWD");
+	if (!pwd)
+		pwd = "";
+	return (join_with_slash(pwd, path));
+}
+
 static int	perform_chdir(t_list **env_lst, char *path)
 {
 	char	*old_pwd;
@@ -93,6 +103,8 @@ static int	perform_chdir(t_list **env_lst, char *path)
 int	builtin_cd(t_minishell *minishell, char **args)
 {
 	char	*target_path;
+	char	*absolute_path;
+	int		result;
 
 	if (args[1] && args[2])
 	{
@@ -104,5 +116,12 @@ int	builtin_cd(t_minishell *minishell, char **args)
 		return (1);
 	if (args[1] && ft_strncmp(args[1], "-", 2) == 0)
 		ft_printf("%s\n", target_path);
-	return (perform_chdir(&minishell->env_lst, target_path));
+	if (target_path[0] == '/')
+		return (perform_chdir(&minishell->env_lst, target_path));
+	absolute_path = convert_to_absolute_path(minishell->env_lst, target_path);
+	if (!absolute_path)
+		return (return_error("malloc", ERR_MALLOC));
+	result = perform_chdir(&minishell->env_lst, absolute_path);
+	free(absolute_path);
+	return (result);
 }
