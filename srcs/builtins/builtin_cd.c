@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/22 14:35:33 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/22 21:39:59 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static int	update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd)
 	return (0);
 }
 
-static int	perform_chdir(t_list **env_lst, char *path, char *fallback_path)
+static int	perform_chdir(t_list **env_lst, char *path, char *error_path,
+		char *fallback_path)
 {
 	char	*old_pwd;
 	char	*new_pwd;
@@ -57,7 +58,7 @@ static int	perform_chdir(t_list **env_lst, char *path, char *fallback_path)
 		old_pwd = "";
 	if (chdir(path) == -1)
 	{
-		print_error_msg_builtin("cd", path, BLTERR_ERRNO);
+		print_error_msg_builtin("cd", error_path, BLTERR_ERRNO);
 		return (1);
 	}
 	new_pwd = getcwd(NULL, 0);
@@ -77,18 +78,18 @@ static t_cwd_status	get_cwd_for_abs(t_list *env_lst, char **cwd_out)
 {
 	char	*env_pwd;
 
+	*cwd_out = getcwd(NULL, 0);
+	if (*cwd_out)
+		return (CWD_SUCCESS);
 	env_pwd = search_env(env_lst, "PWD");
-	if (env_pwd && is_pwd_valid(env_pwd))
+	if (env_pwd)
 	{
 		*cwd_out = ft_strdup(env_pwd);
 		if (!*cwd_out)
 			return (CWD_MALLOC_ERROR);
-		return (CWD_SUCCESS);
+		return (CWD_SUCCESS_WITH_PWD);
 	}
-	*cwd_out = getcwd(NULL, 0);
-	if (!*cwd_out)
-		return (CWD_GETCWD_ERROR);
-	return (CWD_SUCCESS);
+	return (CWD_GETCWD_ERROR);
 }
 
 static char	*reconstruct_path(char **components, int count)
@@ -121,36 +122,18 @@ static char	*reconstruct_path(char **components, int count)
 	return (path);
 }
 
-static int	validate_component_path(char **components, int count)
+static void	process_component(char **components, int *count, char *component)
 {
-	char		*current_path;
-	struct stat	st;
-
-	current_path = reconstruct_path(components, count);
-	if (!current_path)
-		return (0);
-	if (lstat(current_path, &st) != 0)
-	{
-		free(current_path);
-		return (0);
-	}
-	free(current_path);
-	return (1);
-}
-
-static int	process_component(char **components, int *count, char *comp)
-{
-	if (ft_strcmp(comp, ".") == 0)
-		return (1);
-	if (ft_strcmp(comp, "..") == 0)
+	if (ft_strcmp(component, ".") == 0)
+		return ;
+	if (ft_strcmp(component, "..") == 0)
 	{
 		if (*count > 0)
 			(*count)--;
-		return (1);
+		return ;
 	}
-	components[*count] = comp;
+	components[*count] = component;
 	(*count)++;
-	return (validate_component_path(components, *count));
 }
 
 static char	*normalize_path(const char *unnormalized_abs_path)
@@ -167,7 +150,7 @@ static char	*normalize_path(const char *unnormalized_abs_path)
 	i = 0;
 	while (split_path[i])
 		i++;
-	components = malloc(sizeof(char *) * i);
+	components = ft_calloc(i, sizeof(char *));
 	if (!components)
 	{
 		free_args(split_path);
@@ -177,12 +160,7 @@ static char	*normalize_path(const char *unnormalized_abs_path)
 	i = 0;
 	while (split_path[i])
 	{
-		if (!process_component(components, &count, split_path[i]))
-		{
-			free(components);
-			free_args(split_path);
-			return (NULL);
-		}
+		process_component(components, &count, split_path[i]);
 		i++;
 	}
 	normalized_path = reconstruct_path(components, count);
@@ -199,7 +177,7 @@ static int	handle_absolute_path(t_list **env_lst, char *target_path)
 	normalized_path = normalize_path(target_path);
 	if (!normalized_path)
 		return (return_error("malloc", ERR_MALLOC));
-	exit_status = perform_chdir(env_lst, normalized_path, target_path);
+	exit_status = perform_chdir(env_lst, normalized_path, target_path, NULL);
 	free(normalized_path);
 	return (exit_status);
 }
@@ -217,7 +195,7 @@ static int	handle_relative_path(t_list **env_lst, char *target_path)
 	if (status == CWD_MALLOC_ERROR)
 		return (return_error("malloc", ERR_MALLOC));
 	if (status == CWD_GETCWD_ERROR)
-		return (perform_chdir(env_lst, target_path, target_path));
+		return (perform_chdir(env_lst, target_path, target_path, target_path));
 	if (cwd[ft_strlen(cwd) - 1] != '/')
 	{
 		tmp = ft_strjoin(cwd, "/");
@@ -231,11 +209,18 @@ static int	handle_relative_path(t_list **env_lst, char *target_path)
 	if (!unnormalized_abs_path)
 		return (return_error("malloc", ERR_MALLOC));
 	normalized_path = normalize_path(unnormalized_abs_path);
-	free(unnormalized_abs_path);
 	if (!normalized_path)
+	{
+		free(unnormalized_abs_path);
 		return (return_error("malloc", ERR_MALLOC));
-	exit_status = perform_chdir(env_lst, normalized_path, normalized_path);
+	}
+	if (status == CWD_SUCCESS_WITH_PWD)
+		exit_status = perform_chdir(env_lst, target_path, target_path,
+				unnormalized_abs_path);
+	else
+		exit_status = perform_chdir(env_lst, normalized_path, target_path, NULL);
 	free(normalized_path);
+	free(unnormalized_abs_path);
 	return (exit_status);
 }
 
