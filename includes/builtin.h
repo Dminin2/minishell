@@ -32,6 +32,13 @@ typedef enum e_blt_error
 	BLTERR_ERRNO
 }	t_blt_error;
 
+typedef enum e_cwd_status
+{
+	CWD_SUCCESS,
+	CWD_MALLOC_ERROR,
+	CWD_GETCWD_ERROR
+}	t_cwd_status;
+
 int	builtin_pwd(t_minishell *minishell);
 int	builtin_echo(char **args);
 int	builtin_cd(t_minishell *minishell, char **args);
