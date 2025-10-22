@@ -59,6 +59,6 @@ int				strtouc_and_validate(char *str, unsigned char *last_status);
 char			*get_arg_path(t_list *env_lst, char *arg);
 char			*append_slash(char *path);
 t_cwd_status	get_cwd_for_abs(t_list *env_lst, char **cwd_out);
-char			*normalize_path(const char *unnormalized_abs_path);
+char			*normalize_path(const char *abs_path);
 
 #endif
