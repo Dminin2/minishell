@@ -16,6 +16,11 @@ int	dprint_char_buf(t_dprintf_buf *buffer, int n)
 {
 	char	c;
 
+	if (buffer->pos + 1 > PIPE_BUF)
+	{
+		if (buf_flush(buffer) == -1)
+			return (-1);
+	}
 	c = (char)n;
 	return (buf_putchar(buffer, c));
 }
@@ -25,12 +30,34 @@ int	dprint_string_buf(t_dprintf_buf *buffer, char *str)
 	int	len;
 
 	if (!str)
-		return (buf_putstr(buffer, "(null)", 6));
-	len = ft_strlen(str);
+	{
+		len = 6;
+		str = "(null)";
+	}
+	else
+		len = ft_strlen(str);
+	if (len > PIPE_BUF)
+	{
+		if (buf_flush(buffer) == -1)
+			return (-1);
+		if (write(buffer->fd, str, len) == -1)
+			return (-1);
+		return (len);
+	}
+	if (buffer->pos + len > PIPE_BUF)
+	{
+		if (buf_flush(buffer) == -1)
+			return (-1);
+	}
 	return (buf_putstr(buffer, str, len));
 }
 
 int	dprint_percent_buf(t_dprintf_buf *buffer)
 {
+	if (buffer->pos + 1 > PIPE_BUF)
+	{
+		if (buf_flush(buffer) == -1)
+			return (-1);
+	}
 	return (buf_putchar(buffer, '%'));
 }

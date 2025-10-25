@@ -51,7 +51,14 @@ static int	loop_format_buf(t_dprintf_buf *buffer, const char *format,
 		if (format[i] == '%')
 			result = handle_format_buf(buffer, format[++i], args);
 		else
+		{
+			if (buffer->pos + 1 > PIPE_BUF)
+			{
+				if (buf_flush(buffer) == -1)
+					return (-1);
+			}
 			result = buf_putchar(buffer, format[i]);
+		}
 		if (result == -1)
 			return (-1);
 		i++;
