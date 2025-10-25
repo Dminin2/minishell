@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/25 13:11:18 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:19:35 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_token(token_lst, g_fd);
 #endif
-		pipeline_ir = parse(&minishell, token_lst, input.is_eof);
+		pipeline_ir = parse(&minishell, token_lst);
 		ft_lstclear(&token_lst, &free_token_wrapper);
 		if (!pipeline_ir)
 			continue ;

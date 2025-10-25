@@ -6,13 +6,13 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/19 13:34:09 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:20:44 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_error(t_list *tok_lst, t_list *head, t_status status, int is_eof)
+int	handle_error(t_list *tok_lst, t_list *head, t_status status)
 {
 	t_token	*tok;
 	char	*token_str;
@@ -43,9 +43,6 @@ int	handle_error(t_list *tok_lst, t_list *head, t_status status, int is_eof)
 						free_cmd_ir_wrapper));
 			}
 		}
-		else if (is_eof)
-			return (error_lst(head, "end of file", ERR_SYNTAX,
-					free_cmd_ir_wrapper));
 		else
 			return (error_lst(head, "newline", ERR_SYNTAX,
 					free_cmd_ir_wrapper));
