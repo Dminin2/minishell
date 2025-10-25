@@ -32,7 +32,7 @@ int	builtin_pwd(t_minishell *minishell)
 	char	*env_pwd;
 
 	env_pwd = search_env(minishell->env_lst, "PWD");
-	if (env_pwd && is_pwd_valid(env_pwd))
+	if (is_pwd_valid(env_pwd))
 		ft_printf("%s\n", env_pwd);
 	else
 	{
