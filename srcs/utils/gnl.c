@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 18:58:42 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/19 13:34:47 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/25 17:15:20 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@ t_status	gnl_and_remove_new_line(t_input *input)
 			input->is_eof = 1;
 		}
 	}
+	else
+		input->line = NULL;
 	return (status);
 }
