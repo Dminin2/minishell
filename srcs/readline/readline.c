@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:50:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/24 22:20:56 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/25 16:43:58 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,6 @@ t_status	get_command_line(t_minishell *minishell, t_input *input)
 {
 	t_status	status;
 
-	// t_input		*input;
-	// input = ft_calloc(1, sizeof(t_input));
-	// if (!input)
-	// {
-	// 	print_error_msg("malloc", ERR_MALLOC);
-	// 	return (NULL);
-	// }
 	if (isatty(STDIN_FILENO))
 	{
 		if (isatty(STDERR_FILENO))
