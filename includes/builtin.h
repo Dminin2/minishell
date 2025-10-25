@@ -50,7 +50,6 @@ int				builtin_exit(t_minishell *minishell, char **args,
 					int cmd_count);
 
 int				return_error(char *msg, t_status status);
-int				is_pwd_valid(char *env_pwd);
 
 int				handle_args(t_minishell *minishell, char **args);
 int				handle_no_args(t_minishell *minishell);
