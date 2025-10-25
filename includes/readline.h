@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:17:56 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 22:57:22 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:17:26 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include <stdio.h>
 # include <unistd.h>
 
-t_status	get_command_line(t_minishell *minishell, char **line);
+typedef struct s_input
+{
+	char	*line;
+	int		is_eof;
+}			t_input;
+
+t_status	get_command_line(t_minishell *minishell, t_input *input);
 
 #endif
