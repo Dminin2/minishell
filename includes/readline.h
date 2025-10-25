@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:17:56 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/19 13:33:14 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:09:23 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_input
 	int		is_eof;
 }			t_input;
 
-t_input		*get_command_line(t_minishell *minishell);
+t_status get_command_line(t_minishell *minishell, t_input *input);
 void		free_input(t_input *input);
 
 #endif

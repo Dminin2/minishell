@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/19 23:38:23 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:11:18 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 	t_pipeline_ir	*pipeline_ir;
 	t_minishell		minishell;
 	t_pipeline		*pipeline;
-	t_input			*input;
+	t_input			input;
 	t_status		status;
 
 	(void)argc;
@@ -57,12 +57,13 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_status(minishell.last_status, g_fd);
 #endif
-		input = get_command_line(&minishell);
-		if (!input)
+		input.line = NULL;
+		input.is_eof = 0;
+		status = get_command_line(&minishell, &input);
+		if (status != SUCCESS)
 			continue ;
-		if (!input->line)
+		if (!(input.line))
 		{
-			free(input);
 			if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
 				ft_dprintf(STDERR_FILENO, "exit\n");
 			break ;
@@ -70,17 +71,14 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_line(line, g_fd);
 #endif
-		token_lst = tokenize(&minishell, input);
+		token_lst = tokenize(&minishell, &input);
+		free(input.line);
 		if (!token_lst)
-		{
-			free_input(input);
 			continue ;
-		}
 #ifdef DEBUG
 		print_token(token_lst, g_fd);
 #endif
-		pipeline_ir = parse(&minishell, token_lst, input->is_eof);
-		free_input(input);
+		pipeline_ir = parse(&minishell, token_lst, input.is_eof);
 		ft_lstclear(&token_lst, &free_token_wrapper);
 		if (!pipeline_ir)
 			continue ;
