@@ -20,7 +20,6 @@
 typedef enum e_status
 {
 	SUCCESS,
-	FAILURE,
 	ERR_SYNTAX,
 	ERR_CMD_NOT_FOUND,
 	ERR_NOT_VALID_PATH,
@@ -35,6 +34,8 @@ typedef enum e_status
 	ERR_SIG,
 	ERR_HEREDOC,
 	ERR_QUOTE,
+	ERR_NOKEY,
+	RCV_SIGINT,
 	ERR_ERRNO,
 }			t_status;
 
