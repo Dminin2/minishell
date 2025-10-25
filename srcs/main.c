@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_pipeline(pipeline, g_fd);
 #endif
-		if (read_heredoc(&minishell, pipeline) == FAILURE)
+		if (read_heredoc(&minishell, pipeline) != SUCCESS)
 			continue ;
 		execute(&minishell, pipeline);
 	}
