@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/26 15:59:58 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/26 21:33:22 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,11 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 			exit_error(minishell, pipeline, cmd->args[0], status);
 	}
 	if (stat(cmd->path, &st_buf) == -1)
-		exit_error(minishell, pipeline, cmd->path, ERR_STAT);
+	{
+		if (errno == ENOENT)
+			exit_error(minishell, pipeline, cmd->path, ERR_STAT_ENOENT);
+		exit_error(minishell, pipeline, cmd->path, ERR_STAT_OTHER);
+	}
 	if (S_ISDIR(st_buf.st_mode))
 		exit_error(minishell, pipeline, cmd->path, ERR_ISDIR);
 	if (access(cmd->path, X_OK) == -1)
