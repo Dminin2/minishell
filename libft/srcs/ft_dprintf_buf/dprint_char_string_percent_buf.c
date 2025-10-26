@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dprint_char_string_percent_buf.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/23 00:00:00 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/23 00:00:00 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/10/26 10:32:51 by hmaruyam          #+#    #+#             */
+/*   Updated: 2025/10/26 10:32:53 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
