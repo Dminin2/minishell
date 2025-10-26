@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 12:23:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/25 13:20:03 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:20:13 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 		if (status != SUCCESS)
 		{
 			free_cmd_ir(cmd_ir);
-			minishell->last_status = handle_error(tok_lst, head, status);
+			handle_error(minishell, tok_lst, head, status);
 			return (NULL);
 		}
 		status = add_newlst(&head, (void *)cmd_ir);

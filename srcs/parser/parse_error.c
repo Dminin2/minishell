@@ -6,27 +6,29 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/25 13:20:44 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/15 23:20:37 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_error(t_list *tok_lst, t_list *head, t_status status)
+void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
+		t_status status)
 {
 	t_token	*tok;
 	char	*token_str;
 
 	if (status == ERR_MALLOC)
-		return (error_lst(head, "malloc", ERR_MALLOC, free_cmd_ir_wrapper));
-	else
+		minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
+				free_cmd_ir_wrapper);
+	else if (status == ERR_SYNTAX)
 	{
 		if (tok_lst)
 		{
 			tok = tok_lst->content;
 			if (tok->value)
-				return (error_lst(head, tok->value, ERR_SYNTAX,
-						free_cmd_ir_wrapper));
+				minishell->last_status = error_lst(head, tok->value, ERR_SYNTAX,
+						free_cmd_ir_wrapper);
 			else
 			{
 				if (tok->type == TK_REDIR_IN)
@@ -39,12 +41,12 @@ int	handle_error(t_list *tok_lst, t_list *head, t_status status)
 					token_str = ">>";
 				else
 					token_str = "|";
-				return (error_lst(head, token_str, ERR_SYNTAX,
-						free_cmd_ir_wrapper));
+				minishell->last_status = error_lst(head, token_str, ERR_SYNTAX,
+						free_cmd_ir_wrapper);
 			}
 		}
 		else
-			return (error_lst(head, "newline", ERR_SYNTAX,
-					free_cmd_ir_wrapper));
+			minishell->last_status = error_lst(head, "newline", ERR_SYNTAX,
+					free_cmd_ir_wrapper);
 	}
 }
