@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/19 13:33:57 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/28 00:17:56 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,15 @@ t_list	*tokenize(t_minishell *minishell, t_input *input)
 			if (status == ERR_MALLOC)
 				minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
 						free_token_wrapper);
-			else if (input->is_eof)
-				minishell->last_status = error_lst(head, "end of file", status,
-						free_token_wrapper);
 			else
-				minishell->last_status = error_lst(head, "newline", status,
-						free_token_wrapper);
+			{
+				if (input->is_eof)
+					minishell->last_status = error_lst(head, "end of file",
+							ERR_QUOTE, free_token_wrapper);
+				else
+					minishell->last_status = error_lst(head, "newline",
+							ERR_QUOTE, free_token_wrapper);
+			}
 			return (NULL);
 		}
 	}
