@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/18 00:29:38 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/27 23:35:37 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,23 @@ void	print_error_msg(char *context, t_status status)
 		ft_dprintf(STDERR_FILENO,
 			"minishell: syntax error near unexpected token `%s'\n", context);
 	else if (status == ERR_FILE)
-		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
+		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context,
+			strerror(errno));
 	else if (status == ERR_AMB_REDIR)
-		ft_dprintf(STDERR_FILENO, "minishell: %s: ambiguous redirect\n", context);
+		ft_dprintf(STDERR_FILENO, "minishell: %s: ambiguous redirect\n",
+			context);
 	else if (status == ERR_ERRNO)
-		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
+		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context,
+			strerror(errno));
 	else if (status == ERR_ISDIR)
 		ft_dprintf(STDERR_FILENO, "minishell: %s: Is a directory\n", context);
 	else if (status == ERR_HEREDOC)
-		ft_dprintf(STDERR_FILENO, "\nminishell: warning: here-document delimited by end-of-file (wanted `%s')\n", context);
+		ft_dprintf(STDERR_FILENO,
+			"\nminishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
+			context);
 	else
-		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context, strerror(errno));
+		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context,
+			strerror(errno));
 }
 
 void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
@@ -54,13 +60,15 @@ void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
 	else
 	{
 		if (error == BLTERR_ERRNO)
-			ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", cmd, strerror(errno));
+			ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", cmd,
+				strerror(errno));
 		else if (error == BLTERR_NO_SET_HOME)
 			ft_dprintf(STDERR_FILENO, "minishell: %s: HOME not set\n", cmd);
 		else if (error == BLTERR_NO_SET_OLDPWD)
 			ft_dprintf(STDERR_FILENO, "minishell: %s: OLDPWD not set\n", cmd);
 		else if (error == BLTERR_MANY_ARG)
-			ft_dprintf(STDERR_FILENO, "minishell: %s: too many arguments\n", cmd);
+			ft_dprintf(STDERR_FILENO, "minishell: %s: too many arguments\n",
+				cmd);
 	}
 }
 
@@ -78,8 +86,7 @@ static int	get_exit_status(t_status status)
 		return (1);
 }
 
-int	error_lst(t_list *lst, char *context, t_status status,
-		void (*del)(void *))
+int	error_lst(t_list *lst, char *context, t_status status, void (*del)(void *))
 {
 	print_error_msg(context, status);
 	ft_lstclear(&lst, del);
@@ -93,9 +100,21 @@ int	error_parent(t_pipeline *pipeline, char *context, t_status status)
 	return (get_exit_status(status));
 }
 
-void	exit_error(t_minishell *minishell, t_pipeline *pipeline, char *context, t_status status)
+void	exit_error(t_minishell *minishell, t_pipeline *pipeline, char *context,
+		t_status status)
 {
-	print_error_msg(context, status);
+	char	*ascii_context;
+
+	if (context)
+	{
+		ascii_context = convert_whitespace_to_ascii(context);
+		if (!ascii_context)
+			return ;
+		print_error_msg(ascii_context, status);
+		free(ascii_context);
+	}
+	else
+		print_error_msg(context, status);
 	free_pipeline(pipeline);
 	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
 	exit(get_exit_status(status));

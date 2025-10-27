@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:47:37 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/10 10:47:54 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/27 23:41:37 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,9 @@ int	is_blank(char c)
 int	is_whitespace(char c)
 {
 	return (c == ' ' || (c >= '\t' && c <= '\r'));
+}
+
+int	is_non_space_whitespace(char c)
+{
+	return (c == '\a' || c == '\b' || c == '\v' || c == '\f' || c == '\r');
 }
