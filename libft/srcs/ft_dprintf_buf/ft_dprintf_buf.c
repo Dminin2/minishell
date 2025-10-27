@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 10:33:17 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/26 10:33:18 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/27 21:12:05 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	loop_format_buf(t_dprintf_buf *buffer, const char *format,
 			result = handle_format_buf(buffer, format[++i], args);
 		else
 		{
-			if (buffer->pos + 1 > PIPE_BUF)
+			if (buffer->pos + 1 >= PIPE_BUF)
 			{
 				if (buf_flush(buffer) == -1)
 					return (-1);
