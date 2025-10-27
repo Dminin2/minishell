@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/26 13:08:26 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:13:49 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
 	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
-			ft_dprintf(STDERR_FILENO, "Quit (core dumped)\n");
+			ft_dprintf(STDERR_FILENO, "Quit\n");
 		minishell->last_status = 128 + WTERMSIG(status);
 	}
 	else
