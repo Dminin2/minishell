@@ -53,7 +53,7 @@ int	dprint_hexadecimal_buf(t_dprintf_buf *buffer, unsigned int nbr,
 	int	len;
 
 	len = count_hex_digits((unsigned long)nbr);
-	if (buffer->pos + len > PIPE_BUF)
+	if (buffer->pos + len >= PIPE_BUF)
 	{
 		if (buf_flush(buffer) == -1)
 			return (-1);
@@ -74,7 +74,7 @@ int	dprint_pointer_buf(t_dprintf_buf *buffer, void *ptr)
 	if (!ptr)
 	{
 		len = 5;
-		if (buffer->pos + len > PIPE_BUF)
+		if (buffer->pos + len >= PIPE_BUF)
 		{
 			if (buf_flush(buffer) == -1)
 				return (-1);
@@ -84,7 +84,7 @@ int	dprint_pointer_buf(t_dprintf_buf *buffer, void *ptr)
 	mem = (unsigned long)ptr;
 	len = count_hex_digits(mem);
 	total_len = 2 + len;
-	if (buffer->pos + total_len > PIPE_BUF)
+	if (buffer->pos + total_len >= PIPE_BUF)
 	{
 		if (buf_flush(buffer) == -1)
 			return (-1);

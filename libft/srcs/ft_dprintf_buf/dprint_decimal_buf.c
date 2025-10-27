@@ -77,7 +77,7 @@ int	dprint_decimal_buf(t_dprintf_buf *buffer, int nbr)
 	int	len;
 
 	len = count_decimal_digits(nbr);
-	if (buffer->pos + len > PIPE_BUF)
+	if (buffer->pos + len >= PIPE_BUF)
 	{
 		if (buf_flush(buffer) == -1)
 			return (-1);
@@ -91,7 +91,7 @@ int	dprint_unsigned_decimal_buf(t_dprintf_buf *buffer, unsigned int nbr)
 	int	len;
 
 	len = count_unsigned_decimal_digits(nbr);
-	if (buffer->pos + len > PIPE_BUF)
+	if (buffer->pos + len >= PIPE_BUF)
 	{
 		if (buf_flush(buffer) == -1)
 			return (-1);

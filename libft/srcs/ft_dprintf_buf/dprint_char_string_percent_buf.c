@@ -16,7 +16,7 @@ int	dprint_char_buf(t_dprintf_buf *buffer, int n)
 {
 	char	c;
 
-	if (buffer->pos + 1 > PIPE_BUF)
+	if (buffer->pos + 1 >= PIPE_BUF)
 	{
 		if (buf_flush(buffer) == -1)
 			return (-1);
@@ -44,7 +44,7 @@ int	dprint_string_buf(t_dprintf_buf *buffer, char *str)
 			return (-1);
 		return (len);
 	}
-	if (buffer->pos + len > PIPE_BUF)
+	if (buffer->pos + len >= PIPE_BUF)
 	{
 		if (buf_flush(buffer) == -1)
 			return (-1);
@@ -54,7 +54,7 @@ int	dprint_string_buf(t_dprintf_buf *buffer, char *str)
 
 int	dprint_percent_buf(t_dprintf_buf *buffer)
 {
-	if (buffer->pos + 1 > PIPE_BUF)
+	if (buffer->pos + 1 >= PIPE_BUF)
 	{
 		if (buf_flush(buffer) == -1)
 			return (-1);
