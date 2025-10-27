@@ -6,23 +6,29 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:50:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/27 00:18:23 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:46:35 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void handle_working_history(char *line){
-	int i;
-	int is_blank;
+void	handle_working_history(char *line)
+{
+	int	i;
+	int	is_blank;
+
 	i = 0;
 	is_blank = 1;
-	while(line[i]){
-		if(line[i] != ' ' && line[i] != '\t')
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '\t')
+		{
 			is_blank = 0;
+			break ;
+		}
 		i++;
 	}
-	if(!is_blank || line[0] != ' ')
+	if (!is_blank || line[0] != ' ')
 		add_history(line);
 }
 
