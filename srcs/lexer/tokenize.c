@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 23:17:43 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/28 00:17:56 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_status	consume_quote(t_lexer *lex, char quote_char)
 	while (lex->line[lex->pos] && lex->line[lex->pos] != quote_char)
 		lex->pos++;
 	if (!lex->line[lex->pos])
-		return (ERR_SYNTAX);
+		return (ERR_QUOTE);
 	lex->pos++;
 	return (SUCCESS);
 }
@@ -91,8 +91,8 @@ t_status	handle_word(t_lexer *lex, t_list **head)
 		if (lex->line[lex->pos] == '\'' || lex->line[lex->pos] == '\"')
 		{
 			status = consume_quote(lex, lex->line[lex->pos]);
-			if (status == ERR_SYNTAX)
-				return (ERR_SYNTAX);
+			if (status != SUCCESS)
+				return (status);
 			continue ;
 		}
 		else if (is_metacharacter(lex->line[lex->pos]))
@@ -118,7 +118,7 @@ t_status	handle_word(t_lexer *lex, t_list **head)
 	return (SUCCESS);
 }
 
-t_list	*tokenize(t_minishell *minishell, char *line)
+t_list	*tokenize(t_minishell *minishell, t_input *input)
 {
 	t_list		*head;
 	t_lexer		lex;
@@ -126,7 +126,7 @@ t_list	*tokenize(t_minishell *minishell, char *line)
 	t_tok_types	op_type;
 
 	head = NULL;
-	lex.line = line;
+	lex.line = input->line;
 	lex.pos = 0;
 	status = SUCCESS;
 	while (lex.line[lex.pos])
@@ -142,9 +142,15 @@ t_list	*tokenize(t_minishell *minishell, char *line)
 			if (status == ERR_MALLOC)
 				minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
 						free_token_wrapper);
-			else if (status == ERR_SYNTAX)
-				minishell->last_status = error_lst(head, "Unclosed quote",
-						ERR_SYNTAX, free_token_wrapper);
+			else
+			{
+				if (input->is_eof)
+					minishell->last_status = error_lst(head, "end of file",
+							ERR_QUOTE, free_token_wrapper);
+				else
+					minishell->last_status = error_lst(head, "newline",
+							ERR_QUOTE, free_token_wrapper);
+			}
 			return (NULL);
 		}
 	}
