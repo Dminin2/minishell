@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:42:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/28 16:11:46 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:18:43 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_status	set_pwd(t_minishell *minishell, t_list **head)
 	t_status	status;
 
 	env_pwd = search_env(*head, "PWD");
-	if (env_pwd && is_pwd_valid(env_pwd))
+	if (is_pwd_valid(env_pwd))
 	{
 		cwd = normalize_path(env_pwd);
 		if (!cwd)
