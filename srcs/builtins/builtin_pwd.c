@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 09:53:08 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/28 15:45:02 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/28 18:24:36 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 int	builtin_pwd(t_minishell *minishell)
 {
 	char	*cwd;
-	char	*env_pwd;
 
-	env_pwd = search_env(minishell->env_lst, "PWD");
-	if (is_pwd_valid(env_pwd))
-		ft_printf("%s\n", env_pwd);
+	if (minishell->cwd)
+		ft_printf("%s\n", minishell->cwd);
 	else
 	{
 		cwd = getcwd(NULL, 0);
