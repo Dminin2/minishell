@@ -95,6 +95,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	rl_clear_history();
 	ft_lstclear(&(minishell.env_lst), free_env_wrapper);
+	free(minishell.cwd);
 #ifdef DEBUG
 	close(g_fd);
 #endif

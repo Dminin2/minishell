@@ -40,6 +40,7 @@ typedef enum e_status
 typedef struct s_minishell
 {
 	t_list	*env_lst;
+	char	*cwd;
 	int		last_status;
 	int		should_exit;
 }			t_minishell;

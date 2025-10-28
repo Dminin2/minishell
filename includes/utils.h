@@ -50,4 +50,6 @@ void						exit_error(t_minishell *minishell,
 void						exit_success(t_minishell *minishell,
 								t_pipeline *pipeline);
 
+int							is_pwd_valid(char *pwd_path);
+
 #endif
