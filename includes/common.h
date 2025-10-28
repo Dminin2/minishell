@@ -34,7 +34,6 @@ typedef enum e_status
 	ERR_PIPE,
 	ERR_FORK,
 	ERR_WAITPID,
-	ERR_SIG,
 	ERR_HEREDOC,
 	ERR_NOKEY,
 	RCV_SIGINT,
