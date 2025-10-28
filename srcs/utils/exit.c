@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/28 00:47:48 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:55:05 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	exit_error(t_minishell *minishell, t_pipeline *pipeline, char *context,
 {
 	char	*ascii_context;
 
-	if (context && context[0])
+	if (status == ERR_CMD_NOT_FOUND && context && context[0])
 	{
 		ascii_context = convert_whitespace_to_ascii(context);
 		if (ascii_context)
