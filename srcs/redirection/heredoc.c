@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/19 23:22:30 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:09:19 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,11 +152,8 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 
 	status = SUCCESS;
 	cur_node = pipeline->cmd_lst;
-	if (isatty(STDIN_FILENO) && set_signal_heredoc() != SUCCESS)
-	{
-		minishell->last_status = error_parent(pipeline, "sigaction", ERR_SIG);
-		return (ERR_SIG);
-	}
+	if (isatty(STDIN_FILENO))
+		set_signal_heredoc();
 	while (cur_node)
 	{
 		cmd = cur_node->content;
@@ -180,15 +177,7 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 		}
 		cur_node = cur_node->next;
 	}
-	if (isatty(STDIN_FILENO) && set_signal_interactive() != SUCCESS)
-	{
-		if (status == SUCCESS)
-			minishell->last_status = error_parent(pipeline, "sigaction",
-					ERR_SIG);
-		else
-			minishell->last_status = error_parent(NULL, "sigaction", ERR_SIG);
-		minishell->should_exit = 1;
-		return (ERR_SIG);
-	}
+	if (isatty(STDIN_FILENO))
+		set_signal_interactive();
 	return (status);
 }
