@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:42:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/28 15:56:42 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:11:46 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,13 @@ static t_status	set_pwd(t_minishell *minishell, t_list **head)
 		minishell->cwd = NULL;
 		return (SUCCESS);
 	}
-	minishell->cwd = cwd;
 	status = process_env_key_value(head, "PWD", cwd);
+	if (status != SUCCESS)
+	{
+		free(cwd);
+		return (status);
+	}
+	minishell->cwd = cwd;
 	return (status);
 }
 
