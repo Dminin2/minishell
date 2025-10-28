@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:42:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/28 16:18:43 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/28 23:17:20 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_status	set_pwd(t_minishell *minishell, t_list **head)
 		return (SUCCESS);
 	}
 	status = process_env_key_value(head, "PWD", cwd);
-	if (status != SUCCESS)
+	if (status == ERR_MALLOC)
 	{
 		free(cwd);
 		return (status);
@@ -73,9 +73,15 @@ static t_status	init_shell_vars(t_minishell *minishell, t_list **head)
 	t_status	status;
 
 	status = set_pwd(minishell, head);
-	if (status != SUCCESS)
+	if (status == ERR_MALLOC)
 		return (status);
 	status = set_shlvl(head);
+	if (status == ERR_MALLOC)
+	{
+		free(minishell->cwd);
+		minishell->cwd = NULL;
+		return (status);
+	}
 	return (status);
 }
 
