@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/26 13:09:19 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/29 01:17:13 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,19 +105,26 @@ t_status	handle_heredoc(t_minishell *minishell, t_redir *redir)
 		return (ERR_MALLOC);
 	free(redir->value);
 	redir->value = delimiter;
-	tmp_file = "/tmp/minishell_heredoc";
+	status = create_hd_filename(&tmp_file);
+	if (status != SUCCESS)
+		return (status);
 	fd = open(tmp_file, O_CREAT | O_EXCL | O_WRONLY, 0600);
 	if (fd < 0)
+	{
+		free(tmp_file);
 		return (ERR_FILE);
+	}
 	status = read_line_and_write_fd(minishell, redir->value, fd, is_quoted);
 	close(fd);
 	if (status != SUCCESS)
 	{
 		unlink(tmp_file);
+		free(tmp_file);
 		return (status);
 	}
 	redir->fd_hd = open(tmp_file, O_RDONLY);
 	unlink(tmp_file);
+	free(tmp_file);
 	if (redir->fd_hd < 0)
 		return (ERR_FILE);
 	return (SUCCESS);
@@ -162,7 +169,7 @@ t_status	read_heredoc(t_minishell *minishell, t_pipeline *pipeline)
 		{
 			if (status == ERR_FILE)
 				minishell->last_status = error_parent(pipeline,
-						"/tmp/minishell_heredoc", ERR_FILE);
+						"cannot create temp file for here-document", status);
 			else if (status == ERR_MALLOC)
 				minishell->last_status = error_parent(pipeline, "malloc",
 						ERR_MALLOC);
