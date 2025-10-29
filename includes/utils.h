@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/29 00:01:35 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/29 21:44:43 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+
+typedef enum e_normalize_status
+{
+	NORMALIZE_SUCCESS,
+	NORMALIZE_STAT_FAILED,
+	NORMALIZE_MALLOC_ERROR
+}							t_normalize_status;
 
 typedef enum e_blt_error	t_blt_error;
 typedef struct s_pipeline	t_pipeline;
@@ -53,6 +60,6 @@ void						exit_success(t_minishell *minishell,
 
 int							is_pwd_valid(char *pwd_path);
 
-char						*normalize_path(const char *abs_path);
+t_normalize_status			normalize_path(const char *abs_path, char **result);
 
 #endif
