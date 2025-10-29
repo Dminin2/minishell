@@ -47,35 +47,3 @@ char	*get_arg_path(t_list *env_lst, char *arg)
 	return (result);
 }
 
-char	*append_slash(char *path)
-{
-	char	*tmp;
-
-	if (ft_strlen(path) == 0)
-		return (path);
-	if (path[ft_strlen(path) - 1] != '/')
-	{
-		tmp = ft_strjoin(path, "/");
-		free(path);
-		return (tmp);
-	}
-	return (path);
-}
-
-t_cwd_status	get_cwd_for_abs(t_list *env_lst, char **cwd_out)
-{
-	char	*env_pwd;
-
-	*cwd_out = getcwd(NULL, 0);
-	if (*cwd_out)
-		return (CWD_FROM_GETCWD);
-	env_pwd = search_env(env_lst, "PWD");
-	if (env_pwd)
-	{
-		*cwd_out = ft_strdup(env_pwd);
-		if (!*cwd_out)
-			return (CWD_MALLOC_ERROR);
-		return (CWD_FROM_PWD);
-	}
-	return (CWD_NOT_AVAILABLE);
-}
