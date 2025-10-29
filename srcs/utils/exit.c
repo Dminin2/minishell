@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/26 21:36:18 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/29 21:12:04 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ static int	get_exit_status(t_status status)
 	else if (status == ERR_SYNTAX)
 		return (2);
 	else if (status == ERR_CMD_NOT_FOUND || status == ERR_NOT_VALID_PATH
-		|| status == ERR_STAT_ENOENT)
+		|| status == ERR_ENOENT)
 		return (127);
-	else if (status == ERR_ISDIR || status == ERR_STAT_OTHER
-		|| status == ERR_ACCESS)
+	else if (status == ERR_ISDIR || status == ERR_EACCES
+		|| status == ERR_ENOTDIR)
 		return (126);
 	else
 		return (1);
