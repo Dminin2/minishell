@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:10:05 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/29 01:38:41 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:15:41 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*convert_to_hex(char *buf)
 {
-	char		new_buf[17];
-	static char	hex[16] = "0123456789abcdef";
-	int			i;
+	char				new_buf[17];
+	static const char	hex[16] = "0123456789abcdef";
+	int					i;
 
 	i = 0;
 	while (i < 8)
