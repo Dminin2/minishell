@@ -90,10 +90,10 @@ t_normalize_status	normalize_path(const char *abs_path, char **result)
 		process_component(components, &count, split_path[i]);
 		i++;
 	}
-	free_args(split_path);
 	stat_failed = 0;
 	*result = reconstruct_path(components, count, &stat_failed);
 	free(components);
+	free_args(split_path);
 	if (!*result && !stat_failed)
 		return (NORMALIZE_MALLOC_ERROR);
 	if (stat_failed)
