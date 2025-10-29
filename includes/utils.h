@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/18 16:08:18 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/29 00:01:35 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,9 @@ void						exit_error(t_minishell *minishell,
 								t_status status);
 void						exit_success(t_minishell *minishell,
 								t_pipeline *pipeline);
+
+int							is_pwd_valid(char *pwd_path);
+
+char						*normalize_path(const char *abs_path);
 
 #endif

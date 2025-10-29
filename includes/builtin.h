@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/14 13:22:24 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/29 00:01:28 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,5 @@ int				strtouc_and_validate(char *str, unsigned char *last_status);
 char			*get_arg_path(t_list *env_lst, char *arg);
 char			*append_slash(char *path);
 t_cwd_status	get_cwd_for_abs(t_list *env_lst, char **cwd_out);
-char			*normalize_path(const char *abs_path);
 
 #endif
