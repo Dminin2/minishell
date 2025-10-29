@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/29 21:11:16 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/29 21:26:32 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,16 @@ void	handle_execve_error(t_minishell *minishell, t_pipeline *pipeline,
 		t_cmd *cmd)
 {
 	struct stat	st_buf;
+	int			saved_errno;
 
+	saved_errno = errno;
 	if (stat(cmd->path, &st_buf) == 0 && S_ISDIR(st_buf.st_mode))
 		exit_error(minishell, pipeline, cmd->path, ERR_ISDIR);
-	else if (errno == EACCES)
+	else if (saved_errno == EACCES)
 		exit_error(minishell, pipeline, cmd->path, ERR_EACCES);
-	else if (errno == ENOENT)
+	else if (saved_errno == ENOENT)
 		exit_error(minishell, pipeline, cmd->path, ERR_ENOENT);
-	else if(errno == ENOTDIR)
+	else if (saved_errno == ENOTDIR)
 		exit_error(minishell, pipeline, cmd->path, ERR_ENOTDIR);
 	else
 		exit_error(minishell, pipeline, cmd->path, ERR_ERRNO);
