@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 15:42:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/28 23:17:20 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/29 22:04:53 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,22 @@
 
 static t_status	set_pwd(t_minishell *minishell, t_list **head)
 {
-	char		*env_pwd;
-	char		*cwd;
-	t_status	status;
+	char				*env_pwd;
+	char				*cwd;
+	t_status			status;
+	t_normalize_status	normalize_status;
 
 	env_pwd = search_env(*head, "PWD");
 	if (is_pwd_valid(env_pwd))
 	{
-		cwd = normalize_path(env_pwd);
-		if (!cwd)
+		normalize_status = normalize_path(env_pwd, &cwd);
+		if (normalize_status == NORMALIZE_MALLOC_ERROR)
 			return (ERR_MALLOC);
+		if (normalize_status == NORMALIZE_STAT_FAILED)
+		{
+			free(cwd);
+			cwd = getcwd(NULL, 0);
+		}
 	}
 	else
 		cwd = getcwd(NULL, 0);
