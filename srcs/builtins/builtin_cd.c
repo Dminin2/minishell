@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/22 21:39:59 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:05:53 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ static int	handle_relative_path(t_list **env_lst, char *arg_path)
 	char			*abs_path;
 	char			*clean_path;
 	int				exit_status;
-	t_cwd_status	status;
+	t_cwd_status	cwd_status;
 
-	status = get_cwd_for_abs(*env_lst, &cwd);
-	if (status == CWD_MALLOC_ERROR)
+	cwd_status = get_cwd_for_abs(*env_lst, &cwd);
+	if (cwd_status == CWD_MALLOC_ERROR)
 		return (return_error("malloc", ERR_MALLOC));
-	if (status == CWD_NOT_AVAILABLE)
+	if (cwd_status == CWD_NOT_AVAILABLE)
 		return (exec_chdir(env_lst, arg_path, arg_path, arg_path));
 	cwd = append_slash(cwd);
 	if (!cwd)
@@ -92,7 +92,7 @@ static int	handle_relative_path(t_list **env_lst, char *arg_path)
 		free(abs_path);
 		return (return_error("malloc", ERR_MALLOC));
 	}
-	if (status == CWD_FROM_PWD)
+	if (cwd_status == CWD_FROM_PWD)
 		exit_status = exec_chdir(env_lst, arg_path, arg_path, abs_path);
 	else
 		exit_status = exec_chdir(env_lst, clean_path, arg_path, clean_path);
