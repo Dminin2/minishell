@@ -21,6 +21,7 @@
 
 typedef enum e_blt_error	t_blt_error;
 typedef struct s_pipeline	t_pipeline;
+typedef struct s_input		t_input;
 
 void						free_args(char **args);
 void						free_str_wrapper(void *str);
@@ -35,7 +36,7 @@ int							ft_strcmp(char *s1, char *s2);
 int							is_blank(char c);
 int							is_whitespace(char c);
 
-t_status					gnl_and_remove_new_line(char **line);
+t_status					gnl_and_remove_new_line(t_input *input);
 
 void						print_error_msg(char *context, t_status status);
 void						print_error_msg_builtin(char *cmd, char *context,

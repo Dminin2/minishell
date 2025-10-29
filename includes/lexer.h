@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 14:21:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 15:15:52 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/18 16:07:38 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "libft.h"
 # include <stdlib.h>
+
+typedef struct s_input	t_input;
 
 typedef enum e_tok_types
 {
@@ -25,23 +27,23 @@ typedef enum e_tok_types
 	TK_HEREDOC,
 	TK_APPEND,
 	TK_EOF
-}				t_tok_types;
+}						t_tok_types;
 
 typedef struct s_token
 {
-	t_tok_types	type;
-	char		*value;
-}				t_token;
+	t_tok_types			type;
+	char				*value;
+}						t_token;
 
 typedef struct s_lexer
 {
-	const char	*line;
-	int			pos;
-}				t_lexer;
+	const char			*line;
+	int					pos;
+}						t_lexer;
 
-t_list			*tokenize(t_minishell *minishell, char *line);
+t_list					*tokenize(t_minishell *minishell, t_input *input);
 
-void			free_token_wrapper(void *tok);
-void			free_token(t_token *tok);
+void					free_token_wrapper(void *tok);
+void					free_token(t_token *tok);
 
 #endif
