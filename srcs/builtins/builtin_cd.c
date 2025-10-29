@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/29 23:28:39 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/30 00:04:17 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,14 +125,21 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	}
 	oldpwd = NULL;
 	if (args[1] && ft_strncmp(args[1], "-", 2) == 0)
-		oldpwd = search_env(minishell->env_lst, "OLDPWD");
+	{
+		if (search_env(minishell->env_lst, "OLDPWD"))
+			oldpwd = ft_strdup(search_env(minishell->env_lst, "OLDPWD"));
+	}
 	arg = get_arg_path(minishell->env_lst, args[1]);
 	if (!arg)
+	{
+		free(oldpwd);
 		return (1);
+	}
 	abs_path = build_absolute_path(minishell, arg);
 	if (!abs_path)
 	{
 		free(arg);
+		free(oldpwd);
 		return (return_error("malloc", ERR_MALLOC));
 	}
 	normalize_status = normalize_path(abs_path, &target_path);
@@ -140,6 +147,7 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	if (normalize_status == NORMALIZE_MALLOC_ERROR)
 	{
 		free(arg);
+		free(oldpwd);
 		return (return_error("malloc", ERR_MALLOC));
 	}
 	exit_status = try_chdir_and_update(minishell, target_path, arg,
@@ -148,5 +156,6 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	if (exit_status == 0 && oldpwd)
 		ft_printf("%s\n", oldpwd);
 	free(arg);
+	free(oldpwd);
 	return (exit_status);
 }
