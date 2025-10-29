@@ -57,10 +57,13 @@ SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/close.c \
 	$(UTILS_DIR)/list.c \
 	$(UTILS_DIR)/string.c \
-	$(UTILS_DIR)/gnl.c
+	$(UTILS_DIR)/gnl.c \
+	$(UTILS_DIR)/pwd_utils.c \
+	$(UTILS_DIR)/normalize_path.c
 SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_echo.c \
 	$(BUILTINS_DIR)/builtin_cd.c \
+	$(BUILTINS_DIR)/builtin_cd_utils.c \
 	$(BUILTINS_DIR)/builtin_exit.c \
 	$(BUILTINS_DIR)/builtin_exit_utils.c \
 	$(BUILTINS_DIR)/builtin_utils.c \

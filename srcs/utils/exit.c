@@ -38,6 +38,9 @@ void	print_error_msg(char *context, t_status status)
 		ft_dprintf(STDERR_FILENO,
 			"\nminishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
 			context);
+	else if (status == ERR_QUOTE)
+		ft_dprintf(STDERR_FILENO, "minishell: syntax error: unexpected %s\n",
+			context);
 	else
 		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context,
 			strerror(errno));
@@ -108,6 +111,7 @@ void	exit_error(t_minishell *minishell, t_pipeline *pipeline, char *context,
 	print_error_msg(context, status);
 	free_pipeline(pipeline);
 	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
+	free(minishell->cwd);
 	exit(get_exit_status(status));
 }
 
@@ -115,5 +119,6 @@ void	exit_success(t_minishell *minishell, t_pipeline *pipeline)
 {
 	free_pipeline(pipeline);
 	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
+	free(minishell->cwd);
 	exit(0);
 }

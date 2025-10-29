@@ -35,6 +35,7 @@ typedef enum e_status
 	ERR_FORK,
 	ERR_WAITPID,
 	ERR_HEREDOC,
+	ERR_QUOTE,
 	ERR_NOKEY,
 	RCV_SIGINT,
 	ERR_ERRNO,
@@ -43,6 +44,7 @@ typedef enum e_status
 typedef struct s_minishell
 {
 	t_list	*env_lst;
+	char	*cwd;
 	int		last_status;
 	int		should_exit;
 }			t_minishell;
