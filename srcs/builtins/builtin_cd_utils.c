@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 22:00:00 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/28 23:57:30 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/29 10:04:34 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_arg_path(t_list *env_lst, char *arg)
 		result = ft_strdup(arg);
 	if (!result)
 	{
-		return_error("malloc", ERR_MALLOC);
+		print_error_msg("malloc", ERR_MALLOC);
 		return (NULL);
 	}
 	return (result);
