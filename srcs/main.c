@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/17 14:23:51 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:12:56 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,19 @@ int	g_fd = -1;
 
 int	main(int argc, char **argv, char **envp)
 {
-	char			*line;
 	t_list			*token_lst;
 	t_pipeline_ir	*pipeline_ir;
 	t_minishell		minishell;
 	t_pipeline		*pipeline;
+	t_input			input;
 	t_status		status;
 
 	(void)argc;
 	(void)argv;
 	if (isatty(STDIN_FILENO))
-		status = set_signal_interactive();
+		set_signal_interactive();
 	else
-		status = set_signal_noninteractive();
-	if (status != SUCCESS)
-	{
-		print_error_msg("sigaction", status);
-		exit(1);
-	}
+		set_signal_noninteractive();
 	minishell.should_exit = 0;
 	minishell.last_status = 0;
 	minishell.env_lst = env_init(&minishell, envp);
@@ -57,10 +52,12 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_status(minishell.last_status, g_fd);
 #endif
-		status = get_command_line(&minishell, &line);
+		input.line = NULL;
+		input.is_eof = 0;
+		status = get_command_line(&minishell, &input);
 		if (status != SUCCESS)
 			continue ;
-		if (!line)
+		if (!(input.line))
 		{
 			if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
 				ft_dprintf(STDERR_FILENO, "exit\n");
@@ -69,8 +66,8 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_line(line, g_fd);
 #endif
-		token_lst = tokenize(&minishell, line);
-		free(line);
+		token_lst = tokenize(&minishell, &input);
+		free(input.line);
 		if (!token_lst)
 			continue ;
 #ifdef DEBUG
@@ -94,12 +91,13 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_pipeline(pipeline, g_fd);
 #endif
-		if (read_heredoc(&minishell, pipeline) == FAILURE)
+		if (read_heredoc(&minishell, pipeline) != SUCCESS)
 			continue ;
 		execute(&minishell, pipeline);
 	}
 	rl_clear_history();
 	ft_lstclear(&(minishell.env_lst), free_env_wrapper);
+	free(minishell.cwd);
 #ifdef DEBUG
 	close(g_fd);
 #endif

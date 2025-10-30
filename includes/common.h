@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/17 05:10:42 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:09:33 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 typedef enum e_status
 {
 	SUCCESS,
-	FAILURE,
 	ERR_SYNTAX,
 	ERR_CMD_NOT_FOUND,
 	ERR_NOT_VALID_PATH,
@@ -33,14 +32,17 @@ typedef enum e_status
 	ERR_PIPE,
 	ERR_FORK,
 	ERR_WAITPID,
-	ERR_SIG,
 	ERR_HEREDOC,
+	ERR_QUOTE,
+	ERR_NOKEY,
+	RCV_SIGINT,
 	ERR_ERRNO,
 }			t_status;
 
 typedef struct s_minishell
 {
 	t_list	*env_lst;
+	char	*cwd;
 	int		last_status;
 	int		should_exit;
 }			t_minishell;

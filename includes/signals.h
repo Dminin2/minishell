@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 02:45:41 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/17 04:29:12 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/26 12:52:07 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 
 extern volatile sig_atomic_t	g_sig;
 
-t_status						set_signal_interactive(void);
-t_status						set_signal_noninteractive(void);
-t_status						set_signal_heredoc(void);
+void						set_signal_interactive(void);
+void						set_signal_noninteractive(void);
+void						set_signal_heredoc(void);
+void						set_signal_default(void);
+void						set_signal_wait_child(void);
 
 #endif
