@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 23:57:34 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/30 16:48:11 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:49:14 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ t_normalize_status	normalize_path(const char *abs_path, char **result)
 		*result = ft_strdup(".");
 		if (!*result)
 			return (NORMALIZE_MALLOC_ERROR);
-		return (NORMALIZE_NOT_ABSOLUTE);
+		return (NORMALIZE_SUCCESS);
 	}
 	if (abs_path[0] != '/')
 	{
 		*result = ft_strdup(abs_path);
 		if (!*result)
 			return (NORMALIZE_MALLOC_ERROR);
-		return (NORMALIZE_NOT_ABSOLUTE);
+		return (NORMALIZE_SUCCESS);
 	}
 	split_path = ft_split(abs_path, '/');
 	if (!split_path)
