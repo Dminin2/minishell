@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/29 21:44:43 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:51:11 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ typedef enum e_normalize_status
 {
 	NORMALIZE_SUCCESS,
 	NORMALIZE_STAT_FAILED,
-	NORMALIZE_MALLOC_ERROR,
-	NORMALIZE_NOT_ABSOLUTE
+	NORMALIZE_MALLOC_ERROR
 }							t_normalize_status;
 
 typedef enum e_blt_error	t_blt_error;
