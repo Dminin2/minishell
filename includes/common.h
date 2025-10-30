@@ -14,6 +14,7 @@
 # define COMMON_H
 
 # include "ft_dprintf.h"
+# include "ft_dprintf_buf.h"
 # include "get_next_line.h"
 # include "libft.h"
 

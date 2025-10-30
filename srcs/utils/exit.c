@@ -15,34 +15,32 @@
 void	print_error_msg(char *context, t_status status)
 {
 	if (status == ERR_CMD_NOT_FOUND)
-		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context,
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
 			"command not found");
 	else if (status == ERR_NOT_VALID_PATH)
-		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context,
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
 			"No such file or directory");
 	else if (status == ERR_SYNTAX)
-		ft_dprintf(STDERR_FILENO,
+		ft_dprintf_buf(STDERR_FILENO,
 			"minishell: syntax error near unexpected token `%s'\n", context);
 	else if (status == ERR_FILE)
-		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context,
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
 			strerror(errno));
 	else if (status == ERR_AMB_REDIR)
-		ft_dprintf(STDERR_FILENO, "minishell: %s: ambiguous redirect\n",
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: ambiguous redirect\n",
 			context);
 	else if (status == ERR_ERRNO)
-		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context,
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
 			strerror(errno));
 	else if (status == ERR_ISDIR)
-		ft_dprintf(STDERR_FILENO, "minishell: %s: Is a directory\n", context);
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: Is a directory\n",
+			context);
 	else if (status == ERR_HEREDOC)
-		ft_dprintf(STDERR_FILENO,
+		ft_dprintf_buf(STDERR_FILENO,
 			"\nminishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
 			context);
-	else if (status == ERR_QUOTE)
-		ft_dprintf(STDERR_FILENO, "minishell: syntax error: unexpected %s\n",
-			context);
 	else
-		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", context,
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
 			strerror(errno));
 }
 
@@ -51,26 +49,27 @@ void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
 	if (context)
 	{
 		if (error == BLTERR_ERRNO)
-			ft_dprintf(STDERR_FILENO, "minishell: %s: %s: %s\n", cmd, context,
-				strerror(errno));
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s: %s\n", cmd,
+				context, strerror(errno));
 		else if (error == BLTERR_NUM_ARG)
-			ft_dprintf(STDERR_FILENO, "minishell: %s: %s: %s\n", cmd, context,
-				NUMARG_ERR);
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s: %s\n", cmd,
+				context, NUMARG_ERR);
 		else if (error == BLTERR_NOT_VALID)
-			ft_dprintf(STDERR_FILENO, "minishell: %s: `%s': %s\n", cmd, context,
-				ENV_ERR);
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: `%s': %s\n", cmd,
+				context, ENV_ERR);
 	}
 	else
 	{
 		if (error == BLTERR_ERRNO)
-			ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", cmd,
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", cmd,
 				strerror(errno));
 		else if (error == BLTERR_NO_SET_HOME)
-			ft_dprintf(STDERR_FILENO, "minishell: %s: HOME not set\n", cmd);
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: HOME not set\n", cmd);
 		else if (error == BLTERR_NO_SET_OLDPWD)
-			ft_dprintf(STDERR_FILENO, "minishell: %s: OLDPWD not set\n", cmd);
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: OLDPWD not set\n",
+				cmd);
 		else if (error == BLTERR_MANY_ARG)
-			ft_dprintf(STDERR_FILENO, "minishell: %s: too many arguments\n",
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: too many arguments\n",
 				cmd);
 	}
 }

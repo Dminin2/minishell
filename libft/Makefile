@@ -76,6 +76,13 @@ dprint_hexadecimal.c \
 dput_fd_utils.c
 FT_DPRINTF_OBJS = $(addprefix $(OBJS_DIR)/$(FT_DPRINTF_DIR)/, $(FT_DPRINTF_SRCS:.c=.o))
 
+FT_DPRINTF_BUF_DIR = ft_dprintf_buf
+FT_DPRINTF_BUF_SRCS = ft_dprintf_buf.c \
+dprintf_buffer.c \
+dprint_char_string_percent_buf.c \
+dprint_decimal_buf.c \
+dprint_hexadecimal_buf.c
+FT_DPRINTF_BUF_OBJS = $(addprefix $(OBJS_DIR)/$(FT_DPRINTF_BUF_DIR)/, $(FT_DPRINTF_BUF_SRCS:.c=.o))
 
 GNL_DIR = get_next_line
 GNL_SRCS = get_next_line.c \
@@ -83,10 +90,10 @@ get_next_line_utils.c
 GNL_OBJS = $(addprefix $(OBJS_DIR)/$(GNL_DIR)/, $(GNL_SRCS:.c=.o))
 
 SRCS_DIR = srcs
-SRCS = $(LIBFT_SRCS) $(FT_PRINTF_SRCS) $(FT_DPRINTF_SRCS) $(GNL_SRCS)
+SRCS = $(LIBFT_SRCS) $(FT_PRINTF_SRCS) $(FT_DPRINTF_SRCS) $(FT_DPRINTF_BUF_SRCS) $(GNL_SRCS)
 
 OBJS_DIR = objs
-OBJS = $(LIBFT_OBJS) $(FT_PRINTF_OBJS) $(FT_DPRINTF_OBJS) $(GNL_OBJS)
+OBJS = $(LIBFT_OBJS) $(FT_PRINTF_OBJS) $(FT_DPRINTF_OBJS) $(FT_DPRINTF_BUF_OBJS) $(GNL_OBJS)
 
 INCLUDES = includes
 
@@ -106,6 +113,7 @@ $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)/$(LIBFT_DIR)
 	mkdir -p $(OBJS_DIR)/$(FT_PRINTF_DIR)
 	mkdir -p $(OBJS_DIR)/$(FT_DPRINTF_DIR)
+	mkdir -p $(OBJS_DIR)/$(FT_DPRINTF_BUF_DIR)
 	mkdir -p $(OBJS_DIR)/$(GNL_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
