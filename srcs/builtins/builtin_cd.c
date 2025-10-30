@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/30 00:04:17 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/30 20:53:35 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static char	*build_absolute_path(t_minishell *minishell, char *arg)
 		}
 		minishell->cwd = cwd;
 	}
-	if (ft_strlen(minishell->cwd) > 1)
+	if (ft_strlen(minishell->cwd) > 1
+		&& minishell->cwd[ft_strlen(minishell->cwd) - 1] != '/')
 		tmp = ft_strjoin(minishell->cwd, "/");
 	else
 		tmp = ft_strdup(minishell->cwd);

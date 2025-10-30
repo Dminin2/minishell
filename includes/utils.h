@@ -23,7 +23,8 @@ typedef enum e_normalize_status
 {
 	NORMALIZE_SUCCESS,
 	NORMALIZE_STAT_FAILED,
-	NORMALIZE_MALLOC_ERROR
+	NORMALIZE_MALLOC_ERROR,
+	NORMALIZE_NOT_ABSOLUTE
 }							t_normalize_status;
 
 typedef enum e_blt_error	t_blt_error;
