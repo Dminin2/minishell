@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 23:57:34 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/30 21:49:14 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:57:48 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_normalize_status	normalize_path(const char *abs_path, char **result)
 	int		count;
 	int		stat_failed;
 
+	*result == NULL;
 	if (!abs_path || abs_path[0] == '\0')
 	{
 		*result = ft_strdup(".");
