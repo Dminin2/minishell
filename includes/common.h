@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/31 11:56:31 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/31 15:24:45 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ typedef enum e_status
 	ERR_CMD_NOT_FOUND,
 	ERR_NOT_VALID_PATH,
 	ERR_ISDIR,
+	ERR_EACCES,
+	ERR_ENOENT,
+	ERR_ENOTDIR,
+	ERR_EXECVE_OTHER,
 	ERR_FILE,
 	ERR_AMB_REDIR,
 	ERR_DUP,
