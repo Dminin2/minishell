@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 23:16:48 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/31 14:06:28 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void	handle_redir_err(t_minishell *minishell, t_pipeline *pipeline,
 		exit_error(minishell, pipeline, "dup", ERR_DUP);
 	else if (err.status == ERR_AMB_REDIR)
 		exit_error(minishell, pipeline, err.redir_err->value, ERR_AMB_REDIR);
+	else if (err.status == ERR_HD_FILE)
+		exit_error(minishell, pipeline,
+			"cannot create temp file for here-document", ERR_HD_FILE);
 }
 
 void	handle_execve_error(t_minishell *minishell, t_pipeline *pipeline,
