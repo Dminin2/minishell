@@ -37,6 +37,7 @@ typedef enum e_status
 	ERR_FORK,
 	ERR_WAITPID,
 	ERR_HEREDOC,
+	ERR_HD_FILE,
 	ERR_QUOTE,
 	ERR_NOKEY,
 	RCV_SIGINT,

@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:12 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 23:19:41 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/31 12:18:01 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,15 @@ t_status	get_redirection(t_list **tok_lst, t_cmd_ir *cmd_ir)
 	{
 		free(redir);
 		return (status);
+	}
+	if (redir->type == R_HEREDOC)
+	{
+		status = read_heredoc(redir);
+		if (status != SUCCESS)
+		{
+			free_redir(redir);
+			return (status);
+		}
 	}
 	status = add_newlst(&(cmd_ir->redir_lst), (void *)redir);
 	if (status != SUCCESS)

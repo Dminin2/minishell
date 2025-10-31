@@ -39,6 +39,9 @@ void	handle_redir_err(t_minishell *minishell, t_pipeline *pipeline,
 		exit_error(minishell, pipeline, "dup", ERR_DUP);
 	else if (err.status == ERR_AMB_REDIR)
 		exit_error(minishell, pipeline, err.redir_err->value, ERR_AMB_REDIR);
+	else if (err.status == ERR_HD_FILE)
+		exit_error(minishell, pipeline,
+			"cannot create temp file for here-document", ERR_HD_FILE);
 }
 
 void	handle_execve_error(t_minishell *minishell, t_pipeline *pipeline,
