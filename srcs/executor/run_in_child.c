@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/29 21:26:32 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/31 15:25:00 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	handle_execve_error(t_minishell *minishell, t_pipeline *pipeline,
 	else if (saved_errno == ENOTDIR)
 		exit_error(minishell, pipeline, cmd->path, ERR_ENOTDIR);
 	else
-		exit_error(minishell, pipeline, cmd->path, ERR_ERRNO);
+		exit_error(minishell, pipeline, cmd->path, ERR_EXECVE_OTHER);
 }
 
 void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)

@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/29 21:11:25 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/31 15:24:45 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef enum e_status
 	ERR_EACCES,
 	ERR_ENOENT,
 	ERR_ENOTDIR,
+	ERR_EXECVE_OTHER,
 	ERR_FILE,
 	ERR_AMB_REDIR,
 	ERR_DUP,

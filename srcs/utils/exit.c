@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/29 21:12:04 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/31 15:24:39 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	get_exit_status(t_status status)
 		|| status == ERR_ENOENT)
 		return (127);
 	else if (status == ERR_ISDIR || status == ERR_EACCES
-		|| status == ERR_ENOTDIR)
+		|| status == ERR_ENOTDIR || status == ERR_EXECVE_OTHER)
 		return (126);
 	else
 		return (1);
