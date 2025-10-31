@@ -115,39 +115,44 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 RM_DIR = rm -rf
 
-all: $(NAME)
+all:
+	@echo "Building minishell..."
+	@$(MAKE) --no-print-directory $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_A)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) -lreadline -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) -lreadline -o $(NAME)
+	@echo "\033[0;32m✨ Build complete! ✨\033[0m"
 
 $(LIBFT_A):
-	make -C $(LIBFT_DIR)
+	@make -s -C $(LIBFT_DIR)
 
 $(OBJS_DIR):
-	mkdir -p $(OBJS_DIR)
-	mkdir -p $(OBJS_DIR)/$(READLINE_DIR)
-	mkdir -p $(OBJS_DIR)/$(EXECUTOR_DIR)
-	mkdir -p $(OBJS_DIR)/$(LEXER_DIR)
-	mkdir -p $(OBJS_DIR)/$(PARSER_DIR)
-	mkdir -p $(OBJS_DIR)/$(EXPANDER_DIR)
-	mkdir -p $(OBJS_DIR)/$(REDIRECTION_DIR)
-	mkdir -p $(OBJS_DIR)/$(ENV_DIR)
-	mkdir -p $(OBJS_DIR)/$(UTILS_DIR)
-	mkdir -p $(OBJS_DIR)/$(DEBUG_DIR)
-	mkdir -p $(OBJS_DIR)/$(BUILTINS_DIR)
-	mkdir -p $(OBJS_DIR)/$(SIGNALS_DIR)
+	@mkdir -p $(OBJS_DIR)
+	@mkdir -p $(OBJS_DIR)/$(READLINE_DIR)
+	@mkdir -p $(OBJS_DIR)/$(EXECUTOR_DIR)
+	@mkdir -p $(OBJS_DIR)/$(LEXER_DIR)
+	@mkdir -p $(OBJS_DIR)/$(PARSER_DIR)
+	@mkdir -p $(OBJS_DIR)/$(EXPANDER_DIR)
+	@mkdir -p $(OBJS_DIR)/$(REDIRECTION_DIR)
+	@mkdir -p $(OBJS_DIR)/$(ENV_DIR)
+	@mkdir -p $(OBJS_DIR)/$(UTILS_DIR)
+	@mkdir -p $(OBJS_DIR)/$(DEBUG_DIR)
+	@mkdir -p $(OBJS_DIR)/$(BUILTINS_DIR)
+	@mkdir -p $(OBJS_DIR)/$(SIGNALS_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
-	$(CC) $(CFLAGS) -I$(INCLUDES) -I$(LIBFT_INCLUDES) -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(INCLUDES) -I$(LIBFT_INCLUDES) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS)
-	$(RM_DIR) $(OBJS_DIR)
-	$(MAKE) clean -C $(LIBFT_DIR)
+	@$(RM) $(OBJS)
+	@$(RM_DIR) $(OBJS_DIR)
+	@$(MAKE) clean -s -C $(LIBFT_DIR)
+	@echo "\033[0;32m✨ Clean complete! ✨\033[0m"
 
 fclean: clean
-	$(RM) $(NAME)
-	$(MAKE) fclean -C $(LIBFT_DIR)
+	@$(RM) $(NAME)
+	@echo "\033[0;32m✨ Removed $(NAME) ✨\033[0m"
+	@$(MAKE) fclean -s -C $(LIBFT_DIR)
 
 re: fclean all
 
