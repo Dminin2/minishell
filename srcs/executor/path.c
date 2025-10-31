@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:32:03 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/17 19:38:23 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/31 16:11:01 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_status	search_path(t_cmd *cmd, char **paths)
 		if (paths[i][0] != '\0')
 			tmp = ft_strjoin(paths[i], "/");
 		else
-			tmp = ft_strdup(paths[i]);
+			tmp = ft_strjoin("./", paths[i]);
 		if (!tmp)
 			return (ERR_MALLOC);
 		full_path = ft_strjoin(tmp, cmd->args[0]);
