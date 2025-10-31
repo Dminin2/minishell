@@ -115,10 +115,13 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 RM_DIR = rm -rf
 
-all: $(NAME)
+all:
+	@echo "Building minishell..."
+	@$(MAKE) --no-print-directory $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_A)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) -lreadline -o $(NAME)
+	@echo "\033[0;32m✨ Build complete! ✨\033[0m"
 
 $(LIBFT_A):
 	@make -s -C $(LIBFT_DIR)
@@ -144,9 +147,11 @@ clean:
 	@$(RM) $(OBJS)
 	@$(RM_DIR) $(OBJS_DIR)
 	@$(MAKE) clean -s -C $(LIBFT_DIR)
+	@echo "\033[0;32m✨ Clean complete! ✨\033[0m"
 
 fclean: clean
 	@$(RM) $(NAME)
+	@echo "\033[0;32m✨ Removed $(NAME) ✨\033[0m"
 	@$(MAKE) fclean -s -C $(LIBFT_DIR)
 
 re: fclean all
