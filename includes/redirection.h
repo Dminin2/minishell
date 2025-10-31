@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:03:44 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/14 13:14:47 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/28 23:35:53 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void						redirect(t_minishell *minishell, t_list *redir_lst,
 								t_redir_err *err);
 t_status					read_heredoc(t_minishell *minishell,
 								t_pipeline *pipeline);
+t_status					create_hd_filename(char **fname_hd);
 
 void						free_redir_wrapper(void *redir);
 void						free_redir(t_redir *redir);

@@ -44,7 +44,8 @@ SRCS_EXPANDER = $(EXPANDER_DIR)/expand.c \
 	$(EXPANDER_DIR)/free_pipeline.c \
 	$(EXPANDER_DIR)/free_pipeline_ir_in_expander.c
 SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
-	$(REDIRECTION_DIR)/heredoc.c
+	$(REDIRECTION_DIR)/heredoc.c \
+	$(REDIRECTION_DIR)/heredoc_file.c
 SRCS_ENV = $(ENV_DIR)/env_init.c \
 	$(ENV_DIR)/env_utils.c \
 	$(ENV_DIR)/search_env.c \
