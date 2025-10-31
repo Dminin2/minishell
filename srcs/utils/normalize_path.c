@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 23:57:34 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/28 23:57:44 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:59:06 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ static void	process_component(char **components, int *count, char *component)
 	(*count)++;
 }
 
-static char	*reconstruct_path(char **components, int count)
+static char	*reconstruct_path(char **components, int count, int *stat_failed)
 {
-	char	*path;
-	char	*tmp;
-	int		i;
+	char		*path;
+	char		*tmp;
+	int			i;
+	struct stat	st;
 
 	path = ft_strdup("/");
 	if (!path)
@@ -51,22 +52,43 @@ static char	*reconstruct_path(char **components, int count)
 		if (!tmp)
 			return (NULL);
 		path = tmp;
+		if (!(stat(path, &st) == 0 && S_ISDIR(st.st_mode)))
+		{
+			*stat_failed = 1;
+			free(path);
+			return (NULL);
+		}
 		i++;
 	}
 	return (path);
 }
 
-char	*normalize_path(const char *abs_path)
+t_normalize_status	normalize_path(const char *abs_path, char **result)
 {
 	char	**split_path;
 	char	**components;
-	char	*normalized_path;
 	int		i;
 	int		count;
+	int		stat_failed;
 
+	*result = NULL;
+	if (!abs_path || abs_path[0] == '\0')
+	{
+		*result = ft_strdup(".");
+		if (!*result)
+			return (NORMALIZE_MALLOC_ERROR);
+		return (NORMALIZE_SUCCESS);
+	}
+	if (abs_path[0] != '/')
+	{
+		*result = ft_strdup(abs_path);
+		if (!*result)
+			return (NORMALIZE_MALLOC_ERROR);
+		return (NORMALIZE_SUCCESS);
+	}
 	split_path = ft_split(abs_path, '/');
 	if (!split_path)
-		return (NULL);
+		return (NORMALIZE_MALLOC_ERROR);
 	i = 0;
 	while (split_path[i])
 		i++;
@@ -74,7 +96,7 @@ char	*normalize_path(const char *abs_path)
 	if (!components)
 	{
 		free_args(split_path);
-		return (NULL);
+		return (NORMALIZE_MALLOC_ERROR);
 	}
 	count = 0;
 	i = 0;
@@ -83,8 +105,18 @@ char	*normalize_path(const char *abs_path)
 		process_component(components, &count, split_path[i]);
 		i++;
 	}
-	normalized_path = reconstruct_path(components, count);
+	stat_failed = 0;
+	*result = reconstruct_path(components, count, &stat_failed);
 	free(components);
 	free_args(split_path);
-	return (normalized_path);
+	if (!*result && !stat_failed)
+		return (NORMALIZE_MALLOC_ERROR);
+	if (stat_failed)
+	{
+		*result = ft_strdup(abs_path);
+		if (!*result)
+			return (NORMALIZE_MALLOC_ERROR);
+		return (NORMALIZE_STAT_FAILED);
+	}
+	return (NORMALIZE_SUCCESS);
 }
