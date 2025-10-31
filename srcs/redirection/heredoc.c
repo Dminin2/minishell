@@ -6,56 +6,62 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/31 16:52:30 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/01 00:27:06 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*expand_line(t_minishell *minishell, char *line)
+{
+	int		i;
+	char	*new_line;
+	char	*word;
+	int		start;
+
+	i = 0;
+	new_line = NULL;
+	while (line[i])
+	{
+		if (line[i] == '$')
+			word = expand_parameter(minishell, line, &i);
+		else
+		{
+			start = i;
+			while (line[i] && line[i] != '$')
+				i++;
+			word = ft_substr(line, start, i - start);
+		}
+		if (!word)
+		{
+			free(new_line);
+			return (NULL);
+		}
+		if (new_line)
+			new_line = ft_strjoin_and_free(new_line, word);
+		else
+			new_line = word;
+		if (!new_line)
+			return (NULL);
+	}
+	return (new_line);
+}
+
 t_status	expand_heredoc(t_minishell *minishell, int old_fd, int new_fd)
 {
 	char	*new_line;
-	int		start;
-	char	*word;
-	int		i;
 	char	*line;
 
 	while (1)
 	{
-		i = 0;
 		line = get_next_line(old_fd);
 		if (!line)
 			break ;
-		new_line = NULL;
-		while (line[i])
-		{
-			if (line[i] == '$')
-				word = expand_parameter(minishell, line, &i);
-			else
-			{
-				start = i;
-				while (line[i] && line[i] != '$')
-					i++;
-				word = ft_substr(line, start, i - start);
-			}
-			if (!word)
-			{
-				free(line);
-				free(new_line);
-				return (ERR_MALLOC);
-			}
-			if (new_line)
-				new_line = ft_strjoin_and_free(new_line, word);
-			else
-				new_line = word;
-			if (!new_line)
-			{
-				free(line);
-				return (ERR_MALLOC);
-			}
-		}
-		ft_putstr_fd(new_line, new_fd);
+		new_line = expand_line(minishell, line);
 		free(line);
+		if (!new_line)
+			return (ERR_MALLOC);
+		ft_putstr_fd(new_line, new_fd);
 		free(new_line);
 	}
 	return (SUCCESS);
@@ -115,7 +121,7 @@ t_status	read_heredoc(t_redir *redir)
 	if (fd < 0)
 	{
 		free(tmp_file);
-		return (ERR_FILE);
+		return (ERR_HD_FILE);
 	}
 	if (isatty(STDIN_FILENO))
 		set_signal_heredoc();
