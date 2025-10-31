@@ -118,30 +118,19 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	char				*target_path;
 	t_normalize_status	normalize_status;
 	int					exit_status;
-	char				*oldpwd;
 
-	oldpwd = NULL;
 	if (args[1] && args[2])
 	{
 		print_error_msg_builtin("cd", NULL, BLTERR_MANY_ARG);
 		return (1);
 	}
-	if (args[1] && ft_strncmp(args[1], "-", 2) == 0)
-	{
-		if (prepare_oldpwd(minishell->env_lst, &oldpwd) == 1)
-			return (1);
-	}
 	arg = get_arg_path(minishell->env_lst, args[1]);
 	if (!arg)
-	{
-		free(oldpwd);
 		return (1);
-	}
 	abs_path = build_absolute_path(minishell, arg);
 	if (!abs_path)
 	{
 		free(arg);
-		free(oldpwd);
 		return (return_error("malloc", ERR_MALLOC));
 	}
 	normalize_status = normalize_path(abs_path, &target_path);
@@ -149,15 +138,13 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	if (normalize_status == NORMALIZE_MALLOC_ERROR)
 	{
 		free(arg);
-		free(oldpwd);
 		return (return_error("malloc", ERR_MALLOC));
 	}
 	exit_status = try_chdir_and_update(minishell, target_path, arg,
 			normalize_status);
 	free(target_path);
+	if (exit_status == 0 && args[1] && ft_strncmp(args[1], "-", 2) == 0)
+		ft_printf("%s\n", arg);
 	free(arg);
-	if (exit_status == 0 && oldpwd)
-		ft_printf("%s\n", oldpwd);
-	free(oldpwd);
 	return (exit_status);
 }
