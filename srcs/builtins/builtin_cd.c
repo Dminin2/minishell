@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/31 13:08:50 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/31 14:28:31 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,16 +120,16 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	int					exit_status;
 	char				*oldpwd;
 
+	oldpwd = NULL;
 	if (args[1] && args[2])
 	{
 		print_error_msg_builtin("cd", NULL, BLTERR_MANY_ARG);
 		return (1);
 	}
-	oldpwd = NULL;
 	if (args[1] && ft_strncmp(args[1], "-", 2) == 0)
 	{
-		if (search_env(minishell->env_lst, "OLDPWD"))
-			oldpwd = ft_strdup(search_env(minishell->env_lst, "OLDPWD"));
+		if (prepare_oldpwd(minishell->env_lst, &oldpwd) == 1)
+			return (1);
 	}
 	arg = get_arg_path(minishell->env_lst, args[1]);
 	if (!arg)
@@ -155,9 +155,9 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	exit_status = try_chdir_and_update(minishell, target_path, arg,
 			normalize_status);
 	free(target_path);
+	free(arg);
 	if (exit_status == 0 && oldpwd)
 		ft_printf("%s\n", oldpwd);
-	free(arg);
 	free(oldpwd);
 	return (exit_status);
 }

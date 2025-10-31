@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/29 23:11:20 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/31 14:27:54 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		handle_args(t_minishell *minishell, char **args);
 int		handle_no_args(t_minishell *minishell);
 int		strtouc_and_validate(char *str, unsigned char *last_status);
 
+int		prepare_oldpwd(t_list *env_lst, char **oldpwd_to_print);
 char	*get_arg_path(t_list *env_lst, char *arg);
 
 #endif
