@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/31 15:28:53 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/31 21:54:37 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	expand_heredoc_and_replace_fd(t_minishell *minishell, t_redir *redir,
 		err->status = status;
 		return ;
 	}
-	tmp_fd = open(tmp_fname, O_CREAT | O_EXCL | O_WRONLY, 0600);
+	tmp_fd = open(tmp_fname, O_CREAT | O_EXCL | O_WRONLY | O_CLOEXEC, 0600);
 	if (tmp_fd < 0)
 	{
 		err->redir_err = NULL;
@@ -88,7 +88,7 @@ void	expand_heredoc_and_replace_fd(t_minishell *minishell, t_redir *redir,
 		err->status = status;
 		return ;
 	}
-	redir->fd_hd = open(tmp_fname, O_RDONLY);
+	redir->fd_hd = open(tmp_fname, O_RDONLY | O_CLOEXEC);
 	unlink(tmp_fname);
 	free(tmp_fname);
 	if (redir->fd_hd < 0)

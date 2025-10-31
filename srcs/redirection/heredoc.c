@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/31 14:45:39 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/31 16:52:30 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ t_status	read_line_and_write_fd(char *delimiter, int fd)
 
 t_status	read_heredoc(t_redir *redir)
 {
-	int fd;
-	char *tmp_file;
-	char *delimiter;
-	t_status status;
+	int			fd;
+	char		*tmp_file;
+	char		*delimiter;
+	t_status	status;
 
 	delimiter = expand_delimiter(redir->value, &(redir->delimiter_is_quoted));
 	if (!delimiter)
@@ -111,7 +111,7 @@ t_status	read_heredoc(t_redir *redir)
 	status = create_hd_filename(&tmp_file);
 	if (status != SUCCESS)
 		return (status);
-	fd = open(tmp_file, O_CREAT | O_EXCL | O_WRONLY, 0600);
+	fd = open(tmp_file, O_CREAT | O_EXCL | O_WRONLY | O_CLOEXEC, 0600);
 	if (fd < 0)
 	{
 		free(tmp_file);
@@ -129,7 +129,7 @@ t_status	read_heredoc(t_redir *redir)
 		free(tmp_file);
 		return (status);
 	}
-	redir->fd_hd = open(tmp_file, O_RDONLY);
+	redir->fd_hd = open(tmp_file, O_RDONLY | O_CLOEXEC);
 	unlink(tmp_file);
 	free(tmp_file);
 	if (redir->fd_hd < 0)
