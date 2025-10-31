@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/30 20:53:35 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/31 13:08:50 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ static int	try_chdir_and_update(t_minishell *minishell, char *target_path,
 			old_pwd = "";
 		return (update_pwd_env(&minishell->env_lst, old_pwd, minishell->cwd));
 	}
-	ft_dprintf(STDERR_FILENO, "cd: %s: %s\n", arg, strerror(first_errno));
+	ft_dprintf(STDERR_FILENO, "minishell: cd: %s: %s\n", arg,
+		strerror(first_errno));
 	return (1);
 }
 
