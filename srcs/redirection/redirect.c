@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/31 14:44:01 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/31 15:28:53 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	expand_heredoc_and_replace_fd(t_minishell *minishell, t_redir *redir,
 	}
 	status = expand_heredoc(minishell, redir->fd_hd, tmp_fd);
 	close(redir->fd_hd);
+	redir->fd_hd = -1;
 	close(tmp_fd);
 	if (status != SUCCESS)
 	{
