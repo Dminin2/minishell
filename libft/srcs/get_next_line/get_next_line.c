@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 17:49:03 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/05/11 02:38:25 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/05/14 11:05:45 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/11/01 09:11:54 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static char	*free_save(char **save)
 {
+	if (!*save)
+		return (NULL);
 	free(*save);
 	*save = NULL;
 	return (NULL);
@@ -83,25 +85,27 @@ char	*get_next_line(int fd)
 {
 	char		*buf;
 	char		*line;
-	static char	*save = NULL;
+	static char	*save[OPEN_MAX];
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (free_save(&save));
+	if (BUFFER_SIZE <= 0)
+		return (free_save(&save[fd]));
+	if (fd < 0 || fd >= OPEN_MAX)
+		return (NULL);
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
-		return (free_save(&save));
-	if (!save)
+		return (free_save(&save[fd]));
+	if (!save[fd])
 	{
-		save = ft_strdup("");
-		if (!save)
+		save[fd] = ft_strdup("");
+		if (!save[fd])
 			return (free(buf), NULL);
 	}
-	save = read_and_save(fd, buf, save);
-	if (!save || !*save)
-		return (free_save(&save));
-	line = put_line(save);
+	save[fd] = read_and_save(fd, buf, save[fd]);
+	if (!save[fd] || !*(save[fd]))
+		return (free_save(&save[fd]));
+	line = put_line(save[fd]);
 	if (!line)
-		return (free_save(&save));
-	save = remove_line(save);
+		return (free_save(&save[fd]));
+	save[fd] = remove_line(save[fd]);
 	return (line);
 }

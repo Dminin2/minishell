@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 17:49:30 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/07/24 11:44:14 by aomatsud         ###   ########.fr       */
+/*   Created: 2025/05/14 11:07:29 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/11/01 09:28:06 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 32
 # endif
+
+# define OPEN_MAX 1048576
 
 # include "libft.h"
 # include <stdlib.h>
