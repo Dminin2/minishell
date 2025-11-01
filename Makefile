@@ -84,7 +84,8 @@ SRCS_DEBUG = $(DEBUG_DIR)/print_pipeline_ir.c \
 	$(DEBUG_DIR)/print_redir_lst.c \
 	$(DEBUG_DIR)/print_env_lst.c \
 	$(DEBUG_DIR)/print_status.c \
-	$(DEBUG_DIR)/print_input.c
+	$(DEBUG_DIR)/print_input.c \
+	$(DEBUG_DIR)/malloc.c
 
 
 SRCS = $(SRCS_MAIN) \
@@ -158,5 +159,8 @@ re: fclean all
 
 debug:
 	$(MAKE) all CFLAGS="$(CFLAGS) -DDEBUG"
+
+debug_malloc:
+	$(MAKE) all CFLAGS="$(CFLAGS) -DDEBUG_MALLOC"
 
 .PHONY: all clean fclean re debug
