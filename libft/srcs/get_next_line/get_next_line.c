@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:05:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/01 09:11:54 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/01 18:32:31 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ char	*get_next_line(int fd)
 {
 	char		*buf;
 	char		*line;
-	static char	*save[OPEN_MAX];
+	static char	*save[GNL_FD_MAX];
 
 	if (BUFFER_SIZE <= 0)
 		return (free_save(&save[fd]));
-	if (fd < 0 || fd >= OPEN_MAX)
+	if (fd < 0 || fd >= GNL_FD_MAX)
 		return (NULL);
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
