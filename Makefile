@@ -160,7 +160,8 @@ re: fclean all
 debug:
 	$(MAKE) all CFLAGS="$(CFLAGS) -DDEBUG"
 
+N ?= 50
 debug_malloc:
-	$(MAKE) all CFLAGS="$(CFLAGS) -DDEBUG_MALLOC"
+	$(MAKE) all CFLAGS="$(CFLAGS) -DDEBUG_MALLOC -DMALLOC_FAILED=$(N)"
 
 .PHONY: all clean fclean re debug debug_malloc
