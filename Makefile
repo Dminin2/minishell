@@ -163,4 +163,4 @@ debug:
 debug_malloc:
 	$(MAKE) all CFLAGS="$(CFLAGS) -DDEBUG_MALLOC"
 
-.PHONY: all clean fclean re debug
+.PHONY: all clean fclean re debug debug_malloc
