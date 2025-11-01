@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 16:29:09 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/01 23:30:03 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/01 23:36:42 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	*my_calloc(size_t nmemb, size_t size)
 	size_t			i;
 	static int		malloc_num = 0;
 
+	malloc_num++;
 	if (malloc_num == MALLOC_FAILED)
 	{
 		dprintf(STDERR_FILENO, "my_calloc: failed\n");
 		malloc_num = 0;
 		return (NULL);
 	}
-	malloc_num++;
 	i = 0;
 	if (!nmemb || !size)
 	{
