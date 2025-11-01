@@ -6,11 +6,15 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 16:29:09 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/01 19:02:41 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/01 19:04:59 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+#ifndef MALLOC_FAILED
+# define MALLOC_FAILED 50
+#endif
 
 void	*my_calloc(size_t nmemb, size_t size)
 {
