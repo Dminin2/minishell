@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 16:29:09 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/01 19:04:59 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/01 23:30:03 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	*my_calloc(size_t nmemb, size_t size)
 		result = malloc(1);
 		if (!result)
 			return (NULL);
+		result[0] = 0;
 		return (result);
 	}
 	if (size > 0 && nmemb > SIZE_MAX / size)
