@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:02:11 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/02 19:16:04 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/02 21:41:49 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ static char	*read_unquoted(char *old, int *i)
 	return (new);
 }
 
+static char	*create_new_value(char *new_value, char *word)
+{
+	if (new_value)
+		return (ft_strjoin_and_free(new_value, word));
+	else
+		return (word);
+}
+
 char	*expand_delimiter(char *old, int *is_quoted)
 {
 	char	*word;
@@ -62,14 +70,10 @@ char	*expand_delimiter(char *old, int *is_quoted)
 			word = read_unquoted(old, &i);
 		if (!word)
 		{
-			if (new_value)
-				free(new_value);
+			free(new_value);
 			return (NULL);
 		}
-		if (new_value)
-			new_value = ft_strjoin_and_free(new_value, word);
-		else
-			new_value = word;
+		new_value = create_new_value(new_value, word);
 		if (!new_value)
 			return (NULL);
 	}
@@ -93,14 +97,10 @@ char	*expand_filename(t_minishell *minishell, char *old_value,
 			word = handle_normal_word(old_value, &i);
 		if (!word)
 		{
-			if (new_value)
-				free(new_value);
+			free(new_value);
 			return (NULL);
 		}
-		if (new_value)
-			new_value = ft_strjoin_and_free(new_value, word);
-		else
-			new_value = word;
+		new_value = create_new_value(new_value, word);
 		if (!new_value)
 			return (NULL);
 	}
