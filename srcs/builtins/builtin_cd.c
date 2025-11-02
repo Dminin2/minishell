@@ -66,8 +66,21 @@ static int	update_cwd(t_minishell *minishell, char *target_path,
 	return (0);
 }
 
-static int	try_chdir_and_update(t_minishell *minishell, char *target_path,
-		char *arg, t_normalize_status normalize_status)
+static int	update_cwd_and_env(t_minishell *minishell, char *target_path,
+		int normalize_failed)
+{
+	char	*old_pwd;
+
+	if (update_cwd(minishell, target_path, normalize_failed) != 0)
+		return (1);
+	old_pwd = search_env(minishell->env_lst, "PWD");
+	if (!old_pwd)
+		old_pwd = "";
+	return (update_pwd_env(&minishell->env_lst, old_pwd, minishell->cwd));
+}
+
+static int	perform_chdir(t_minishell *minishell, char *target_path, char *arg,
+		t_normalize_status normalize_status)
 {
 	int		first_errno;
 	int		normalize_failed;
@@ -75,24 +88,10 @@ static int	try_chdir_and_update(t_minishell *minishell, char *target_path,
 
 	normalize_failed = (normalize_status == NORMALIZE_STAT_FAILED);
 	if (chdir(target_path) == 0)
-	{
-		if (update_cwd(minishell, target_path, normalize_failed) != 0)
-			return (1);
-		old_pwd = search_env(minishell->env_lst, "PWD");
-		if (!old_pwd)
-			old_pwd = "";
-		return (update_pwd_env(&minishell->env_lst, old_pwd, minishell->cwd));
-	}
+		return (update_cwd_and_env(minishell, target_path, normalize_failed));
 	first_errno = errno;
 	if (chdir(arg) == 0)
-	{
-		if (update_cwd(minishell, target_path, 1) != 0)
-			return (1);
-		old_pwd = search_env(minishell->env_lst, "PWD");
-		if (!old_pwd)
-			old_pwd = "";
-		return (update_pwd_env(&minishell->env_lst, old_pwd, minishell->cwd));
-	}
+		return (update_cwd_and_env(minishell, target_path, 1));
 	ft_dprintf(STDERR_FILENO, "minishell: cd: %s: %s\n", arg,
 		strerror(first_errno));
 	return (1);
@@ -141,8 +140,7 @@ int	builtin_cd(t_minishell *minishell, char **args)
 		free(arg);
 		return (1);
 	}
-	exit_status = try_chdir_and_update(minishell, target_path, arg,
-			normalize_status);
+	exit_status = perform_chdir(minishell, target_path, arg, normalize_status);
 	free(target_path);
 	if (exit_status == 0 && args[1] && ft_strncmp(args[1], "-", 2) == 0)
 		ft_printf("%s\n", arg);
