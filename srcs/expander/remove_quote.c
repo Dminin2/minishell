@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:41:53 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/02 23:12:22 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/02 19:20:47 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ char	*add_normal_words(int start, int end, char *new, char *old)
 	return (new);
 }
 
-char	*process_env_key_value_value(t_minishell *minishell, int *i, char *new, char *old)
+char	*process_env_key_value_value(t_minishell *minishell, int *i, char *new,
+		char *old)
 {
 	char	*expand_str;
 
