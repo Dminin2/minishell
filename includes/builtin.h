@@ -48,5 +48,6 @@ int		strtouc_and_validate(char *str, unsigned char *last_status);
 
 int		prepare_oldpwd(t_list *env_lst, char **oldpwd_to_print);
 char	*get_arg_path(t_list *env_lst, char *arg);
+int		update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd);
 
 #endif

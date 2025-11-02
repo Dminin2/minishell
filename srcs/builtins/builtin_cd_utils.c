@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+int	update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd)
+{
+	t_status	status;
+
+	status = process_env_key_value(env_lst, "OLDPWD", old_pwd);
+	if (status == ERR_MALLOC)
+		return (return_error("malloc", ERR_MALLOC));
+	status = process_env_key_value(env_lst, "PWD", new_pwd);
+	if (status == ERR_MALLOC)
+		return (return_error("malloc", ERR_MALLOC));
+	return (0);
+}
+
 int	prepare_oldpwd(t_list *env_lst, char **oldpwd_to_print)
 {
 	char	*tmp_oldpwd;

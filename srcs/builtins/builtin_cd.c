@@ -12,19 +12,6 @@
 
 #include "minishell.h"
 
-static int	update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd)
-{
-	t_status	status;
-
-	status = process_env_key_value(env_lst, "OLDPWD", old_pwd);
-	if (status == ERR_MALLOC)
-		return (return_error("malloc", ERR_MALLOC));
-	status = process_env_key_value(env_lst, "PWD", new_pwd);
-	if (status == ERR_MALLOC)
-		return (return_error("malloc", ERR_MALLOC));
-	return (0);
-}
-
 static char	*build_absolute_path(t_minishell *minishell, char *arg)
 {
 	char	*cwd;
@@ -111,13 +98,34 @@ static int	try_chdir_and_update(t_minishell *minishell, char *target_path,
 	return (1);
 }
 
+static char	*build_target_path(t_minishell *minishell, char *arg,
+		t_normalize_status *normalize_status)
+{
+	char	*abs_path;
+	char	*target_path;
+
+	abs_path = build_absolute_path(minishell, arg);
+	if (!abs_path)
+	{
+		print_error_msg("malloc", ERR_MALLOC);
+		return (NULL);
+	}
+	*normalize_status = normalize_path(abs_path, &target_path);
+	free(abs_path);
+	if (*normalize_status == NORMALIZE_MALLOC_ERROR)
+	{
+		print_error_msg("malloc", ERR_MALLOC);
+		return (NULL);
+	}
+	return (target_path);
+}
+
 int	builtin_cd(t_minishell *minishell, char **args)
 {
 	char				*arg;
-	char				*abs_path;
 	char				*target_path;
-	t_normalize_status	normalize_status;
 	int					exit_status;
+	t_normalize_status	normalize_status;
 
 	if (args[1] && args[2])
 	{
@@ -127,18 +135,11 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	arg = get_arg_path(minishell->env_lst, args[1]);
 	if (!arg)
 		return (1);
-	abs_path = build_absolute_path(minishell, arg);
-	if (!abs_path)
+	target_path = build_target_path(minishell, arg, &normalize_status);
+	if (!target_path)
 	{
 		free(arg);
-		return (return_error("malloc", ERR_MALLOC));
-	}
-	normalize_status = normalize_path(abs_path, &target_path);
-	free(abs_path);
-	if (normalize_status == NORMALIZE_MALLOC_ERROR)
-	{
-		free(arg);
-		return (return_error("malloc", ERR_MALLOC));
+		return (1);
 	}
 	exit_status = try_chdir_and_update(minishell, target_path, arg,
 			normalize_status);
