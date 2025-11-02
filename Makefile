@@ -27,6 +27,7 @@ SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/stdio_fd.c \
 	$(EXECUTOR_DIR)/free_pipes.c
 SRCS_LEXER = $(LEXER_DIR)/tokenize.c \
+	$(LEXER_DIR)/lexer_utils.c \
 	$(LEXER_DIR)/free_token.c
 SRCS_PARSER = $(PARSER_DIR)/parse.c \
 	$(PARSER_DIR)/parse_error.c \
