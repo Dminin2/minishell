@@ -30,7 +30,7 @@ typedef struct s_env
 
 t_list		*env_init(t_minishell *minishell, char **envp);
 
-t_status	set_pwd(t_minishell *minishell, t_list **head);
+t_status	set_pwd(t_minishell *minishell, t_list **env_lst);
 t_status	set_shlvl(t_list **head);
 
 t_status	process_env_line(t_list **head, char *line);

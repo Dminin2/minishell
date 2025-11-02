@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-static t_status	init_shell_vars(t_minishell *minishell, t_list **head)
+static t_status	init_shell_vars(t_minishell *minishell, t_list **env_lst)
 {
 	t_status	status;
 
-	status = set_pwd(minishell, head);
+	status = set_pwd(minishell, env_lst);
 	if (status == ERR_MALLOC)
 		return (status);
-	status = set_shlvl(head);
+	status = set_shlvl(env_lst);
 	if (status == ERR_MALLOC)
 	{
 		free(minishell->cwd);
