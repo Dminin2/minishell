@@ -6,26 +6,26 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:41:53 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/02 19:20:47 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/03 00:13:41 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*handle_single_quote(char *old, int *i)
+char	*handle_single_quote(char *old, int *pos)
 {
 	int		start;
 	char	*new;
 
-	start = ++*i;
-	while (old[*i] && old[*i] != '\'')
-		(*i)++;
-	if (start == *i)
+	start = ++*pos;
+	while (old[*pos] && old[*pos] != '\'')
+		(*pos)++;
+	if (start == *pos)
 		new = ft_strdup("");
 	else
-		new = ft_substr(old, start, *i - start);
-	if (old[*i] == '\'')
-		(*i)++;
+		new = ft_substr(old, start, *pos - start);
+	if (old[*pos] == '\'')
+		(*pos)++;
 	return (new);
 }
 
@@ -46,55 +46,51 @@ char	*add_normal_words(int start, int end, char *new, char *old)
 	return (new);
 }
 
-char	*process_env_key_value_value(t_minishell *minishell, int *i, char *new,
+char	*append_env_parameter(t_minishell *minishell, int *pos, char *new,
 		char *old)
 {
 	char	*expand_str;
 
-	expand_str = expand_parameter(minishell, old, i);
+	expand_str = expand_parameter(minishell, old, pos);
 	if (!expand_str)
 	{
-		if (new)
-			free(new);
+		free(new);
 		return (NULL);
 	}
-	if (new)
-		new = ft_strjoin_and_free(new, expand_str);
-	else
-		new = expand_str;
+	new = create_new_value(new, expand_str);
 	return (new);
 }
 
-char	*handle_double_quote(t_minishell *minishell, char *old, int *i)
+char	*handle_double_quote(t_minishell *minishell, char *old, int *pos)
 {
 	char	*new;
-	int		copied_pos;
+	int		start;
 
-	copied_pos = ++(*i);
+	start = ++(*pos);
 	new = NULL;
-	while (old[*i] && old[*i] != '\"')
+	while (old[*pos] && old[*pos] != '\"')
 	{
-		if (old[*i] == '$')
+		if (old[*pos] == '$')
 		{
-			if (copied_pos != *i)
+			if (start != *pos)
 			{
-				new = add_normal_words(copied_pos, *i, new, old);
+				new = add_normal_words(start, *pos, new, old);
 				if (!new)
 					return (NULL);
 			}
-			new = process_env_key_value_value(minishell, i, new, old);
+			new = append_env_parameter(minishell, pos, new, old);
 			if (!new)
 				return (NULL);
-			copied_pos = *i;
+			start = *pos;
 		}
 		else
-			(*i)++;
+			(*pos)++;
 	}
-	if (copied_pos != *i)
-		new = add_normal_words(copied_pos, *i, new, old);
+	if (start != *pos)
+		new = add_normal_words(start, *pos, new, old);
 	else if (!new)
 		new = ft_strdup("");
-	if (old[*i] == '\"')
-		(*i)++;
+	if (old[*pos] == '\"')
+		(*pos)++;
 	return (new);
 }
