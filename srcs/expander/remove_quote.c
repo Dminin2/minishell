@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:41:53 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/03 00:13:41 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/03 00:54:38 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ char	*add_normal_words(int start, int end, char *new, char *old)
 		free(new);
 		return (NULL);
 	}
-	if (new)
-		new = ft_strjoin_and_free(new, sub_str);
-	else
-		new = sub_str;
+	new = create_new_value(new, sub_str);
 	return (new);
 }
 
@@ -58,6 +55,17 @@ char	*append_env_parameter(t_minishell *minishell, int *pos, char *new,
 		return (NULL);
 	}
 	new = create_new_value(new, expand_str);
+	return (new);
+}
+
+static char	*finalize_dquote(int start, int *pos, char *old, char *new)
+{
+	if (start != *pos)
+		new = add_normal_words(start, *pos, new, old);
+	else if (!new)
+		new = ft_strdup("");
+	if (old[*pos] == '\"')
+		(*pos)++;
 	return (new);
 }
 
@@ -86,11 +94,5 @@ char	*handle_double_quote(t_minishell *minishell, char *old, int *pos)
 		else
 			(*pos)++;
 	}
-	if (start != *pos)
-		new = add_normal_words(start, *pos, new, old);
-	else if (!new)
-		new = ft_strdup("");
-	if (old[*pos] == '\"')
-		(*pos)++;
-	return (new);
+	return (finalize_dquote(start, pos, old, new));
 }
