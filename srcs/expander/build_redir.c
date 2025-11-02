@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:02:11 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/08 15:00:51 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/02 19:16:04 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,11 @@ char	*expand_delimiter(char *old, int *is_quoted)
 	new_value = NULL;
 	while (old[i])
 	{
-		// double quoteもsingle quoteも展開なし
 		if (old[i] == '\'' || old[i] == '\"')
 		{
 			word = read_quoted(old, &i);
 			*is_quoted = 1;
 		}
-		//$も展開なし
 		else
 			word = read_unquoted(old, &i);
 		if (!word)
