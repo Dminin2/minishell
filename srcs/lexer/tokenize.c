@@ -12,50 +12,6 @@
 
 #include "minishell.h"
 
-void	consume_blank(t_lexer *lex)
-{
-	while (lex->line[lex->pos] && is_blank(lex->line[lex->pos]))
-		lex->pos++;
-}
-
-t_status	consume_quote(t_lexer *lex, char quote_char)
-{
-	lex->pos++;
-	while (lex->line[lex->pos] && lex->line[lex->pos] != quote_char)
-		lex->pos++;
-	if (!lex->line[lex->pos])
-		return (ERR_QUOTE);
-	lex->pos++;
-	return (SUCCESS);
-}
-
-int	scan_operator(t_lexer *lex, t_tok_types *op_type)
-{
-	if (lex->line[lex->pos + 1] && ft_strncmp(&(lex->line[lex->pos]), "<<",
-			2) == 0)
-		*op_type = TK_HEREDOC;
-	else if (lex->line[lex->pos + 1] && ft_strncmp(&(lex->line[lex->pos]), ">>",
-			2) == 0)
-		*op_type = TK_APPEND;
-	else if (lex->line[lex->pos] == '<')
-		*op_type = TK_REDIR_IN;
-	else if (lex->line[lex->pos] == '>')
-		*op_type = TK_REDIR_OUT;
-	else if (lex->line[lex->pos] == '|')
-		*op_type = TK_PIPE;
-	else
-		return (0);
-	return (1);
-}
-
-int	is_metacharacter(char c)
-{
-	if (ft_strchr("|<>", c))
-		return (1);
-	else
-		return (0);
-}
-
 t_status	handle_operator(t_lexer *lex, t_list **head, t_tok_types *op_type)
 {
 	t_token		*tok;
