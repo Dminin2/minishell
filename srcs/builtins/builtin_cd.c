@@ -12,37 +12,6 @@
 
 #include "minishell.h"
 
-static char	*build_absolute_path(t_minishell *minishell, char *arg)
-{
-	char	*cwd;
-	char	*abs_path;
-	char	*tmp;
-
-	if (arg[0] == '/')
-		return (ft_strdup(arg));
-	if (!minishell->cwd)
-	{
-		cwd = getcwd(NULL, 0);
-		if (!cwd)
-		{
-			ft_dprintf(STDERR_FILENO, "chdir: %s: %s\n", GETCWD_ERR,
-				strerror(errno));
-			return (ft_strdup(arg));
-		}
-		minishell->cwd = cwd;
-	}
-	if (ft_strlen(minishell->cwd) > 1
-		&& minishell->cwd[ft_strlen(minishell->cwd) - 1] != '/')
-		tmp = ft_strjoin(minishell->cwd, "/");
-	else
-		tmp = ft_strdup(minishell->cwd);
-	if (!tmp)
-		return (NULL);
-	abs_path = ft_strjoin(tmp, arg);
-	free(tmp);
-	return (abs_path);
-}
-
 static int	update_cwd(t_minishell *minishell, char *target_path,
 		int normalize_failed)
 {
@@ -82,9 +51,8 @@ static int	update_cwd_and_env(t_minishell *minishell, char *target_path,
 static int	perform_chdir(t_minishell *minishell, char *target_path, char *arg,
 		t_normalize_status normalize_status)
 {
-	int		first_errno;
-	int		normalize_failed;
-	char	*old_pwd;
+	int	first_errno;
+	int	normalize_failed;
 
 	normalize_failed = (normalize_status == NORMALIZE_STAT_FAILED);
 	if (chdir(target_path) == 0)
