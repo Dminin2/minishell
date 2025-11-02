@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:43:55 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/02 22:44:54 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/02 22:55:58 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,17 @@ char	*handle_normal_word(char *old, int *i)
 
 t_status	expand_args_lst(t_minishell *minishell, t_list *args_lst)
 {
-	char		*old_value;
-	char		*new_value;
-	int			is_quoted;
-	t_status	status;
+	char	*old_value;
+	char	*new_value;
+	int		is_quoted;
 
 	while (args_lst)
 	{
 		is_quoted = 0;
-		new_value = NULL;
 		old_value = args_lst->content;
-		status = expand_string(minishell, old_value, &new_value, &is_quoted);
-		if (status == ERR_MALLOC)
-			return (status);
+		new_value = expand_string(minishell, old_value, &is_quoted);
+		if (!new_value)
+			return (ERR_MALLOC);
 		if (!is_quoted && new_value[0] == '\0')
 		{
 			free(new_value);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/16 01:52:23 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/02 22:55:20 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 	t_redir	*redir;
 	char	*new_value;
 	int		is_quoted;
+	t_list	*head;
 
 #ifdef DEBUG
-	t_list	*head;
 	head = redir_lst;
 #endif
 	while (redir_lst)
@@ -105,7 +105,7 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 		redir = redir_lst->content;
 		if (redir->type != R_HEREDOC)
 		{
-			new_value = expand_filename(minishell, redir->value, &is_quoted);
+			new_value = expand_string(minishell, redir->value, &is_quoted);
 			if (!new_value)
 			{
 				err->status = ERR_MALLOC;

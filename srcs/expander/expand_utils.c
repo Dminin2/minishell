@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:31:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/02 22:43:52 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/02 22:55:45 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,14 @@ char	*create_new_value(char *new_value, char *word)
 		return (word);
 }
 
-t_status	expand_string(t_minishell *minishell, char *old_value,
-		char **new_value, int *is_quoted)
+char	*expand_string(t_minishell *minishell, char *old_value, int *is_quoted)
 {
 	int		i;
 	char	*word;
+	char	*new_value;
 
 	i = 0;
+	new_value = NULL;
 	while (old_value[i])
 	{
 		if (is_to_expand(old_value[i]))
@@ -77,12 +78,12 @@ t_status	expand_string(t_minishell *minishell, char *old_value,
 			word = handle_normal_word(old_value, &i);
 		if (!word)
 		{
-			free(*new_value);
-			return (ERR_MALLOC);
+			free(new_value);
+			return (NULL);
 		}
-		*new_value = create_new_value(*new_value, word);
-		if (!*new_value)
-			return (ERR_MALLOC);
+		new_value = create_new_value(new_value, word);
+		if (!new_value)
+			return (NULL);
 	}
-	return (SUCCESS);
+	return (new_value);
 }

@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:02:11 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/02 22:36:26 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/02 22:55:53 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,5 @@ char	*expand_delimiter(char *old, int *is_quoted)
 		if (!new_value)
 			return (NULL);
 	}
-	return (new_value);
-}
-
-char	*expand_filename(t_minishell *minishell, char *old_value,
-		int *is_quoted)
-{
-	char		*new_value;
-	t_status	status;
-
-	new_value = NULL;
-	status = expand_string(minishell, old_value, &new_value, is_quoted);
-	if (status == ERR_MALLOC)
-		return (NULL);
 	return (new_value);
 }
