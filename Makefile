@@ -35,12 +35,12 @@ SRCS_PARSER = $(PARSER_DIR)/parse.c \
 	$(PARSER_DIR)/free_pipeline_ir.c \
 	$(PARSER_DIR)/free_redir.c
 SRCS_EXPANDER = $(EXPANDER_DIR)/expand.c \
-	$(EXPANDER_DIR)/build_cmd.c \
+	$(EXPANDER_DIR)/convert_args.c \
 	$(EXPANDER_DIR)/remove_quote.c \
 	$(EXPANDER_DIR)/expand_param.c \
-	$(EXPANDER_DIR)/build_args.c \
+	$(EXPANDER_DIR)/expand_args.c \
 	$(EXPANDER_DIR)/expand_utils.c \
-	$(EXPANDER_DIR)/build_redir.c \
+	$(EXPANDER_DIR)/expand_redir.c \
 	$(EXPANDER_DIR)/free_pipeline.c \
 	$(EXPANDER_DIR)/free_pipeline_ir_in_expander.c
 SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \

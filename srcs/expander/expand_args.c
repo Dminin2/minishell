@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_cmd.c                                        :+:      :+:    :+:   */
+/*   expand_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:43:55 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/09 11:18:46 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/02 22:44:54 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,43 +44,26 @@ char	*handle_normal_word(char *old, int *i)
 
 t_status	expand_args_lst(t_minishell *minishell, t_list *args_lst)
 {
-	char	*old_args;
-	int		i;
-	char	*word;
-	char	*new_args;
-	int		is_quoted;
+	char		*old_value;
+	char		*new_value;
+	int			is_quoted;
+	t_status	status;
 
 	while (args_lst)
 	{
 		is_quoted = 0;
-		new_args = NULL;
-		old_args = args_lst->content;
-		i = 0;
-		while (old_args[i])
+		new_value = NULL;
+		old_value = args_lst->content;
+		status = expand_string(minishell, old_value, &new_value, &is_quoted);
+		if (status == ERR_MALLOC)
+			return (status);
+		if (!is_quoted && new_value[0] == '\0')
 		{
-			if (is_to_expand(old_args[i]))
-				word = handle_special_word(minishell, old_args, &i, &is_quoted);
-			else
-				word = handle_normal_word(old_args, &i);
-			if (!word)
-			{
-				free(new_args);
-				return (ERR_MALLOC);
-			}
-			if (new_args)
-				new_args = ft_strjoin_and_free(new_args, word);
-			else
-				new_args = word;
-			if (!new_args)
-				return (ERR_MALLOC);
+			free(new_value);
+			new_value = NULL;
 		}
-		if (!is_quoted && new_args[0] == '\0')
-		{
-			free(new_args);
-			new_args = NULL;
-		}
-		free(old_args);
-		args_lst->content = new_args;
+		free(old_value);
+		args_lst->content = new_value;
 		args_lst = args_lst->next;
 	}
 	return (SUCCESS);

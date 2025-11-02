@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_redir.c                                      :+:      :+:    :+:   */
+/*   expand_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:02:11 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/02 21:41:49 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/02 22:36:26 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,6 @@ static char	*read_unquoted(char *old, int *i)
 	return (new);
 }
 
-static char	*create_new_value(char *new_value, char *word)
-{
-	if (new_value)
-		return (ft_strjoin_and_free(new_value, word));
-	else
-		return (word);
-}
-
 char	*expand_delimiter(char *old, int *is_quoted)
 {
 	char	*word;
@@ -83,26 +75,12 @@ char	*expand_delimiter(char *old, int *is_quoted)
 char	*expand_filename(t_minishell *minishell, char *old_value,
 		int *is_quoted)
 {
-	char	*word;
-	char	*new_value;
-	int		i;
+	char		*new_value;
+	t_status	status;
 
-	i = 0;
 	new_value = NULL;
-	while (old_value[i])
-	{
-		if (is_to_expand(old_value[i]))
-			word = handle_special_word(minishell, old_value, &i, is_quoted);
-		else
-			word = handle_normal_word(old_value, &i);
-		if (!word)
-		{
-			free(new_value);
-			return (NULL);
-		}
-		new_value = create_new_value(new_value, word);
-		if (!new_value)
-			return (NULL);
-	}
+	status = expand_string(minishell, old_value, &new_value, is_quoted);
+	if (status == ERR_MALLOC)
+		return (NULL);
 	return (new_value);
 }

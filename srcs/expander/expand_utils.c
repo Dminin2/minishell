@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:31:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/09 15:04:57 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/02 22:43:52 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,37 @@ int	is_to_expand(char c)
 		return (1);
 	else
 		return (0);
+}
+
+char	*create_new_value(char *new_value, char *word)
+{
+	if (new_value)
+		return (ft_strjoin_and_free(new_value, word));
+	else
+		return (word);
+}
+
+t_status	expand_string(t_minishell *minishell, char *old_value,
+		char **new_value, int *is_quoted)
+{
+	int		i;
+	char	*word;
+
+	i = 0;
+	while (old_value[i])
+	{
+		if (is_to_expand(old_value[i]))
+			word = handle_special_word(minishell, old_value, &i, is_quoted);
+		else
+			word = handle_normal_word(old_value, &i);
+		if (!word)
+		{
+			free(*new_value);
+			return (ERR_MALLOC);
+		}
+		*new_value = create_new_value(*new_value, word);
+		if (!*new_value)
+			return (ERR_MALLOC);
+	}
+	return (SUCCESS);
 }
