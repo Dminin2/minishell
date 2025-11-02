@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_pipeline_ir_in_expander.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 21:01:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 21:07:13 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/02 19:16:23 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	free_cmd_ir_after_expand(t_cmd_ir *cmd_ir)
 		free(cmd_ir);
 	}
 }
+
 void	free_cmd_ir_after_expand_wrapper(void *cmd_ir)
 {
 	free_cmd_ir_after_expand((t_cmd_ir *)cmd_ir);
