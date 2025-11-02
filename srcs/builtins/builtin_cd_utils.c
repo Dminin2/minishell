@@ -26,6 +26,12 @@ int	prepare_oldpwd(t_list *env_lst, char **oldpwd_to_print)
 	return (0);
 }
 
+static char	*cd_env_error(t_blt_error error)
+{
+	print_error_msg_builtin("cd", NULL, error);
+	return (NULL);
+}
+
 char	*get_arg_path(t_list *env_lst, char *arg)
 {
 	char	*env_value;
@@ -35,20 +41,14 @@ char	*get_arg_path(t_list *env_lst, char *arg)
 	{
 		env_value = search_env(env_lst, "HOME");
 		if (!env_value)
-		{
-			print_error_msg_builtin("cd", NULL, BLTERR_NO_SET_HOME);
-			return (NULL);
-		}
+			return (cd_env_error(BLTERR_NO_SET_HOME));
 		result = ft_strdup(env_value);
 	}
 	else if (ft_strncmp(arg, "-", 2) == 0)
 	{
 		env_value = search_env(env_lst, "OLDPWD");
 		if (!env_value)
-		{
-			print_error_msg_builtin("cd", NULL, BLTERR_NO_SET_OLDPWD);
-			return (NULL);
-		}
+			return (cd_env_error(BLTERR_NO_SET_OLDPWD));
 		result = ft_strdup(env_value);
 	}
 	else
