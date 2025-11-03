@@ -46,4 +46,9 @@ t_list					*tokenize(t_minishell *minishell, t_input *input);
 void					free_token_wrapper(void *tok);
 void					free_token(t_token *tok);
 
+void					consume_blank(t_lexer *lex);
+int						is_metacharacter(char c);
+t_status				consume_quote(t_lexer *lex, char quote_char);
+int						scan_operator(t_lexer *lex, t_tok_types *op_type);
+
 #endif

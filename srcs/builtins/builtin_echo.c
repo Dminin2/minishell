@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 22:10:56 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/06 01:59:40 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/03 11:44:57 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	is_n_option(char *arg)
 {
 	int	i;
 
-	if (strncmp(arg, "-n", 2) != 0)
+	if (ft_strncmp(arg, "-n", 2) != 0)
 		return (0);
 	i = 2;
 	while (arg[i])

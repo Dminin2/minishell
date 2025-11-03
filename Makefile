@@ -27,6 +27,7 @@ SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/stdio_fd.c \
 	$(EXECUTOR_DIR)/free_pipes.c
 SRCS_LEXER = $(LEXER_DIR)/tokenize.c \
+	$(LEXER_DIR)/lexer_utils.c \
 	$(LEXER_DIR)/free_token.c
 SRCS_PARSER = $(PARSER_DIR)/parse.c \
 	$(PARSER_DIR)/parse_error.c \
@@ -47,6 +48,7 @@ SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
 	$(REDIRECTION_DIR)/heredoc.c \
 	$(REDIRECTION_DIR)/heredoc_file.c
 SRCS_ENV = $(ENV_DIR)/env_init.c \
+  $(ENV_DIR)/env_init_utils.c \
 	$(ENV_DIR)/env_utils.c \
 	$(ENV_DIR)/search_env.c \
 	$(ENV_DIR)/free_env.c \
@@ -73,7 +75,8 @@ SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_export_args.c \
 	$(BUILTINS_DIR)/builtin_export_no_args.c \
 	$(BUILTINS_DIR)/builtin_unset.c
-SRCS_SIGNALS = $(SIGNALS_DIR)/signal_setup.c
+SRCS_SIGNALS = $(SIGNALS_DIR)/signal_setup.c \
+  $(SIGNALS_DIR)/signal_modes.c
 
 
 # debug用
@@ -84,7 +87,8 @@ SRCS_DEBUG = $(DEBUG_DIR)/print_pipeline_ir.c \
 	$(DEBUG_DIR)/print_redir_lst.c \
 	$(DEBUG_DIR)/print_env_lst.c \
 	$(DEBUG_DIR)/print_status.c \
-	$(DEBUG_DIR)/print_input.c
+	$(DEBUG_DIR)/print_input.c \
+	$(DEBUG_DIR)/malloc.c
 
 
 SRCS = $(SRCS_MAIN) \
@@ -159,4 +163,8 @@ re: fclean all
 debug:
 	$(MAKE) all CFLAGS="$(CFLAGS) -DDEBUG"
 
-.PHONY: all clean fclean re debug
+N ?= 50
+debug_malloc:
+	$(MAKE) all CFLAGS="$(CFLAGS) -DDEBUG_MALLOC -DMALLOC_FAILED=$(N)"
+
+.PHONY: all clean fclean re debug debug_malloc
