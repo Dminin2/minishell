@@ -12,21 +12,37 @@
 
 #include "minishell.h"
 
-static void	process_component(char **components, int *count, char *component)
+static void	remove_last_component(char *path)
 {
-	if (ft_strcmp(component, ".") == 0)
+	char	*last_slash;
+
+	if (ft_strcmp(path, "/") == 0)
 		return ;
-	if (ft_strcmp(component, "..") == 0)
-	{
-		if (*count > 0)
-			(*count)--;
-		return ;
-	}
-	components[*count] = component;
-	(*count)++;
+	last_slash = ft_strrchr(path, '/');
+	if (last_slash && last_slash != path)
+		*last_slash = '\0';
+	else if (last_slash == path)
+		*(last_slash + 1) = '\0';
 }
 
-static char	*reconstruct_path(char **components, int count, int *stat_failed)
+static char	*append_component(char *path, char *component)
+{
+	char	*tmp;
+	char	*result;
+
+	if (ft_strlen(path) > 1)
+	{
+		tmp = ft_strjoin(path, "/");
+		if (!tmp)
+			return (NULL);
+		result = ft_strjoin(tmp, component);
+		free(tmp);
+		return (result);
+	}
+	return (ft_strjoin(path, component));
+}
+
+static char	*reconstruct_path(char **split_path, int *stat_failed)
 {
 	char		*path;
 	char		*tmp;
@@ -37,26 +53,36 @@ static char	*reconstruct_path(char **components, int count, int *stat_failed)
 	if (!path)
 		return (NULL);
 	i = 0;
-	while (i < count)
+	while (split_path[i])
 	{
-		if (ft_strlen(path) > 1)
+		if (ft_strcmp(split_path[i], ".") == 0)
 		{
-			tmp = ft_strjoin(path, "/");
+			i++;
+			continue ;
+		}
+		if (ft_strcmp(split_path[i], "..") == 0)
+		{
+			if (stat(path, &st) != 0 || !S_ISDIR(st.st_mode))
+			{
+				*stat_failed = 1;
+				free(path);
+				return (NULL);
+			}
+			remove_last_component(path);
+		}
+		else
+		{
+			tmp = append_component(path, split_path[i]);
 			free(path);
 			if (!tmp)
 				return (NULL);
 			path = tmp;
-		}
-		tmp = ft_strjoin(path, components[i]);
-		free(path);
-		if (!tmp)
-			return (NULL);
-		path = tmp;
-		if (!(stat(path, &st) == 0 && S_ISDIR(st.st_mode)))
-		{
-			*stat_failed = 1;
-			free(path);
-			return (NULL);
+			if (stat(path, &st) != 0 || !S_ISDIR(st.st_mode))
+			{
+				*stat_failed = 1;
+				free(path);
+				return (NULL);
+			}
 		}
 		i++;
 	}
@@ -66,9 +92,6 @@ static char	*reconstruct_path(char **components, int count, int *stat_failed)
 t_normalize_status	normalize_path(const char *abs_path, char **result)
 {
 	char	**split_path;
-	char	**components;
-	int		i;
-	int		count;
 	int		stat_failed;
 
 	*result = NULL;
@@ -89,25 +112,8 @@ t_normalize_status	normalize_path(const char *abs_path, char **result)
 	split_path = ft_split(abs_path, '/');
 	if (!split_path)
 		return (NORMALIZE_MALLOC_ERROR);
-	i = 0;
-	while (split_path[i])
-		i++;
-	components = ft_calloc(i, sizeof(char *));
-	if (!components)
-	{
-		free_args(split_path);
-		return (NORMALIZE_MALLOC_ERROR);
-	}
-	count = 0;
-	i = 0;
-	while (split_path[i])
-	{
-		process_component(components, &count, split_path[i]);
-		i++;
-	}
 	stat_failed = 0;
-	*result = reconstruct_path(components, count, &stat_failed);
-	free(components);
+	*result = reconstruct_path(split_path, &stat_failed);
 	free_args(split_path);
 	if (!*result && !stat_failed)
 		return (NORMALIZE_MALLOC_ERROR);
