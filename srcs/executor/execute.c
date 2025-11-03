@@ -36,7 +36,7 @@ static t_status	set_underscore_for_invocation(t_minishell *minishell,
 	return (status);
 }
 
-static char	*get_last_arg(t_cmd *cmd, t_command_type type)
+char	*get_last_arg(t_cmd *cmd, t_command_type type)
 {
 	int		i;
 	char	*last_arg;

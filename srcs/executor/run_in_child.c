@@ -67,6 +67,7 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	t_cmd			*cmd;
 	t_command_type	type;
 	char			**envp;
+	char			*last_arg;
 
 	cmd = get_cmd_from_lst(pipeline->cmd_lst, pos);
 	status = pipe_duplicate(pipeline, pos);
@@ -79,6 +80,13 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	if (err.status != SUCCESS)
 		handle_redir_err(minishell, pipeline, err);
 	type = scan_command_type(cmd);
+	last_arg = get_last_arg(cmd, type);
+	if (!last_arg)
+		exit_error(minishell, pipeline, "malloc", ERR_MALLOC);
+	status = process_env_key_value(&(minishell->env_lst), "_", last_arg);
+	free(last_arg);
+	if (status != SUCCESS)
+		exit_error(minishell, pipeline, "malloc", ERR_MALLOC);
 	if (type != EXTERNAL && type != NO_CMD)
 	{
 		execute_builtin(minishell, cmd, type, pipeline->n);
