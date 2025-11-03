@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 14:27:13 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/18 12:53:41 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/03 14:53:11 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ t_status	get_env_from_line(t_env *env, char *line)
 	i = 0;
 	while (line[i] && line[i] != '=')
 		i++;
-	if (i == 0)
-		return (ERR_NOKEY);
 	env->key = ft_substr(line, 0, i);
 	if (!env->key)
 		return (ERR_MALLOC);
