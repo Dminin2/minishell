@@ -75,7 +75,8 @@ SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_export_args.c \
 	$(BUILTINS_DIR)/builtin_export_no_args.c \
 	$(BUILTINS_DIR)/builtin_unset.c
-SRCS_SIGNALS = $(SIGNALS_DIR)/signal_setup.c
+SRCS_SIGNALS = $(SIGNALS_DIR)/signal_setup.c \
+  $(SIGNALS_DIR)/signal_modes.c
 
 
 # debug用
