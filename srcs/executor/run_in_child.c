@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_in_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/31 15:25:00 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 00:05:40 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	t_cmd			*cmd;
 	t_command_type	type;
 	char			**envp;
-	char			*last_arg;
 
 	cmd = get_cmd_from_lst(pipeline->cmd_lst, pos);
 	status = pipe_duplicate(pipeline, pos);
@@ -80,11 +79,7 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	if (err.status != SUCCESS)
 		handle_redir_err(minishell, pipeline, err);
 	type = scan_command_type(cmd);
-	last_arg = get_last_arg(cmd, type);
-	if (!last_arg)
-		exit_error(minishell, pipeline, "malloc", ERR_MALLOC);
-	status = process_env_key_value(&(minishell->env_lst), "_", last_arg);
-	free(last_arg);
+	status = set_underscore_for_invocation(minishell, cmd, type);
 	if (status != SUCCESS)
 		exit_error(minishell, pipeline, "malloc", ERR_MALLOC);
 	if (type != EXTERNAL && type != NO_CMD)
