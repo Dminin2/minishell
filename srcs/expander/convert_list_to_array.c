@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_args.c                                       :+:      :+:    :+:   */
+/*   convert_list_to_array.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:33:54 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/09 12:56:46 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 12:01:50 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_args(t_list *args_lst)
+static int	count_args(t_list *args_lst)
 {
 	int	n;
 
@@ -26,7 +26,7 @@ int	count_args(t_list *args_lst)
 	return (n);
 }
 
-t_status	get_args_from_lst(t_list *args_lst, t_cmd *cmd)
+t_status	convert_list_to_array(t_list *args_lst, t_cmd *cmd)
 {
 	char	**new_args;
 	int		n;
