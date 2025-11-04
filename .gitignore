@@ -6,4 +6,5 @@ labels.json
 create_labels.sh
 playground/log
 readline.supp
+.vscode
 c_cpp_properties.json
