@@ -41,11 +41,11 @@ SRCS_EXPANDER = $(EXPANDER_DIR)/expand.c \
 	$(EXPANDER_DIR)/expand_parameter.c \
 	$(EXPANDER_DIR)/expand_string.c \
 	$(EXPANDER_DIR)/expand_utils.c \
-	$(EXPANDER_DIR)/expand_redir.c \
 	$(EXPANDER_DIR)/free_pipeline.c
 SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
 	$(REDIRECTION_DIR)/heredoc.c \
-	$(REDIRECTION_DIR)/heredoc_file.c
+	$(REDIRECTION_DIR)/heredoc_file.c \
+	$(REDIRECTION_DIR)/expand_delimiter.c
 SRCS_ENV = $(ENV_DIR)/env_init.c \
   $(ENV_DIR)/env_init_utils.c \
 	$(ENV_DIR)/env_utils.c \
