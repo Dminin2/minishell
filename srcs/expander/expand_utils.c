@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:31:17 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/02 23:07:24 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/04 11:33:43 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,30 +60,4 @@ char	*create_new_value(char *new_value, char *word)
 		return (ft_strjoin_and_free(new_value, word));
 	else
 		return (word);
-}
-
-char	*expand_string(t_minishell *minishell, char *old_value, int *is_quoted)
-{
-	int		i;
-	char	*word;
-	char	*new_value;
-
-	i = 0;
-	new_value = NULL;
-	while (old_value[i])
-	{
-		if (is_to_expand(old_value[i]))
-			word = handle_special_word(minishell, old_value, &i, is_quoted);
-		else
-			word = handle_normal_word(old_value, &i);
-		if (!word)
-		{
-			free(new_value);
-			return (NULL);
-		}
-		new_value = create_new_value(new_value, word);
-		if (!new_value)
-			return (NULL);
-	}
-	return (new_value);
 }

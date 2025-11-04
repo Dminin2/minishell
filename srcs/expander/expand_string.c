@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_args.c                                      :+:      :+:    :+:   */
+/*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/26 21:43:55 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/02 22:55:58 by hmaruyam         ###   ########.fr       */
+/*   Created: 2025/11/04 11:55:02 by hmaruyam          #+#    #+#             */
+/*   Updated: 2025/11/04 11:57:35 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*handle_special_word(t_minishell *minishell, char *old, int *i,
+static char	*handle_special_word(t_minishell *minishell, char *old, int *i,
 		int *is_quoted)
 {
 	char	*word;
@@ -30,7 +30,7 @@ char	*handle_special_word(t_minishell *minishell, char *old, int *i,
 	return (word);
 }
 
-char	*handle_normal_word(char *old, int *i)
+static char	*handle_normal_word(char *old, int *i)
 {
 	int		start;
 	char	*new;
@@ -42,27 +42,28 @@ char	*handle_normal_word(char *old, int *i)
 	return (new);
 }
 
-t_status	expand_args_lst(t_minishell *minishell, t_list *args_lst)
+char	*expand_string(t_minishell *minishell, char *old_value, int *is_quoted)
 {
-	char	*old_value;
+	int		i;
+	char	*word;
 	char	*new_value;
-	int		is_quoted;
 
-	while (args_lst)
+	i = 0;
+	new_value = NULL;
+	while (old_value[i])
 	{
-		is_quoted = 0;
-		old_value = args_lst->content;
-		new_value = expand_string(minishell, old_value, &is_quoted);
-		if (!new_value)
-			return (ERR_MALLOC);
-		if (!is_quoted && new_value[0] == '\0')
+		if (is_to_expand(old_value[i]))
+			word = handle_special_word(minishell, old_value, &i, is_quoted);
+		else
+			word = handle_normal_word(old_value, &i);
+		if (!word)
 		{
 			free(new_value);
-			new_value = NULL;
+			return (NULL);
 		}
-		free(old_value);
-		args_lst->content = new_value;
-		args_lst = args_lst->next;
+		new_value = create_new_value(new_value, word);
+		if (!new_value)
+			return (NULL);
 	}
-	return (SUCCESS);
+	return (new_value);
 }

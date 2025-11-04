@@ -36,10 +36,10 @@ SRCS_PARSER = $(PARSER_DIR)/parse.c \
 	$(PARSER_DIR)/free_pipeline_ir.c \
 	$(PARSER_DIR)/free_redir.c
 SRCS_EXPANDER = $(EXPANDER_DIR)/expand.c \
-	$(EXPANDER_DIR)/convert_args.c \
+	$(EXPANDER_DIR)/convert_list_to_array.c \
 	$(EXPANDER_DIR)/remove_quote.c \
-	$(EXPANDER_DIR)/expand_param.c \
-	$(EXPANDER_DIR)/expand_args.c \
+	$(EXPANDER_DIR)/expand_parameter.c \
+	$(EXPANDER_DIR)/expand_string.c \
 	$(EXPANDER_DIR)/expand_utils.c \
 	$(EXPANDER_DIR)/expand_redir.c \
 	$(EXPANDER_DIR)/free_pipeline.c \

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_param.c                                     :+:      :+:    :+:   */
+/*   expand_parameter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 21:42:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/03 00:13:01 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/04 11:56:54 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_last_status(t_minishell *minishell, int *pos)
+static char	*expand_last_status(t_minishell *minishell, int *pos)
 {
 	char	*value;
 
@@ -21,7 +21,7 @@ char	*expand_last_status(t_minishell *minishell, int *pos)
 	return (value);
 }
 
-char	*not_expand(int *pos)
+static char	*not_expand(int *pos)
 {
 	char	*value;
 
