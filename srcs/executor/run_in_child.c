@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_in_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 00:05:40 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/04 15:27:00 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	{
 		execute_builtin(minishell, cmd, type, pipeline->n);
 		free_pipeline(pipeline);
+		ft_lstclear(&(minishell->env_lst), free_env_wrapper);
+		free(minishell->cwd);
 		exit(minishell->last_status);
 	}
 	else if (type == NO_CMD)
