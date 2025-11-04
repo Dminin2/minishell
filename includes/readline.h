@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:17:56 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 21:51:09 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/04 22:44:09 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 # define C_GREEN "\033[32m"
 # define C_BLUE "\033[34m"
 # define C_BOLD "\033[1m"
-# define PROMPT_PART1 C_GREEN "minishell" C_RESET " ➜ " C_BLUE C_BOLD
-# define PROMPT_PART2 C_RESET " $ "
+# define PROMPT_PART1 "\033[32mminishell\033[0m ➜ \033[34m\033[1m"
+# define PROMPT_PART2 "\033[0m $ "
+
 typedef struct s_input
 {
 	char	*line;
