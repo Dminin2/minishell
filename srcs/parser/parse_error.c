@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 10:58:33 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 17:29:43 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
 		else
 			minishell->last_status = error_lst(head, "newline", ERR_SYNTAX,
 					free_cmd_ir_wrapper);
+		if (!isatty(STDIN_FILENO))
+			minishell->should_exit = 1;
 	}
 	else if (status == ERR_HD_FILE)
 		minishell->last_status = error_lst(head, HD_FILE_ERR, status,

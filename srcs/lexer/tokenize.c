@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/28 00:17:56 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 17:27:44 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static t_list	*handle_lexer_error(t_minishell *minishell, t_input *input,
 		else
 			minishell->last_status = error_lst(*head, "newline", ERR_QUOTE,
 					free_token_wrapper);
+		if (!isatty(STDIN_FILENO))
+			minishell->should_exit = 1;
 	}
 	return (NULL);
 }
