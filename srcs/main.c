@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 15:01:03 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 23:31:25 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,19 @@ void	minishell_init(t_minishell *minishell, char **envp)
 #endif
 }
 
-int	main(int argc, char **argv, char **envp)
+void	reader_loop(t_minishell *minishell)
 {
 	t_list			*token_lst;
 	t_pipeline_ir	*pipeline_ir;
-	t_minishell		minishell;
 	t_pipeline		*pipeline;
 	t_input			input;
-	t_status		status;
 
-	(void)argc;
-	(void)argv;
-	minishell_init(&minishell, envp);
-	while (!minishell.should_exit)
+	while (!minishell->should_exit)
 	{
 #ifdef DEBUG
-		print_status(minishell.last_status, g_fd);
+		print_status(minishell->last_status, g_fd);
 #endif
-		input.line = NULL;
-		input.is_eof = 0;
-		status = get_command_line(&minishell, &input);
-		if (status != SUCCESS)
+		if (get_command_line(minishell, &input) != SUCCESS)
 			continue ;
 		if (!(input.line))
 		{
@@ -71,29 +63,39 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_input(&input, g_fd);
 #endif
-		token_lst = tokenize(&minishell, &input);
+		token_lst = tokenize(minishell, &input);
 		free(input.line);
 		if (!token_lst)
 			continue ;
 #ifdef DEBUG
 		print_token(token_lst, g_fd);
 #endif
-		pipeline_ir = parse(&minishell, token_lst);
+		pipeline_ir = parse(minishell, token_lst);
 		ft_lstclear(&token_lst, &free_token_wrapper);
 		if (!pipeline_ir)
 			continue ;
 #ifdef DEBUG
 		print_pipeline_ir(pipeline_ir, g_fd);
 #endif
-		pipeline = expand(&minishell, pipeline_ir);
+		pipeline = expand(minishell, pipeline_ir);
 		free_pipeline_ir(pipeline_ir);
 		if (!pipeline)
 			continue ;
 #ifdef DEBUG
 		print_pipeline(pipeline, g_fd);
 #endif
-		execute(&minishell, pipeline);
+		execute(minishell, pipeline);
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_minishell	minishell;
+
+	(void)argc;
+	(void)argv;
+	minishell_init(&minishell, envp);
+	reader_loop(&minishell);
 	rl_clear_history();
 	ft_lstclear(&(minishell.env_lst), free_env_wrapper);
 	free(minishell.cwd);
