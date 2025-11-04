@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 16:40:41 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 16:59:19 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	reader_loop(t_minishell *minishell)
 	while (!minishell->should_exit)
 	{
 #ifdef DEBUG
-		print_status(minishell.last_status, g_fd);
+		print_status(minishell->last_status, g_fd);
 #endif
 		if (get_command_line(minishell, &input) != SUCCESS)
 			continue ;
