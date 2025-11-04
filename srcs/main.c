@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/29 22:12:48 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 15:01:03 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,9 @@ int	main(int argc, char **argv, char **envp)
 		print_pipeline_ir(pipeline_ir, g_fd);
 #endif
 		pipeline = expand(&minishell, pipeline_ir);
+		free_pipeline_ir(pipeline_ir);
 		if (!pipeline)
-		{
-			free_pipeline_ir(pipeline_ir);
 			continue ;
-		}
-		else
-			free_pipeline_ir_after_expand(pipeline_ir);
 #ifdef DEBUG
 		print_pipeline(pipeline, g_fd);
 #endif

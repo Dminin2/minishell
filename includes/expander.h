@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:33:02 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 11:59:53 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/04 15:09:50 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ char		*create_new_value(char *new_value, char *word);
 
 char		*expand_string(t_minishell *minishell, char *old_value,
 				int *is_quoted);
-
-void		free_pipeline_ir_after_expand(t_pipeline_ir *pipeline_ir);
-void		free_cmd_ir_after_expand(t_cmd_ir *cmd_ir);
-void		free_cmd_ir_after_expand_wrapper(void *cmd_ir);
-void		free_args_lst_after_expand_wrapper(void *args);
 
 void		free_cmd_wrapper(void *cmd);
 void		free_cmd(t_cmd *cmd);

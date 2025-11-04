@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:17:00 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 01:40:18 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/04 15:01:29 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void	free_str_wrapper(void *str)
 
 void	free_str(char *str)
 {
-	free(str);
+	if (str)
+		free(str);
 }
