@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_in_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 10:57:58 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 00:05:40 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	if (err.status != SUCCESS)
 		handle_redir_err(minishell, pipeline, err);
 	type = scan_command_type(cmd);
+	status = set_underscore_for_invocation(minishell, cmd, type);
+	if (status != SUCCESS)
+		exit_error(minishell, pipeline, "malloc", ERR_MALLOC);
 	if (type != EXTERNAL && type != NO_CMD)
 	{
 		execute_builtin(minishell, cmd, type, pipeline->n);
