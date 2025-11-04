@@ -37,11 +37,16 @@ static char	*create_prompt(t_minishell *minishell)
 	char	*prompt;
 	char	*tmp;
 	char	*cwd;
+	char	*part1;
 
 	cwd = minishell->cwd;
 	if (!cwd)
 		cwd = ".";
-	tmp = ft_strjoin(PROMPT_PART1, cwd);
+	if (minishell->last_status == 0)
+		part1 = PROMPT_PART1_SUCCESS;
+	else
+		part1 = PROMPT_PART1_ERROR;
+	tmp = ft_strjoin(part1, cwd);
 	if (!tmp)
 		return (NULL);
 	prompt = ft_strjoin(tmp, PROMPT_PART2);
