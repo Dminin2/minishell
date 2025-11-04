@@ -111,7 +111,7 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	exit_status = perform_chdir(minishell, target_path, arg, normalize_status);
 	free(target_path);
 	if (exit_status == 0 && args[1] && ft_strncmp(args[1], "-", 2) == 0)
-		ft_printf("%s\n", arg);
+		ft_dprintf_buf(STDOUT_FILENO, "%s\n", arg);
 	free(arg);
 	return (exit_status);
 }

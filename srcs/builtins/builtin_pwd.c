@@ -17,7 +17,7 @@ int	builtin_pwd(t_minishell *minishell)
 	char	*cwd;
 
 	if (minishell->cwd)
-		ft_printf("%s\n", minishell->cwd);
+		ft_dprintf_buf(STDOUT_FILENO, "%s\n", minishell->cwd);
 	else
 	{
 		cwd = getcwd(NULL, 0);
@@ -27,7 +27,7 @@ int	builtin_pwd(t_minishell *minishell)
 				strerror(errno));
 			return (1);
 		}
-		ft_printf("%s\n", cwd);
+		ft_dprintf_buf(STDOUT_FILENO, "%s\n", cwd);
 		free(cwd);
 	}
 	return (0);
