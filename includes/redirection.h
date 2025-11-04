@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:03:44 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/31 14:42:00 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 10:57:44 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 typedef struct s_pipeline	t_pipeline;
+
+# define HD_FILE_ERR "cannot create temp file for here-document"
 
 typedef enum e_redir_type
 {
