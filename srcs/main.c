@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 16:59:19 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 23:31:25 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	reader_loop(t_minishell *minishell)
 #ifdef DEBUG
 		print_pipeline_ir(pipeline_ir, g_fd);
 #endif
-		pipeline = expand(&minishell, pipeline_ir);
+		pipeline = expand(minishell, pipeline_ir);
 		free_pipeline_ir(pipeline_ir);
 		if (!pipeline)
 			continue ;
