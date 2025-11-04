@@ -26,7 +26,8 @@ static int	update_cwd(t_minishell *minishell, char *target_path,
 			minishell->cwd = getcwd_result;
 			return (0);
 		}
-		ft_dprintf(STDERR_FILENO, "cd: %s: %s\n", GETCWD_ERR, strerror(errno));
+		ft_dprintf_buf(STDERR_FILENO, "cd: %s: %s\n", GETCWD_ERR,
+			strerror(errno));
 	}
 	free(minishell->cwd);
 	minishell->cwd = ft_strdup(target_path);
@@ -60,7 +61,7 @@ static int	perform_chdir(t_minishell *minishell, char *target_path, char *arg,
 	first_errno = errno;
 	if (chdir(arg) == 0)
 		return (update_cwd_and_env(minishell, target_path, 1));
-	ft_dprintf(STDERR_FILENO, "minishell: cd: %s: %s\n", arg,
+	ft_dprintf_buf(STDERR_FILENO, "minishell: cd: %s: %s\n", arg,
 		strerror(first_errno));
 	return (1);
 }

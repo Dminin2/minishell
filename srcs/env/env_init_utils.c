@@ -33,7 +33,7 @@ t_status	prepare_cwd(t_minishell *minishell, t_list *env_lst, char **cwd)
 		*cwd = getcwd(NULL, 0);
 	if (!*cwd)
 	{
-		ft_dprintf(STDERR_FILENO, "shell-init: %s: %s\n", GETCWD_ERR,
+		ft_dprintf_buf(STDERR_FILENO, "shell-init: %s: %s\n", GETCWD_ERR,
 			strerror(errno));
 		minishell->cwd = NULL;
 	}
@@ -73,7 +73,8 @@ t_status	set_shlvl(t_list **head)
 		shlvl_num = ft_atoi(existing_shlvl) + 1;
 	if (shlvl_num > 999)
 	{
-		ft_dprintf(STDERR_FILENO, "minishell: warning: " SHLVL_ERR, shlvl_num);
+		ft_dprintf_buf(STDERR_FILENO, "minishell: warning: " SHLVL_ERR,
+			shlvl_num);
 		shlvl_num = 1;
 	}
 	shlvl_str = ft_itoa(shlvl_num);

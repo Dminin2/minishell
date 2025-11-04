@@ -23,7 +23,7 @@ int	builtin_pwd(t_minishell *minishell)
 		cwd = getcwd(NULL, 0);
 		if (!cwd)
 		{
-			ft_dprintf(STDERR_FILENO, "pwd: %s: %s\n", GETCWD_ERR,
+			ft_dprintf_buf(STDERR_FILENO, "pwd: %s: %s\n", GETCWD_ERR,
 				strerror(errno));
 			return (1);
 		}

@@ -21,15 +21,15 @@ void	print_cmd_lst(t_list *head, int fd)
 	i = 1;
 	while (head)
 	{
-		ft_dprintf(fd, "\nCommand #%d\n", i);
+		ft_dprintf_buf(fd, "\nCommand #%d\n", i);
 		cmd = head->content;
 		j = 0;
 		if (cmd->args)
 		{
-			ft_dprintf(fd, "  Args:\n");
+			ft_dprintf_buf(fd, "  Args:\n");
 			while (cmd->args[j])
 			{
-				ft_dprintf(fd, "  -(%s)\n", cmd->args[j]);
+				ft_dprintf_buf(fd, "  -(%s)\n", cmd->args[j]);
 				j++;
 			}
 		}
@@ -42,8 +42,8 @@ void	print_cmd_lst(t_list *head, int fd)
 
 void	print_pipeline(t_pipeline *pipeline, int fd)
 {
-	ft_dprintf(fd, "=== pipeline ===\n");
-	ft_dprintf(fd, "cmd count : %d\n", pipeline->n);
+	ft_dprintf_buf(fd, "=== pipeline ===\n");
+	ft_dprintf_buf(fd, "cmd count : %d\n", pipeline->n);
 	print_cmd_lst(pipeline->cmd_lst, fd);
-	ft_dprintf(fd, "\n");
+	ft_dprintf_buf(fd, "\n");
 }

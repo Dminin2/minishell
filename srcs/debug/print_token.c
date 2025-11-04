@@ -16,23 +16,23 @@ void	print_token(t_list *head, int fd)
 {
 	t_token	*tok;
 
-	ft_dprintf(fd, "===  token  ===\n");
+	ft_dprintf_buf(fd, "===  token  ===\n");
 	while (head)
 	{
 		tok = head->content;
 		if (tok->type == TK_WORD)
-			ft_dprintf(fd, "[WORD: %s]\n", tok->value);
+			ft_dprintf_buf(fd, "[WORD: %s]\n", tok->value);
 		else if (tok->type == TK_PIPE)
-			ft_dprintf(fd, "[PIPE: |]\n");
+			ft_dprintf_buf(fd, "[PIPE: |]\n");
 		else if (tok->type == TK_REDIR_IN)
-			ft_dprintf(fd, "[R_IN: <]\n");
+			ft_dprintf_buf(fd, "[R_IN: <]\n");
 		else if (tok->type == TK_REDIR_OUT)
-			ft_dprintf(fd, "[R_OUT: >]\n");
+			ft_dprintf_buf(fd, "[R_OUT: >]\n");
 		else if (tok->type == TK_HEREDOC)
-			ft_dprintf(fd, "[R_HD: <<]\n");
+			ft_dprintf_buf(fd, "[R_HD: <<]\n");
 		else if (tok->type == TK_APPEND)
-			ft_dprintf(fd, "[R_APP: >>]\n");
+			ft_dprintf_buf(fd, "[R_APP: >>]\n");
 		head = head->next;
 	}
-	ft_dprintf(fd, "\n");
+	ft_dprintf_buf(fd, "\n");
 }
