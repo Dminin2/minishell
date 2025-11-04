@@ -27,6 +27,9 @@
 # define PROMPT_PART1_SUCCESS C_GREEN "minishell" C_RESET " ➜ " C_BLUE C_BOLD
 # define PROMPT_PART1_ERROR C_GREEN "minishell" C_RESET " " C_RED "➜" C_RESET " " C_BLUE C_BOLD
 # define PROMPT_PART2 C_RESET " $ "
+# define PROMPT_PART1 "\033[32mminishell\033[0m ➜ \033[34m\033[1m"
+# define PROMPT_PART2 "\033[0m $ "
+
 typedef struct s_input
 {
 	char	*line;
