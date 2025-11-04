@@ -3,23 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:38:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 23:21:38 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 00:05:38 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_status	set_underscore_for_invocation(t_minishell *minishell,
-		t_cmd *cmd, t_command_type type)
+t_status	set_underscore_for_invocation(t_minishell *minishell, t_cmd *cmd,
+		t_command_type type)
 {
 	t_status	status;
 	char		*value;
 	t_cmd		underscore_cmd;
 
-	value = cmd->args[0];
+	if (type == NO_CMD)
+		value = "";
+	else
+		value = cmd->args[0];
 	if (type == EXTERNAL)
 	{
 		underscore_cmd.args = cmd->args;

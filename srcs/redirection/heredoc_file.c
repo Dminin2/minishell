@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:10:05 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/29 10:15:41 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/31 14:07:17 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ t_status	create_hd_filename(char **tmp_file)
 
 	random_fd = open("/dev/urandom", O_RDONLY);
 	if (random_fd < 0)
-		return (ERR_FILE);
+		return (ERR_HD_FILE);
 	n = read(random_fd, buf, sizeof(buf));
 	close(random_fd);
 	if (n < 8)
-		return (ERR_FILE);
+		return (ERR_HD_FILE);
 	hex_id = convert_to_hex(buf);
 	if (!hex_id)
 		return (ERR_MALLOC);

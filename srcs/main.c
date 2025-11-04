@@ -13,8 +13,32 @@
 #include "minishell.h"
 
 #ifdef DEBUG
-int	g_fd = -1;
+int		g_fd = -1;
 #endif
+
+void	minishell_init(t_minishell *minishell, char **envp)
+{
+	if (isatty(STDIN_FILENO))
+		set_signal_interactive();
+	else
+		set_signal_noninteractive();
+	minishell->should_exit = 0;
+	minishell->last_status = 0;
+	minishell->env_lst = env_init(minishell, envp);
+	if (!minishell->env_lst)
+		exit(1);
+	rl_outstream = stderr;
+#ifdef DEBUG
+	g_fd = open("playground/log", O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC,
+			0644);
+	if (g_fd < 0)
+	{
+		printf("log file error\n");
+		exit(1);
+	}
+	print_env_lst(minishell->env_lst, g_fd);
+#endif
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -27,26 +51,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	if (isatty(STDIN_FILENO))
-		set_signal_interactive();
-	else
-		set_signal_noninteractive();
-	minishell.should_exit = 0;
-	minishell.last_status = 0;
-	minishell.env_lst = env_init(&minishell, envp);
-	if (!minishell.env_lst)
-		exit(1);
-	rl_outstream = stderr;
-#ifdef DEBUG
-	g_fd = open("playground/log", O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC,
-			0644);
-	if (g_fd < 0)
-	{
-		printf("log file error\n");
-		exit(1);
-	}
-	print_env_lst(minishell.env_lst, g_fd);
-#endif
+	minishell_init(&minishell, envp);
 	while (!minishell.should_exit)
 	{
 #ifdef DEBUG
@@ -87,8 +92,6 @@ int	main(int argc, char **argv, char **envp)
 #ifdef DEBUG
 		print_pipeline(pipeline, g_fd);
 #endif
-		if (read_heredoc(&minishell, pipeline) != SUCCESS)
-			continue ;
 		execute(&minishell, pipeline);
 	}
 	rl_clear_history();

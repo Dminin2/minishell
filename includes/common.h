@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 13:29:06 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/31 15:24:45 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/03 14:53:14 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ typedef enum e_status
 	ERR_FORK,
 	ERR_WAITPID,
 	ERR_HEREDOC,
+	ERR_HD_FILE,
 	ERR_QUOTE,
-	ERR_NOKEY,
 	RCV_SIGINT,
 	ERR_ERRNO,
 }			t_status;
