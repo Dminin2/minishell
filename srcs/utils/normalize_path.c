@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 23:57:34 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/30 21:59:06 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/04 12:39:57 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,7 @@ static char	*reconstruct_path(char **split_path, int *stat_failed)
 			continue ;
 		}
 		if (ft_strcmp(split_path[i], "..") == 0)
-		{
-			if (stat(path, &st) != 0 || !S_ISDIR(st.st_mode))
-			{
-				*stat_failed = 1;
-				free(path);
-				return (NULL);
-			}
 			remove_last_component(path);
-		}
 		else
 		{
 			tmp = append_component(path, split_path[i]);
