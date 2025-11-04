@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/29 00:01:28 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/31 14:27:54 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,33 +30,23 @@ typedef enum e_blt_error
 	BLTERR_NOT_VALID,
 	BLTERR_NUM_ARG,
 	BLTERR_ERRNO
-}				t_blt_error;
+}		t_blt_error;
 
-typedef enum e_cwd_status
-{
-	CWD_FROM_GETCWD,
-	CWD_FROM_PWD,
-	CWD_MALLOC_ERROR,
-	CWD_NOT_AVAILABLE
-}				t_cwd_status;
+int		builtin_pwd(t_minishell *minishell);
+int		builtin_echo(char **args);
+int		builtin_cd(t_minishell *minishell, char **args);
+int		builtin_export(t_minishell *minishell, char **args);
+int		builtin_env(t_minishell *minishell);
+int		builtin_unset(t_minishell *minishell, char **args);
+int		builtin_exit(t_minishell *minishell, char **args, int cmd_count);
 
-int				builtin_pwd(t_minishell *minishell);
-int				builtin_echo(char **args);
-int				builtin_cd(t_minishell *minishell, char **args);
-int				builtin_export(t_minishell *minishell, char **args);
-int				builtin_env(t_minishell *minishell);
-int				builtin_unset(t_minishell *minishell, char **args);
-int				builtin_exit(t_minishell *minishell, char **args,
-					int cmd_count);
+int		return_error(char *msg, t_status status);
 
-int				return_error(char *msg, t_status status);
+int		handle_args(t_minishell *minishell, char **args);
+int		handle_no_args(t_minishell *minishell);
+int		strtouc_and_validate(char *str, unsigned char *last_status);
 
-int				handle_args(t_minishell *minishell, char **args);
-int				handle_no_args(t_minishell *minishell);
-int				strtouc_and_validate(char *str, unsigned char *last_status);
-
-char			*get_arg_path(t_list *env_lst, char *arg);
-char			*append_slash(char *path);
-t_cwd_status	get_cwd_for_abs(t_list *env_lst, char **cwd_out);
+int		prepare_oldpwd(t_list *env_lst, char **oldpwd_to_print);
+char	*get_arg_path(t_list *env_lst, char *arg);
 
 #endif

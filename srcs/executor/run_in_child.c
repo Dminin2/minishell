@@ -42,6 +42,8 @@ void	handle_redir_err(t_minishell *minishell, t_pipeline *pipeline,
 	else if (err.status == ERR_HD_FILE)
 		exit_error(minishell, pipeline,
 			"cannot create temp file for here-document", ERR_HD_FILE);
+	else if (err.status == ERR_MALLOC)
+		exit_error(minishell, pipeline, "malloc", ERR_MALLOC);
 }
 
 void	handle_execve_error(t_minishell *minishell, t_pipeline *pipeline,

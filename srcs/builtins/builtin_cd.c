@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/22 21:39:59 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/10/31 14:28:31 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,101 +25,126 @@ static int	update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd)
 	return (0);
 }
 
-static int	exec_chdir(t_list **env_lst, char *path, char *error_path,
-		char *fallback_path)
+static char	*build_absolute_path(t_minishell *minishell, char *arg)
 {
-	char	*old_pwd;
-	char	*new_pwd;
-	int		exit_status;
+	char	*cwd;
+	char	*abs_path;
+	char	*tmp;
 
-	old_pwd = search_env(*env_lst, "PWD");
-	if (!old_pwd)
-		old_pwd = "";
-	if (chdir(path) == -1)
+	if (arg[0] == '/')
+		return (ft_strdup(arg));
+	if (!minishell->cwd)
 	{
-		print_error_msg_builtin("cd", error_path, BLTERR_ERRNO);
-		return (1);
+		cwd = getcwd(NULL, 0);
+		if (!cwd)
+		{
+			ft_dprintf(STDERR_FILENO, "chdir: %s: %s\n", GETCWD_ERR,
+				strerror(errno));
+			return (ft_strdup(arg));
+		}
+		minishell->cwd = cwd;
 	}
-	new_pwd = getcwd(NULL, 0);
-	if (!new_pwd)
-	{
-		print_error_msg_builtin("cd", GETCWD_ERR, BLTERR_ERRNO);
-		new_pwd = ft_strdup(fallback_path);
-		if (!new_pwd)
-			return (return_error("malloc", ERR_MALLOC));
-	}
-	exit_status = update_pwd_env(env_lst, old_pwd, new_pwd);
-	free(new_pwd);
-	return (exit_status);
-}
-
-static int	handle_absolute_path(t_list **env_lst, char *arg_path)
-{
-	char	*clean_path;
-	int		exit_status;
-
-	clean_path = normalize_path(arg_path);
-	if (!clean_path)
-		return (return_error("malloc", ERR_MALLOC));
-	exit_status = exec_chdir(env_lst, clean_path, arg_path, clean_path);
-	free(clean_path);
-	return (exit_status);
-}
-
-static int	handle_relative_path(t_list **env_lst, char *arg_path)
-{
-	char			*cwd;
-	char			*abs_path;
-	char			*clean_path;
-	int				exit_status;
-	t_cwd_status	status;
-
-	status = get_cwd_for_abs(*env_lst, &cwd);
-	if (status == CWD_MALLOC_ERROR)
-		return (return_error("malloc", ERR_MALLOC));
-	if (status == CWD_NOT_AVAILABLE)
-		return (exec_chdir(env_lst, arg_path, arg_path, arg_path));
-	cwd = append_slash(cwd);
-	if (!cwd)
-		return (return_error("malloc", ERR_MALLOC));
-	abs_path = ft_strjoin(cwd, arg_path);
-	free(cwd);
-	if (!abs_path)
-		return (return_error("malloc", ERR_MALLOC));
-	clean_path = normalize_path(abs_path);
-	if (!clean_path)
-	{
-		free(abs_path);
-		return (return_error("malloc", ERR_MALLOC));
-	}
-	if (status == CWD_FROM_PWD)
-		exit_status = exec_chdir(env_lst, arg_path, arg_path, abs_path);
+	if (ft_strlen(minishell->cwd) > 1
+		&& minishell->cwd[ft_strlen(minishell->cwd) - 1] != '/')
+		tmp = ft_strjoin(minishell->cwd, "/");
 	else
-		exit_status = exec_chdir(env_lst, clean_path, arg_path, clean_path);
-	free(clean_path);
-	free(abs_path);
-	return (exit_status);
+		tmp = ft_strdup(minishell->cwd);
+	if (!tmp)
+		return (NULL);
+	abs_path = ft_strjoin(tmp, arg);
+	free(tmp);
+	return (abs_path);
+}
+
+static int	update_cwd(t_minishell *minishell, char *target_path,
+		int normalize_failed)
+{
+	char	*getcwd_result;
+
+	if (normalize_failed)
+	{
+		getcwd_result = getcwd(NULL, 0);
+		if (getcwd_result)
+		{
+			free(minishell->cwd);
+			minishell->cwd = getcwd_result;
+			return (0);
+		}
+		ft_dprintf(STDERR_FILENO, "cd: %s: %s\n", GETCWD_ERR, strerror(errno));
+	}
+	free(minishell->cwd);
+	minishell->cwd = ft_strdup(target_path);
+	if (!minishell->cwd)
+		return (return_error("malloc", ERR_MALLOC));
+	return (0);
+}
+
+static int	try_chdir_and_update(t_minishell *minishell, char *target_path,
+		char *arg, t_normalize_status normalize_status)
+{
+	int		first_errno;
+	int		normalize_failed;
+	char	*old_pwd;
+
+	normalize_failed = (normalize_status == NORMALIZE_STAT_FAILED);
+	if (chdir(target_path) == 0)
+	{
+		if (update_cwd(minishell, target_path, normalize_failed) != 0)
+			return (1);
+		old_pwd = search_env(minishell->env_lst, "PWD");
+		if (!old_pwd)
+			old_pwd = "";
+		return (update_pwd_env(&minishell->env_lst, old_pwd, minishell->cwd));
+	}
+	first_errno = errno;
+	if (chdir(arg) == 0)
+	{
+		if (update_cwd(minishell, target_path, 1) != 0)
+			return (1);
+		old_pwd = search_env(minishell->env_lst, "PWD");
+		if (!old_pwd)
+			old_pwd = "";
+		return (update_pwd_env(&minishell->env_lst, old_pwd, minishell->cwd));
+	}
+	ft_dprintf(STDERR_FILENO, "minishell: cd: %s: %s\n", arg,
+		strerror(first_errno));
+	return (1);
 }
 
 int	builtin_cd(t_minishell *minishell, char **args)
 {
-	char	*arg_path;
-	int		exit_status;
+	char				*arg;
+	char				*abs_path;
+	char				*target_path;
+	t_normalize_status	normalize_status;
+	int					exit_status;
 
 	if (args[1] && args[2])
 	{
 		print_error_msg_builtin("cd", NULL, BLTERR_MANY_ARG);
 		return (1);
 	}
-	arg_path = get_arg_path(minishell->env_lst, args[1]);
-	if (!arg_path)
+	arg = get_arg_path(minishell->env_lst, args[1]);
+	if (!arg)
 		return (1);
-	if (arg_path[0] == '/')
-		exit_status = handle_absolute_path(&minishell->env_lst, arg_path);
-	else
-		exit_status = handle_relative_path(&minishell->env_lst, arg_path);
+	abs_path = build_absolute_path(minishell, arg);
+	if (!abs_path)
+	{
+		free(arg);
+		return (return_error("malloc", ERR_MALLOC));
+	}
+	normalize_status = normalize_path(abs_path, &target_path);
+	free(abs_path);
+	if (normalize_status == NORMALIZE_MALLOC_ERROR)
+	{
+		free(arg);
+		return (return_error("malloc", ERR_MALLOC));
+	}
+	exit_status = try_chdir_and_update(minishell, target_path, arg,
+			normalize_status);
+	free(target_path);
 	if (exit_status == 0 && args[1] && ft_strncmp(args[1], "-", 2) == 0)
-		ft_printf("%s\n", arg_path);
-	free(arg_path);
+		ft_printf("%s\n", arg);
+	free(arg);
 	return (exit_status);
 }

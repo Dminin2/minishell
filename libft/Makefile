@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+         #
+#    By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/25 16:09:47 by aomatsud          #+#    #+#              #
-#    Updated: 2025/10/16 00:30:21 by aomatsud         ###   ########.fr        #
+#    Updated: 2025/10/31 15:13:06 by hmaruyam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,24 +106,24 @@ RM = rm -rf
 all:$(NAME)
 
 $(NAME):$(OBJS)
-	$(AR) $(NAME) $(OBJS)
+	@$(AR) $(NAME) $(OBJS)
 
 $(OBJS_DIR):
-	mkdir -p $(OBJS_DIR)
-	mkdir -p $(OBJS_DIR)/$(LIBFT_DIR)
-	mkdir -p $(OBJS_DIR)/$(FT_PRINTF_DIR)
-	mkdir -p $(OBJS_DIR)/$(FT_DPRINTF_DIR)
-	mkdir -p $(OBJS_DIR)/$(FT_DPRINTF_BUF_DIR)
-	mkdir -p $(OBJS_DIR)/$(GNL_DIR)
+	@mkdir -p $(OBJS_DIR)
+	@mkdir -p $(OBJS_DIR)/$(LIBFT_DIR)
+	@mkdir -p $(OBJS_DIR)/$(FT_PRINTF_DIR)
+	@mkdir -p $(OBJS_DIR)/$(FT_DPRINTF_DIR)
+	@mkdir -p $(OBJS_DIR)/$(FT_DPRINTF_BUF_DIR)
+	@mkdir -p $(OBJS_DIR)/$(GNL_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
-	$(CC) $(CFLAGS) -I$(INCLUDES) -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(INCLUDES) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS_DIR)
+	@$(RM) $(OBJS_DIR)
 
 fclean:clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re:fclean all
 

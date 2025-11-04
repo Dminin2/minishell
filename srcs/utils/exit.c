@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/31 15:24:39 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/10/31 15:56:57 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	print_error_msg(char *context, t_status status)
 		ft_dprintf_buf(STDERR_FILENO,
 			"\nminishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
 			context);
+	else if (status == ERR_QUOTE)
+		ft_dprintf_buf(STDERR_FILENO, "minishell: syntax error: unexpected %s\n", context);
 	else
 		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
 			strerror(errno));
@@ -78,7 +80,7 @@ static int	get_exit_status(t_status status)
 {
 	if (status == SUCCESS)
 		return (0);
-	else if (status == ERR_SYNTAX)
+	else if (status == ERR_SYNTAX || status == ERR_QUOTE)
 		return (2);
 	else if (status == ERR_CMD_NOT_FOUND || status == ERR_NOT_VALID_PATH
 		|| status == ERR_ENOENT)
