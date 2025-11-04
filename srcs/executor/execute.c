@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:38:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 00:05:38 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/04 17:03:34 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	status = SUCCESS;
 	if (pipeline->n != 1)
 	{
-		child_process(minishell, pipeline);
+		child_process(minishell, pipeline, NULL);
 		return ;
 	}
 	cmd = pipeline->cmd_lst->content;
@@ -86,7 +86,7 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 		return ;
 	}
 	if (type == EXTERNAL)
-		child_process(minishell, pipeline);
+		child_process(minishell, pipeline, last_arg);
 	else
 		run_builtin_in_parent(minishell, pipeline, type);
 	status = process_env_key_value(&(minishell->env_lst), "_", last_arg);
