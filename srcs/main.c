@@ -77,14 +77,10 @@ void	reader_loop(t_minishell *minishell)
 #ifdef DEBUG
 		print_pipeline_ir(pipeline_ir, g_fd);
 #endif
-		pipeline = expand(minishell, pipeline_ir);
+		pipeline = expand(&minishell, pipeline_ir);
+		free_pipeline_ir(pipeline_ir);
 		if (!pipeline)
-		{
-			free_pipeline_ir(pipeline_ir);
 			continue ;
-		}
-		else
-			free_pipeline_ir_after_expand(pipeline_ir);
 #ifdef DEBUG
 		print_pipeline(pipeline, g_fd);
 #endif
