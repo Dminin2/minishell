@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:35:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/13 17:00:41 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 10:59:05 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ void	handle_redir_err_in_parent(t_minishell *minishell, t_pipeline *pipeline,
 				ERR_AMB_REDIR);
 	else if (err.status == ERR_MALLOC)
 		minishell->last_status = error_parent(pipeline, "malloc", ERR_MALLOC);
+	else if (err.status == ERR_HD_FILE)
+		minishell->last_status = error_parent(pipeline, HD_FILE_ERR,
+				ERR_HD_FILE);
 }
 
 t_status	save_fd_and_redirect(t_minishell *minishell, t_pipeline *pipeline,
