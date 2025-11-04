@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:17:56 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/25 13:17:26 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 22:44:09 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 # include <readline/readline.h>
 # include <stdio.h>
 # include <unistd.h>
+
+# define C_RESET "\033[0m"
+# define C_GREEN "\033[32m"
+# define C_BLUE "\033[34m"
+# define C_BOLD "\033[1m"
+# define PROMPT_PART1 "\033[32mminishell\033[0m ➜ \033[34m\033[1m"
+# define PROMPT_PART2 "\033[0m $ "
 
 typedef struct s_input
 {
