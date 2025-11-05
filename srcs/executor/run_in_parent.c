@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_in_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:35:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 10:59:05 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 20:25:46 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,17 @@ void	handle_redir_err_in_parent(t_minishell *minishell, t_pipeline *pipeline,
 
 	status = restore_stdio_fd(saved);
 	if (status != SUCCESS)
-	{
-		minishell->last_status = error_parent(pipeline, "dup", status);
-		return ;
-	}
+		return (error_parent(minishell, pipeline, "dup", status));
 	if (err.status == ERR_FILE)
-		minishell->last_status = error_parent(pipeline, err.redir_err->value,
-				ERR_FILE);
+		error_parent(minishell, pipeline, err.redir_err->value, ERR_FILE);
 	else if (err.status == ERR_DUP)
-		minishell->last_status = error_parent(pipeline, "dup", ERR_DUP);
+		error_parent(minishell, pipeline, "dup", ERR_DUP);
 	else if (err.status == ERR_AMB_REDIR)
-		minishell->last_status = error_parent(pipeline, err.redir_err->value,
-				ERR_AMB_REDIR);
+		error_parent(minishell, pipeline, err.redir_err->value, ERR_AMB_REDIR);
 	else if (err.status == ERR_MALLOC)
-		minishell->last_status = error_parent(pipeline, "malloc", ERR_MALLOC);
+		error_parent(minishell, pipeline, "malloc", ERR_MALLOC);
 	else if (err.status == ERR_HD_FILE)
-		minishell->last_status = error_parent(pipeline, HD_FILE_ERR,
-				ERR_HD_FILE);
+		error_parent(minishell, pipeline, HD_FILE_ERR, ERR_HD_FILE);
 }
 
 t_status	save_fd_and_redirect(t_minishell *minishell, t_pipeline *pipeline,
@@ -51,7 +45,7 @@ t_status	save_fd_and_redirect(t_minishell *minishell, t_pipeline *pipeline,
 	status = save_stdio_fd(cmd->redir_lst, saved);
 	if (status != SUCCESS)
 	{
-		minishell->last_status = error_parent(pipeline, "dup", status);
+		error_parent(minishell, pipeline, "dup", status);
 		return (ERR_DUP);
 	}
 	redirect(minishell, cmd->redir_lst, &err);
@@ -80,9 +74,6 @@ void	run_builtin_in_parent(t_minishell *minishell, t_pipeline *pipeline,
 		execute_builtin(minishell, cmd, type, pipeline->n);
 	status = restore_stdio_fd(saved);
 	if (status != SUCCESS)
-	{
-		minishell->last_status = error_parent(pipeline, "dup", status);
-		return ;
-	}
+		return (error_parent(minishell, pipeline, "dup", status));
 	free_pipeline(pipeline);
 }
