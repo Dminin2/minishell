@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 14:40:59 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/05 14:41:38 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/05 20:20:32 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,10 @@ int	error_lst(t_list *lst, char *context, t_status status, void (*del)(void *))
 	return (get_exit_status(status));
 }
 
-int	error_parent(t_pipeline *pipeline, char *context, t_status status)
+void	error_parent(t_minishell *minishell, t_pipeline *pipeline,
+		char *context, t_status status)
 {
 	print_error_msg(context, status);
 	free_pipeline(pipeline);
-	return (get_exit_status(status));
+	minishell->last_status = get_exit_status(status);
 }

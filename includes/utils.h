@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 14:43:05 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/05 20:21:06 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void						print_error_msg_builtin(char *cmd, char *context,
 								t_blt_error error);
 int							error_lst(t_list *lst, char *context,
 								t_status status, void (*del)(void *));
-int							error_parent(t_pipeline *pipeline, char *context,
+void						error_parent(t_minishell *minishell,
+								t_pipeline *pipeline, char *context,
 								t_status status);
 void						exit_error(t_minishell *minishell,
 								t_pipeline *pipeline, char *context,
