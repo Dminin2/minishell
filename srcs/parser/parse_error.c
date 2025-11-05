@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 17:29:43 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 20:01:20 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*get_token_str(t_tok_types type)
+{
+	if (type == TK_REDIR_IN)
+		return ("<");
+	else if (type == TK_REDIR_OUT)
+		return (">");
+	else if (type == TK_HEREDOC)
+		return ("<<");
+	else if (type == TK_APPEND)
+		return (">>");
+	else
+		return ("|");
+}
 
 void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
 		t_status status)
@@ -31,16 +45,7 @@ void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
 						free_cmd_ir_wrapper);
 			else
 			{
-				if (tok->type == TK_REDIR_IN)
-					token_str = "<";
-				else if (tok->type == TK_REDIR_OUT)
-					token_str = ">";
-				else if (tok->type == TK_HEREDOC)
-					token_str = "<<";
-				else if (tok->type == TK_APPEND)
-					token_str = ">>";
-				else
-					token_str = "|";
+				token_str = get_token_str(tok->type);
 				minishell->last_status = error_lst(head, token_str, ERR_SYNTAX,
 						free_cmd_ir_wrapper);
 			}
