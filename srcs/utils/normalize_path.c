@@ -42,12 +42,29 @@ static char	*append_component(char *path, char *component)
 	return (ft_strjoin(path, component));
 }
 
+static char	*add_validated_component(char *old_path, char *component,
+		int *stat_failed)
+{
+	char		*new_path;
+	struct stat	st;
+
+	new_path = append_component(old_path, component);
+	free(old_path);
+	if (!new_path)
+		return (NULL);
+	if (stat(new_path, &st) != 0 || !S_ISDIR(st.st_mode))
+	{
+		*stat_failed = 1;
+		free(new_path);
+		return (NULL);
+	}
+	return (new_path);
+}
+
 static char	*reconstruct_path(char **split_path, int *stat_failed)
 {
-	char		*path;
-	char		*tmp;
-	int			i;
-	struct stat	st;
+	char	*path;
+	int		i;
 
 	path = ft_strdup("/");
 	if (!path)
@@ -64,17 +81,9 @@ static char	*reconstruct_path(char **split_path, int *stat_failed)
 			remove_last_component(path);
 		else
 		{
-			tmp = append_component(path, split_path[i]);
-			free(path);
-			if (!tmp)
+			path = add_validated_component(path, split_path[i], stat_failed);
+			if (!path)
 				return (NULL);
-			path = tmp;
-			if (stat(path, &st) != 0 || !S_ISDIR(st.st_mode))
-			{
-				*stat_failed = 1;
-				free(path);
-				return (NULL);
-			}
 		}
 		i++;
 	}
