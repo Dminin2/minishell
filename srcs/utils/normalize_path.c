@@ -81,12 +81,9 @@ static char	*reconstruct_path(char **split_path, int *stat_failed)
 	return (path);
 }
 
-t_normalize_status	normalize_path(const char *abs_path, char **result)
+static t_normalize_status	handle_relative_path(const char *abs_path,
+		char **result)
 {
-	char	**split_path;
-	int		stat_failed;
-
-	*result = NULL;
 	if (!abs_path || abs_path[0] == '\0')
 	{
 		*result = ft_strdup(".");
@@ -94,13 +91,20 @@ t_normalize_status	normalize_path(const char *abs_path, char **result)
 			return (NORMALIZE_MALLOC_ERROR);
 		return (NORMALIZE_SUCCESS);
 	}
-	if (abs_path[0] != '/')
-	{
-		*result = ft_strdup(abs_path);
-		if (!*result)
-			return (NORMALIZE_MALLOC_ERROR);
-		return (NORMALIZE_SUCCESS);
-	}
+	*result = ft_strdup(abs_path);
+	if (!*result)
+		return (NORMALIZE_MALLOC_ERROR);
+	return (NORMALIZE_SUCCESS);
+}
+
+t_normalize_status	normalize_path(const char *abs_path, char **result)
+{
+	char	**split_path;
+	int		stat_failed;
+
+	*result = NULL;
+	if (!abs_path || abs_path[0] == '\0' || abs_path[0] != '/')
+		return (handle_relative_path(abs_path, result));
 	split_path = ft_split(abs_path, '/');
 	if (!split_path)
 		return (NORMALIZE_MALLOC_ERROR);
