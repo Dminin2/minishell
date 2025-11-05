@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 14:30:48 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:36:30 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,12 @@ void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
 			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", cmd,
 				strerror(errno));
 		else if (error == BLTERR_NO_SET_HOME)
-			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: HOME not set\n", cmd);
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", HOME_ERR, cmd);
 		else if (error == BLTERR_NO_SET_OLDPWD)
-			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: OLDPWD not set\n",
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", OLDPWD_ERR,
 				cmd);
 		else if (error == BLTERR_MANY_ARG)
-			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: too many arguments\n",
-				cmd);
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", ARG_ERR, cmd);
 	}
 }
 
