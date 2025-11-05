@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 17:57:17 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/05 17:57:48 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:08:04 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static char	*expand_line(t_minishell *minishell, char *line)
 
 t_status	expand_heredoc(t_minishell *minishell, int old_fd, int new_fd)
 {
-	char *new_line;
-	char *line;
+	char	*new_line;
+	char	*line;
 
 	while (1)
 	{
