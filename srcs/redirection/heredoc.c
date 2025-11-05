@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/01 00:27:06 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 17:15:57 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,34 @@ t_status	read_line_and_write_fd(char *delimiter, int fd)
 	return (SUCCESS);
 }
 
-t_status	read_heredoc(t_redir *redir)
+static t_status	write_heredoc_to_file(char *tmp_file, char *delimiter)
 {
 	int			fd;
+	t_status	status;
+
+	fd = open(tmp_file, O_CREAT | O_EXCL | O_WRONLY | O_CLOEXEC, 0600);
+	if (fd < 0)
+	{
+		free(tmp_file);
+		return (ERR_HD_FILE);
+	}
+	if (isatty(STDIN_FILENO))
+		set_signal_heredoc();
+	status = read_line_and_write_fd(delimiter, fd);
+	if (isatty(STDIN_FILENO))
+		set_signal_interactive();
+	close(fd);
+	if (status != SUCCESS)
+	{
+		unlink(tmp_file);
+		free(tmp_file);
+		return (status);
+	}
+	return (status);
+}
+
+t_status	read_heredoc(t_redir *redir)
+{
 	char		*tmp_file;
 	char		*delimiter;
 	t_status	status;
@@ -117,24 +142,9 @@ t_status	read_heredoc(t_redir *redir)
 	status = create_hd_filename(&tmp_file);
 	if (status != SUCCESS)
 		return (status);
-	fd = open(tmp_file, O_CREAT | O_EXCL | O_WRONLY | O_CLOEXEC, 0600);
-	if (fd < 0)
-	{
-		free(tmp_file);
-		return (ERR_HD_FILE);
-	}
-	if (isatty(STDIN_FILENO))
-		set_signal_heredoc();
-	status = read_line_and_write_fd(redir->value, fd);
-	if (isatty(STDIN_FILENO))
-		set_signal_interactive();
-	close(fd);
+	status = write_heredoc_to_file(tmp_file, redir->value);
 	if (status != SUCCESS)
-	{
-		unlink(tmp_file);
-		free(tmp_file);
 		return (status);
-	}
 	redir->fd_hd = open(tmp_file, O_RDONLY | O_CLOEXEC);
 	unlink(tmp_file);
 	free(tmp_file);
