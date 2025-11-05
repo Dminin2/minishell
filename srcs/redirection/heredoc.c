@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 17:15:57 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/05 17:32:21 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,23 @@ t_status	expand_heredoc(t_minishell *minishell, int old_fd, int new_fd)
 	return (SUCCESS);
 }
 
+static t_status	handle_heredoc_input(t_input *input)
+{
+	t_status	status;
+
+	input->line = NULL;
+	input->is_eof = 0;
+	if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
+		ft_putstr_fd("> ", STDERR_FILENO);
+	status = gnl_and_remove_new_line(&input);
+	if (g_sig == SIGINT)
+	{
+		free(input->line);
+		return (RCV_SIGINT);
+	}
+	return (status);
+}
+
 t_status	read_line_and_write_fd(char *delimiter, int fd)
 {
 	t_status	status;
@@ -74,16 +91,7 @@ t_status	read_line_and_write_fd(char *delimiter, int fd)
 
 	while (1)
 	{
-		input.line = NULL;
-		input.is_eof = 0;
-		if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
-			ft_putstr_fd("> ", STDERR_FILENO);
-		status = gnl_and_remove_new_line(&input);
-		if (g_sig == SIGINT)
-		{
-			free(input.line);
-			return (RCV_SIGINT);
-		}
+		status = handle_heredoc_input(&input);
 		if (status != SUCCESS)
 			return (status);
 		if (!(input.line))
