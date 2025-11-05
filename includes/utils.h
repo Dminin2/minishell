@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 14:35:51 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:43:05 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void						exit_error(t_minishell *minishell,
 								t_status status);
 void						exit_success(t_minishell *minishell,
 								t_pipeline *pipeline);
+int							get_exit_status(t_status status);
 
 int							is_pwd_valid(char *pwd_path);
 
