@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 14:10:31 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:29:49 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+
+# define CMD_ERR "command not found"
+# define VLD_ERR "No such file or directory"
+# define SYN_ERR "syntax error near unexpected token"
+# define HD_ERR "warning: here-document delimited by end-of-file (wanted"
+# define QUOTE_ERR "syntax error: unexpected"
+# define AMB_ERR "ambiguous redirect"
 
 typedef enum e_normalize_status
 {

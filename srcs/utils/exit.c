@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/31 15:56:57 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:30:48 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,16 @@
 void	print_error_msg(char *context, t_status status)
 {
 	if (status == ERR_CMD_NOT_FOUND)
-		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
-			"command not found");
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context, CMD_ERR);
 	else if (status == ERR_NOT_VALID_PATH)
-		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
-			"No such file or directory");
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context, VLD_ERR);
 	else if (status == ERR_SYNTAX)
-		ft_dprintf_buf(STDERR_FILENO,
-			"minishell: syntax error near unexpected token `%s'\n", context);
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s `%s'\n", SYN_ERR, context);
 	else if (status == ERR_FILE)
 		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
 			strerror(errno));
 	else if (status == ERR_AMB_REDIR)
-		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: ambiguous redirect\n",
-			context);
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", AMB_ERR, context);
 	else if (status == ERR_ERRNO)
 		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
 			strerror(errno));
@@ -36,11 +32,10 @@ void	print_error_msg(char *context, t_status status)
 		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: Is a directory\n",
 			context);
 	else if (status == ERR_HEREDOC)
-		ft_dprintf_buf(STDERR_FILENO,
-			"\nminishell: warning: here-document delimited by end-of-file (wanted `%s')\n",
+		ft_dprintf_buf(STDERR_FILENO, "\nminishell: %s `%s')\n", HD_ERR,
 			context);
 	else if (status == ERR_QUOTE)
-		ft_dprintf_buf(STDERR_FILENO, "minishell: syntax error: unexpected %s\n", context);
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s %s\n", QUOTE_ERR, context);
 	else
 		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
 			strerror(errno));
