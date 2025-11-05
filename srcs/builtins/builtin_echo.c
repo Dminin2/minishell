@@ -42,12 +42,12 @@ int	builtin_echo(char **args)
 	}
 	while (args[i])
 	{
-		ft_printf("%s", args[i]);
+		ft_dprintf_buf(STDOUT_FILENO, "%s", args[i]);
 		if (args[i + 1])
-			ft_printf(" ");
+			ft_dprintf_buf(STDOUT_FILENO, " ");
 		i++;
 	}
 	if (!n_option)
-		ft_printf("\n");
+		ft_dprintf_buf(STDOUT_FILENO, "\n");
 	return (0);
 }

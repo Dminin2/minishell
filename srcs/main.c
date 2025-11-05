@@ -57,7 +57,7 @@ void	reader_loop(t_minishell *minishell)
 		if (!(input.line))
 		{
 			if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
-				ft_dprintf(STDERR_FILENO, "exit\n");
+				ft_dprintf_buf(STDERR_FILENO, "exit\n");
 			break ;
 		}
 #ifdef DEBUG

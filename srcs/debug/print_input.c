@@ -14,10 +14,10 @@
 
 void	print_input(t_input *input, int fd)
 {
-	ft_dprintf(fd, "***** input *****\n");
+	ft_dprintf_buf(fd, "***** input *****\n");
 	if (input->is_eof)
-		ft_dprintf(fd, "is_eof : true\n");
+		ft_dprintf_buf(fd, "is_eof : true\n");
 	else
-		ft_dprintf(fd, "is_eof : false\n");
-	ft_dprintf(fd, "line   : %s\n\n", input->line);
+		ft_dprintf_buf(fd, "is_eof : false\n");
+	ft_dprintf_buf(fd, "line   : %s\n\n", input->line);
 }

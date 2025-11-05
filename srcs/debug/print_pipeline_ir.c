@@ -19,7 +19,7 @@ void	print_args_lst(t_list *head, int fd)
 	while (head)
 	{
 		args = head->content;
-		ft_dprintf(fd, "    -(%s)\n", args);
+		ft_dprintf_buf(fd, "    -(%s)\n", args);
 		head = head->next;
 	}
 }
@@ -32,11 +32,11 @@ void	print_cmd_ir_lst(t_list *head, int fd)
 	i = 1;
 	while (head)
 	{
-		ft_dprintf(fd, "\nCommand #%d\n", i);
+		ft_dprintf_buf(fd, "\nCommand #%d\n", i);
 		cmd_ir = head->content;
 		if (cmd_ir->args_lst)
 		{
-			ft_dprintf(fd, "  Args:\n");
+			ft_dprintf_buf(fd, "  Args:\n");
 			print_args_lst(cmd_ir->args_lst, fd);
 		}
 		if (cmd_ir->redir_lst)
@@ -48,8 +48,8 @@ void	print_cmd_ir_lst(t_list *head, int fd)
 
 void	print_pipeline_ir(t_pipeline_ir *pipeline_ir, int fd)
 {
-	ft_dprintf(fd, "=== pipeline_ir ===\n");
-	ft_dprintf(fd, "cmd count : %d\n", pipeline_ir->n);
+	ft_dprintf_buf(fd, "=== pipeline_ir ===\n");
+	ft_dprintf_buf(fd, "cmd count : %d\n", pipeline_ir->n);
 	print_cmd_ir_lst(pipeline_ir->cmd_ir_lst, fd);
-	ft_dprintf(fd, "\n");
+	ft_dprintf_buf(fd, "\n");
 }

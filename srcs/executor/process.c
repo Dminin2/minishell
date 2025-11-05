@@ -46,7 +46,7 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
 	}
 	if (g_sig == SIGINT)
 	{
-		ft_dprintf(STDERR_FILENO, "\n");
+		ft_dprintf_buf(STDERR_FILENO, "\n");
 		g_sig = 0;
 	}
 	if (err)
@@ -56,7 +56,7 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
 	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
-			ft_dprintf(STDERR_FILENO, "Quit\n");
+			ft_dprintf_buf(STDERR_FILENO, "Quit\n");
 		minishell->last_status = 128 + WTERMSIG(status);
 	}
 	else
