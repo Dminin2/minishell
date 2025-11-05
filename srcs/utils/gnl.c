@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+static void	set_input_eof(t_input *input, char *line)
+{
+	input->line = line;
+	input->is_eof = 1;
+}
+
 t_status	gnl_and_remove_new_line(t_input *input)
 {
 	int			i;
@@ -34,15 +40,9 @@ t_status	gnl_and_remove_new_line(t_input *input)
 			input->is_eof = 0;
 		}
 		else
-		{
-			input->line = line;
-			input->is_eof = 1;
-		}
+			set_input_eof(input, line);
 	}
 	else
-	{
-		input->line = NULL;
-		input->is_eof = 1;
-	}
+		set_input_eof(input, NULL);
 	return (status);
 }
