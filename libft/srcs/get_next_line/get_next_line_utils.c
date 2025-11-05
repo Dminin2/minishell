@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:06:54 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 12:23:07 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:44:55 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	*save_cleanup(char **save)
 	while (save[i])
 	{
 		free(save[i]);
+		save[i] = NULL;
 		i++;
 	}
 	return (NULL);
