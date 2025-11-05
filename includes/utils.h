@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/30 21:51:11 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:10:31 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,8 @@ void						exit_success(t_minishell *minishell,
 int							is_pwd_valid(char *pwd_path);
 
 t_normalize_status			normalize_path(const char *abs_path, char **result);
+
+void						remove_last_component(char *path);
+char						*append_component(char *path, char *component);
 
 #endif

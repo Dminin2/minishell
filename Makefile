@@ -61,7 +61,8 @@ SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/string.c \
 	$(UTILS_DIR)/gnl.c \
 	$(UTILS_DIR)/pwd_utils.c \
-	$(UTILS_DIR)/normalize_path.c
+	$(UTILS_DIR)/normalize_path.c \
+	$(UTILS_DIR)/normalize_path_utils.c
 SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_echo.c \
 	$(BUILTINS_DIR)/builtin_cd.c \
