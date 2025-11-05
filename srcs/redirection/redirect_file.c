@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 18:19:26 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/05 18:21:40 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:42:55 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	redir_out(t_redir *redir, t_redir_err *err)
 
 void	redir_append(t_redir *redir, t_redir_err *err)
 {
-	int fd;
+	int	fd;
 
 	fd = open(redir->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
