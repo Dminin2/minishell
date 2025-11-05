@@ -6,11 +6,24 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 18:21:42 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:32:52 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	cleanup_and_set_error(t_redir_err *err, t_status status,
+		char *tmp_fname, int should_unlink)
+{
+	err->redir_err = NULL;
+	err->status = status;
+	if (tmp_fname)
+	{
+		if (should_unlink)
+			unlink(tmp_fname);
+		free(tmp_fname);
+	}
+}
 
 void	expand_heredoc_and_replace_fd(t_minishell *minishell, t_redir *redir,
 		t_redir_err *err)
@@ -21,40 +34,21 @@ void	expand_heredoc_and_replace_fd(t_minishell *minishell, t_redir *redir,
 
 	status = create_hd_filename(&tmp_fname);
 	if (status != SUCCESS)
-	{
-		err->redir_err = NULL;
-		err->status = status;
-		return ;
-	}
+		return (cleanup_and_set_error(err, status, NULL, 0));
 	tmp_fd = open(tmp_fname, O_CREAT | O_EXCL | O_WRONLY | O_CLOEXEC, 0600);
 	if (tmp_fd < 0)
-	{
-		err->redir_err = NULL;
-		err->status = ERR_HD_FILE;
-		free(tmp_fname);
-		return ;
-	}
+		return (cleanup_and_set_error(err, ERR_HD_FILE, tmp_fname, 0));
 	status = expand_heredoc(minishell, redir->fd_hd, tmp_fd);
 	close(redir->fd_hd);
 	redir->fd_hd = -1;
 	close(tmp_fd);
 	if (status != SUCCESS)
-	{
-		unlink(tmp_fname);
-		free(tmp_fname);
-		err->redir_err = NULL;
-		err->status = status;
-		return ;
-	}
+		return (cleanup_and_set_error(err, status, tmp_fname, 1));
 	redir->fd_hd = open(tmp_fname, O_RDONLY | O_CLOEXEC);
 	unlink(tmp_fname);
 	free(tmp_fname);
 	if (redir->fd_hd < 0)
-	{
-		err->redir_err = NULL;
-		err->status = ERR_HD_FILE;
-		return ;
-	}
+		return (cleanup_and_set_error(err, ERR_HD_FILE, NULL, 0));
 }
 
 void	redir_heredoc(t_minishell *minishell, t_redir *redir, t_redir_err *err)
