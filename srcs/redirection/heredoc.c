@@ -6,41 +6,41 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:15:39 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 17:32:21 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/05 17:54:46 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*get_next_word(t_minishell *minishell, char *line, int *i)
+{
+	int	start;
+
+	if (line[*i] == '$')
+		return (expand_parameter(minishell, line, i));
+	start = *i;
+	while (line[*i] && line[*i] != '$')
+		(*i)++;
+	return (ft_substr(line, start, *i - start));
+}
 
 char	*expand_line(t_minishell *minishell, char *line)
 {
 	int		i;
 	char	*new_line;
 	char	*word;
-	int		start;
 
 	i = 0;
 	new_line = NULL;
 	while (line[i])
 	{
-		if (line[i] == '$')
-			word = expand_parameter(minishell, line, &i);
-		else
-		{
-			start = i;
-			while (line[i] && line[i] != '$')
-				i++;
-			word = ft_substr(line, start, i - start);
-		}
+		word = get_next_word(minishell, line, &i);
 		if (!word)
 		{
 			free(new_line);
 			return (NULL);
 		}
-		if (new_line)
-			new_line = ft_strjoin_and_free(new_line, word);
-		else
-			new_line = word;
+		new_line = create_new_value(new_line, word);
 		if (!new_line)
 			return (NULL);
 	}
