@@ -6,54 +6,30 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/28 00:17:56 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 17:27:44 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	consume_blank(t_lexer *lex)
+static t_list	*handle_lexer_error(t_minishell *minishell, t_input *input,
+		t_status status, t_list **head)
 {
-	while (lex->line[lex->pos] && is_blank(lex->line[lex->pos]))
-		lex->pos++;
-}
-
-t_status	consume_quote(t_lexer *lex, char quote_char)
-{
-	lex->pos++;
-	while (lex->line[lex->pos] && lex->line[lex->pos] != quote_char)
-		lex->pos++;
-	if (!lex->line[lex->pos])
-		return (ERR_QUOTE);
-	lex->pos++;
-	return (SUCCESS);
-}
-
-int	scan_operator(t_lexer *lex, t_tok_types *op_type)
-{
-	if (lex->line[lex->pos + 1] && ft_strncmp(&(lex->line[lex->pos]), "<<",
-			2) == 0)
-		*op_type = TK_HEREDOC;
-	else if (lex->line[lex->pos + 1] && ft_strncmp(&(lex->line[lex->pos]), ">>",
-			2) == 0)
-		*op_type = TK_APPEND;
-	else if (lex->line[lex->pos] == '<')
-		*op_type = TK_REDIR_IN;
-	else if (lex->line[lex->pos] == '>')
-		*op_type = TK_REDIR_OUT;
-	else if (lex->line[lex->pos] == '|')
-		*op_type = TK_PIPE;
+	if (status == ERR_MALLOC)
+		minishell->last_status = error_lst(*head, "malloc", ERR_MALLOC,
+				free_token_wrapper);
 	else
-		return (0);
-	return (1);
-}
-
-int	is_metacharacter(char c)
-{
-	if (ft_strchr("|<>", c))
-		return (1);
-	else
-		return (0);
+	{
+		if (input->is_eof)
+			minishell->last_status = error_lst(*head, "end of file", ERR_QUOTE,
+					free_token_wrapper);
+		else
+			minishell->last_status = error_lst(*head, "newline", ERR_QUOTE,
+					free_token_wrapper);
+		if (!isatty(STDIN_FILENO))
+			minishell->should_exit = 1;
+	}
+	return (NULL);
 }
 
 t_status	handle_operator(t_lexer *lex, t_list **head, t_tok_types *op_type)
@@ -78,27 +54,11 @@ t_status	handle_operator(t_lexer *lex, t_list **head, t_tok_types *op_type)
 	return (SUCCESS);
 }
 
-t_status	handle_word(t_lexer *lex, t_list **head)
+static t_status	create_word_token(t_list **head, t_lexer *lex, int start)
 {
 	t_token		*tok;
-	int			start;
 	t_status	status;
 
-	start = lex->pos;
-	status = SUCCESS;
-	while (lex->line[lex->pos] && !is_blank(lex->line[lex->pos]))
-	{
-		if (lex->line[lex->pos] == '\'' || lex->line[lex->pos] == '\"')
-		{
-			status = consume_quote(lex, lex->line[lex->pos]);
-			if (status != SUCCESS)
-				return (status);
-			continue ;
-		}
-		else if (is_metacharacter(lex->line[lex->pos]))
-			break ;
-		lex->pos++;
-	}
 	tok = ft_calloc(1, sizeof(t_token));
 	if (!tok)
 		return (ERR_MALLOC);
@@ -116,6 +76,28 @@ t_status	handle_word(t_lexer *lex, t_list **head)
 		return (ERR_MALLOC);
 	}
 	return (SUCCESS);
+}
+
+t_status	handle_word(t_lexer *lex, t_list **head)
+{
+	t_status	status;
+	int			start;
+
+	start = lex->pos;
+	while (lex->line[lex->pos] && !is_blank(lex->line[lex->pos]))
+	{
+		if (lex->line[lex->pos] == '\'' || lex->line[lex->pos] == '\"')
+		{
+			status = consume_quote(lex, lex->line[lex->pos]);
+			if (status != SUCCESS)
+				return (status);
+			continue ;
+		}
+		else if (is_metacharacter(lex->line[lex->pos]))
+			break ;
+		lex->pos++;
+	}
+	return (create_word_token(head, lex, start));
 }
 
 t_list	*tokenize(t_minishell *minishell, t_input *input)
@@ -138,21 +120,7 @@ t_list	*tokenize(t_minishell *minishell, t_input *input)
 		else
 			status = handle_word(&lex, &head);
 		if (status != SUCCESS)
-		{
-			if (status == ERR_MALLOC)
-				minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
-						free_token_wrapper);
-			else
-			{
-				if (input->is_eof)
-					minishell->last_status = error_lst(head, "end of file",
-							ERR_QUOTE, free_token_wrapper);
-				else
-					minishell->last_status = error_lst(head, "newline",
-							ERR_QUOTE, free_token_wrapper);
-			}
-			return (NULL);
-		}
+			return (handle_lexer_error(minishell, input, status, &head));
 	}
 	return (head);
 }

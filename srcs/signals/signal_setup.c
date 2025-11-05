@@ -40,33 +40,3 @@ void	set_action(int sig, void (*handler)(int))
 	sigemptyset(&sig_act.sa_mask);
 	sigaction(sig, &sig_act, NULL);
 }
-
-void	set_signal_interactive(void)
-{
-	set_action(SIGINT, sigint_handler_in_readline);
-	set_action(SIGQUIT, SIG_IGN);
-}
-
-void	set_signal_noninteractive(void)
-{
-	set_action(SIGINT, SIG_DFL);
-	set_action(SIGQUIT, SIG_IGN);
-}
-
-void	set_signal_heredoc(void)
-{
-	set_action(SIGINT, sigint_handler_in_heredoc);
-	set_action(SIGQUIT, SIG_IGN);
-}
-
-void	set_signal_default(void)
-{
-	set_action(SIGINT, SIG_DFL);
-	set_action(SIGQUIT, SIG_DFL);
-}
-
-void	set_signal_wait_child(void)
-{
-	set_action(SIGINT, SIG_IGN);
-	set_action(SIGQUIT, SIG_IGN);
-}

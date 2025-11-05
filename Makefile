@@ -27,6 +27,7 @@ SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/stdio_fd.c \
 	$(EXECUTOR_DIR)/free_pipes.c
 SRCS_LEXER = $(LEXER_DIR)/tokenize.c \
+	$(LEXER_DIR)/lexer_utils.c \
 	$(LEXER_DIR)/free_token.c
 SRCS_PARSER = $(PARSER_DIR)/parse.c \
 	$(PARSER_DIR)/parse_error.c \
@@ -35,18 +36,18 @@ SRCS_PARSER = $(PARSER_DIR)/parse.c \
 	$(PARSER_DIR)/free_pipeline_ir.c \
 	$(PARSER_DIR)/free_redir.c
 SRCS_EXPANDER = $(EXPANDER_DIR)/expand.c \
-	$(EXPANDER_DIR)/build_cmd.c \
+	$(EXPANDER_DIR)/convert_list_to_array.c \
 	$(EXPANDER_DIR)/remove_quote.c \
-	$(EXPANDER_DIR)/expand_param.c \
-	$(EXPANDER_DIR)/build_args.c \
+	$(EXPANDER_DIR)/expand_parameter.c \
+	$(EXPANDER_DIR)/expand_string.c \
 	$(EXPANDER_DIR)/expand_utils.c \
-	$(EXPANDER_DIR)/build_redir.c \
-	$(EXPANDER_DIR)/free_pipeline.c \
-	$(EXPANDER_DIR)/free_pipeline_ir_in_expander.c
+	$(EXPANDER_DIR)/free_pipeline.c
 SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
 	$(REDIRECTION_DIR)/heredoc.c \
-	$(REDIRECTION_DIR)/heredoc_file.c
+	$(REDIRECTION_DIR)/heredoc_file.c \
+	$(REDIRECTION_DIR)/expand_delimiter.c
 SRCS_ENV = $(ENV_DIR)/env_init.c \
+  $(ENV_DIR)/env_init_utils.c \
 	$(ENV_DIR)/env_utils.c \
 	$(ENV_DIR)/search_env.c \
 	$(ENV_DIR)/free_env.c \
@@ -73,7 +74,8 @@ SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_export_args.c \
 	$(BUILTINS_DIR)/builtin_export_no_args.c \
 	$(BUILTINS_DIR)/builtin_unset.c
-SRCS_SIGNALS = $(SIGNALS_DIR)/signal_setup.c
+SRCS_SIGNALS = $(SIGNALS_DIR)/signal_setup.c \
+  $(SIGNALS_DIR)/signal_modes.c
 
 
 # debug用

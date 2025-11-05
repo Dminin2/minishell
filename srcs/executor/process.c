@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/26 14:13:49 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 17:03:15 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
 	free(pids);
 }
 
-int	fork_all_children(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids)
+int	fork_all_children(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
+		char *last_arg)
 {
 	int	i;
 
@@ -78,6 +79,7 @@ int	fork_all_children(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids)
 			return (i);
 		if (pids[i] == 0)
 		{
+			free(last_arg);
 			free(pids);
 			set_signal_default();
 			run_in_child(minishell, pipeline, i);
@@ -87,7 +89,8 @@ int	fork_all_children(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids)
 	return (i);
 }
 
-void	child_process(t_minishell *minishell, t_pipeline *pipeline)
+void	child_process(t_minishell *minishell, t_pipeline *pipeline,
+		char *last_arg)
 {
 	t_status	status;
 	pid_t		*pids;
@@ -111,7 +114,7 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline)
 		minishell->last_status = error_parent(pipeline, "malloc", ERR_MALLOC);
 		return ;
 	}
-	fork_pos = fork_all_children(minishell, pipeline, pids);
+	fork_pos = fork_all_children(minishell, pipeline, pids, last_arg);
 	if (fork_pos != pipeline->n)
 	{
 		wait_child(minishell, pipeline, pids, fork_pos);

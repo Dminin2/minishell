@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/16 01:52:23 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/03 01:23:01 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,59 @@ void	redir_out(t_redir *redir, t_redir_err *err)
 	close(fd);
 }
 
-void	redir_heredoc(t_redir *redir, t_redir_err *err)
+void	expand_heredoc_and_replace_fd(t_minishell *minishell, t_redir *redir,
+		t_redir_err *err)
 {
+	t_status	status;
+	int			tmp_fd;
+	char		*tmp_fname;
+
+	status = create_hd_filename(&tmp_fname);
+	if (status != SUCCESS)
+	{
+		err->redir_err = NULL;
+		err->status = status;
+		return ;
+	}
+	tmp_fd = open(tmp_fname, O_CREAT | O_EXCL | O_WRONLY | O_CLOEXEC, 0600);
+	if (tmp_fd < 0)
+	{
+		err->redir_err = NULL;
+		err->status = ERR_HD_FILE;
+		free(tmp_fname);
+		return ;
+	}
+	status = expand_heredoc(minishell, redir->fd_hd, tmp_fd);
+	close(redir->fd_hd);
+	redir->fd_hd = -1;
+	close(tmp_fd);
+	if (status != SUCCESS)
+	{
+		unlink(tmp_fname);
+		free(tmp_fname);
+		err->redir_err = NULL;
+		err->status = status;
+		return ;
+	}
+	redir->fd_hd = open(tmp_fname, O_RDONLY | O_CLOEXEC);
+	unlink(tmp_fname);
+	free(tmp_fname);
+	if (redir->fd_hd < 0)
+	{
+		err->redir_err = NULL;
+		err->status = ERR_HD_FILE;
+		return ;
+	}
+}
+
+void	redir_heredoc(t_minishell *minishell, t_redir *redir, t_redir_err *err)
+{
+	if (!redir->delimiter_is_quoted)
+	{
+		expand_heredoc_and_replace_fd(minishell, redir, err);
+		if (err->status != SUCCESS)
+			return ;
+	}
 	if (dup2(redir->fd_hd, STDIN_FILENO) < 0)
 	{
 		close(redir->fd_hd);
@@ -96,7 +147,6 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 	int		is_quoted;
 
 #ifdef DEBUG
-	t_list	*head;
 	head = redir_lst;
 #endif
 	while (redir_lst)
@@ -105,7 +155,7 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 		redir = redir_lst->content;
 		if (redir->type != R_HEREDOC)
 		{
-			new_value = expand_filename(minishell, redir->value, &is_quoted);
+			new_value = expand_string(minishell, redir->value, &is_quoted);
 			if (!new_value)
 			{
 				err->status = ERR_MALLOC;
@@ -126,7 +176,7 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 		else if (redir->type == R_OUT)
 			redir_out(redir, err);
 		else if (redir->type == R_HEREDOC)
-			redir_heredoc(redir, err);
+			redir_heredoc(minishell, redir, err);
 		else
 			redir_append(redir, err);
 		if (err->status != SUCCESS)

@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/31 15:25:00 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/04 15:27:00 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ void	handle_redir_err(t_minishell *minishell, t_pipeline *pipeline,
 		exit_error(minishell, pipeline, "dup", ERR_DUP);
 	else if (err.status == ERR_AMB_REDIR)
 		exit_error(minishell, pipeline, err.redir_err->value, ERR_AMB_REDIR);
+	else if (err.status == ERR_HD_FILE)
+		exit_error(minishell, pipeline, HD_FILE_ERR, ERR_HD_FILE);
+	else if (err.status == ERR_MALLOC)
+		exit_error(minishell, pipeline, "malloc", ERR_MALLOC);
 }
 
 void	handle_execve_error(t_minishell *minishell, t_pipeline *pipeline,
@@ -79,10 +83,15 @@ void	run_in_child(t_minishell *minishell, t_pipeline *pipeline, int pos)
 	if (err.status != SUCCESS)
 		handle_redir_err(minishell, pipeline, err);
 	type = scan_command_type(cmd);
+	status = set_underscore_for_invocation(minishell, cmd, type);
+	if (status != SUCCESS)
+		exit_error(minishell, pipeline, "malloc", ERR_MALLOC);
 	if (type != EXTERNAL && type != NO_CMD)
 	{
 		execute_builtin(minishell, cmd, type, pipeline->n);
 		free_pipeline(pipeline);
+		ft_lstclear(&(minishell->env_lst), free_env_wrapper);
+		free(minishell->cwd);
 		exit(minishell->last_status);
 	}
 	else if (type == NO_CMD)
