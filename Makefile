@@ -43,6 +43,7 @@ SRCS_EXPANDER = $(EXPANDER_DIR)/expand.c \
 	$(EXPANDER_DIR)/expand_utils.c \
 	$(EXPANDER_DIR)/free_pipeline.c
 SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
+	$(REDIRECTION_DIR)/redirect_file.c \
 	$(REDIRECTION_DIR)/heredoc.c \
 	$(REDIRECTION_DIR)/heredoc_file.c \
 	$(REDIRECTION_DIR)/expand_delimiter.c \
