@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:33:02 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 15:09:50 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 17:58:34 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct s_pipeline
 }			t_pipeline;
 
 t_pipeline	*expand(t_minishell *minishell, t_pipeline_ir *pipeline_ir);
+
+t_status	expand_heredoc(t_minishell *minishell, int old_fd, int new_fd);
 
 char		*expand_delimiter(char *old, int *is_quoted);
 
