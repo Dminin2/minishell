@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 10:54:45 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:04:37 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	minishell_init(t_minishell *minishell, char **envp)
 	minishell->last_status = 0;
 	minishell->env_lst = env_init(minishell, envp);
 	if (!minishell->env_lst)
-		exit(1);
+		exit(2);
 	rl_outstream = stderr;
 #ifdef DEBUG
 	g_fd = open("playground/log", O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC,
@@ -93,7 +93,7 @@ void	minishell_cleanup(t_minishell *minishell)
 	rl_clear_history();
 	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
 	free(minishell->cwd);
-  if (!isatty(STDIN_FILENO))
+	if (!isatty(STDIN_FILENO))
 		get_next_line(-1);
 #ifdef DEBUG
 	close(g_fd);
