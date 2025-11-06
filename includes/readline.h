@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 17:17:56 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 22:50:35 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 11:00:20 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_input
 	int		is_eof;
 }			t_input;
 
-t_status	get_command_line(t_minishell *minishell, t_input *input);
+t_input		*get_command_line(t_minishell *minishell);
+void		free_input(t_input *input);
 
 #endif

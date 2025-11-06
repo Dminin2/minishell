@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:50:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 13:05:34 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/07 00:02:25 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,38 @@ static t_status	read_interactive_input(t_minishell *minishell, t_input *input)
 	return (SUCCESS);
 }
 
-t_status	get_command_line(t_minishell *minishell, t_input *input)
+static t_input	*handle_malloc_error(t_minishell *minishell)
+{
+	print_error_msg("malloc", ERR_MALLOC);
+	minishell->last_status = 2;
+	minishell->should_exit = 1;
+	return (NULL);
+}
+
+t_input	*get_command_line(t_minishell *minishell)
 {
 	t_status	status;
+	t_input		*input;
 
+	input = ft_calloc(1, sizeof(t_input));
+	if (!input)
+		return (handle_malloc_error(minishell));
 	if (isatty(STDIN_FILENO))
 		status = read_interactive_input(minishell, input);
 	else
 		status = gnl_and_remove_new_line(input);
 	if (status != SUCCESS)
 	{
-		print_error_msg("malloc", status);
-		minishell->last_status = 2;
-		minishell->should_exit = 1;
+		free_input(input);
+		return (handle_malloc_error(minishell));
 	}
-	return (status);
+	else if (!input->line)
+	{
+		free_input(input);
+		minishell->should_exit = 1;
+		if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
+			ft_dprintf_buf(STDERR_FILENO, "exit\n");
+		return (NULL);
+	}
+	return (input);
 }

@@ -45,26 +45,21 @@ void	reader_loop(t_minishell *minishell)
 	t_list			*token_lst;
 	t_pipeline_ir	*pipeline_ir;
 	t_pipeline		*pipeline;
-	t_input			input;
+	t_input			*input;
 
 	while (!minishell->should_exit)
 	{
 #ifdef DEBUG
 		print_status(minishell->last_status, g_fd);
 #endif
-		if (get_command_line(minishell, &input) != SUCCESS)
+		input = get_command_line(minishell);
+		if (!input)
 			continue ;
-		if (!(input.line))
-		{
-			if (isatty(STDIN_FILENO) && isatty(STDERR_FILENO))
-				ft_dprintf_buf(STDERR_FILENO, "exit\n");
-			break ;
-		}
 #ifdef DEBUG
-		print_input(&input, g_fd);
+		print_input(input, g_fd);
 #endif
-		token_lst = tokenize(minishell, &input);
-		free(input.line);
+		token_lst = tokenize(minishell, input);
+		free_input(input);
 		if (!token_lst)
 			continue ;
 #ifdef DEBUG
