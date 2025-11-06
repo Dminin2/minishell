@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 14:40:59 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/05 20:20:32 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:12:32 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,6 @@ void	error_parent(t_minishell *minishell, t_pipeline *pipeline,
 	print_error_msg(context, status);
 	free_pipeline(pipeline);
 	minishell->last_status = get_exit_status(status);
+	if (status == ERR_MALLOC)
+		minishell->should_exit = 1;
 }
