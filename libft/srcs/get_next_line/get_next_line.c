@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:05:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/01 18:41:21 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:23:06 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*get_next_line(int fd)
 	static char	*save[GNL_FD_MAX];
 
 	if (fd < 0 || fd >= GNL_FD_MAX)
-		return (NULL);
+		return (save_cleanup(save));
 	if (BUFFER_SIZE <= 0)
 		return (free_save(&save[fd]));
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));

@@ -87,7 +87,7 @@ char	*build_absolute_path(t_minishell *minishell, char *arg)
 		cwd = getcwd(NULL, 0);
 		if (!cwd)
 		{
-			ft_dprintf(STDERR_FILENO, "chdir: %s: %s\n", GETCWD_ERR,
+			ft_dprintf_buf(STDERR_FILENO, "chdir: %s: %s\n", GETCWD_ERR,
 				strerror(errno));
 			return (ft_strdup(arg));
 		}

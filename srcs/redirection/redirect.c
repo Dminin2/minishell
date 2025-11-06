@@ -184,7 +184,7 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 		redir_lst = redir_lst->next;
 	}
 #ifdef DEBUG
-	ft_dprintf(g_fd, "=== after expand ===\n");
+	ft_dprintf_buf(g_fd, "=== after expand ===\n");
 	print_redir_lst(head, g_fd);
 #endif
 }

@@ -20,8 +20,8 @@ static void	print_escape_value(char *str)
 	while (str[i])
 	{
 		if (str[i] == '\"' || str[i] == '`' || str[i] == '$' || str[i] == '\\')
-			ft_printf("\\");
-		ft_printf("%c", str[i]);
+			ft_dprintf_buf(STDOUT_FILENO, "\\");
+		ft_dprintf_buf(STDOUT_FILENO, "%c", str[i]);
 		i++;
 	}
 }
@@ -40,14 +40,14 @@ static void	print_no_args(t_list **env_array, size_t env_count)
 			i++;
 			continue ;
 		}
-		ft_printf("declare -x %s", env->key);
+		ft_dprintf_buf(STDOUT_FILENO, "declare -x %s", env->key);
 		if (env->value)
 		{
-			ft_printf("=\"");
+			ft_dprintf_buf(STDOUT_FILENO, "=\"");
 			print_escape_value(env->value);
-			ft_printf("\"");
+			ft_dprintf_buf(STDOUT_FILENO, "\"");
 		}
-		ft_printf("\n");
+		ft_dprintf_buf(STDOUT_FILENO, "\n");
 		i++;
 	}
 }

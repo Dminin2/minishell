@@ -16,11 +16,11 @@ void	print_env_lst(t_list *env_lst, int fd)
 {
 	t_env	*env;
 
-	ft_dprintf(fd, "=== env_lst ===\n");
+	ft_dprintf_buf(fd, "=== env_lst ===\n");
 	while (env_lst)
 	{
 		env = env_lst->content;
-		ft_dprintf(fd, "%s=%s\n", env->key, env->value);
+		ft_dprintf_buf(fd, "%s=%s\n", env->key, env->value);
 		env_lst = env_lst->next;
 	}
 }
