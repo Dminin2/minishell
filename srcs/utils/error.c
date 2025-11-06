@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 14:40:59 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/06 18:36:21 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/07 00:12:22 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	error_cmd_ir_lst(t_minishell *minishell, t_list **lst, char *context,
 		minishell->should_exit = 1;
 }
 
-void	error_parent(t_minishell *minishell, t_pipeline *pipeline,
+void	error_pipeline(t_minishell *minishell, t_pipeline *pipeline,
 		char *context, t_status status)
 {
 	print_error_msg(context, status);

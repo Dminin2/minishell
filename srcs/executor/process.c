@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 20:25:54 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/07 00:12:22 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,18 +98,18 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline,
 
 	status = create_pipes(pipeline);
 	if (status != SUCCESS)
-		return (error_parent(minishell, pipeline, "malloc", ERR_MALLOC));
+		return (error_pipeline(minishell, pipeline, "malloc", ERR_MALLOC));
 	status = pipe_pipes(pipeline->pipes, pipeline->n - 1);
 	if (status != SUCCESS)
-		return (error_parent(minishell, pipeline, "pipe", ERR_PIPE));
+		return (error_pipeline(minishell, pipeline, "pipe", ERR_PIPE));
 	pids = ft_calloc(pipeline->n, sizeof(pid_t));
 	if (!pids)
-		return (error_parent(minishell, pipeline, "malloc", ERR_MALLOC));
+		return (error_pipeline(minishell, pipeline, "malloc", ERR_MALLOC));
 	fork_pos = fork_all_children(minishell, pipeline, pids, last_arg);
 	if (fork_pos != pipeline->n)
 	{
 		wait_child(minishell, pipeline, pids, fork_pos);
-		return (error_parent(minishell, pipeline, "fork", ERR_FORK));
+		return (error_pipeline(minishell, pipeline, "fork", ERR_FORK));
 	}
 	wait_child(minishell, pipeline, pids, pipeline->n);
 	free_pipeline(pipeline);
