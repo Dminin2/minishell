@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:12 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/31 12:18:01 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 10:52:53 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ t_status	handle_redir_value(t_token *tok, t_redir *redir)
 	return (SUCCESS);
 }
 
+static t_status	cleanup_redir_error(t_redir *redir, t_status status)
+{
+	free_redir(redir);
+	return (status);
+}
+
 t_status	get_redirection(t_list **tok_lst, t_cmd_ir *cmd_ir)
 {
 	t_redir		*redir;
@@ -46,31 +52,19 @@ t_status	get_redirection(t_list **tok_lst, t_cmd_ir *cmd_ir)
 	handle_redir_type((*tok_lst)->content, redir);
 	*tok_lst = (*tok_lst)->next;
 	if (!*tok_lst)
-	{
-		free(redir);
-		return (ERR_SYNTAX);
-	}
+		return (cleanup_redir_error(redir, ERR_SYNTAX));
 	status = handle_redir_value((*tok_lst)->content, redir);
 	if (status != SUCCESS)
-	{
-		free(redir);
-		return (status);
-	}
+		return (cleanup_redir_error(redir, status));
 	if (redir->type == R_HEREDOC)
 	{
 		status = read_heredoc(redir);
 		if (status != SUCCESS)
-		{
-			free_redir(redir);
-			return (status);
-		}
+			return (cleanup_redir_error(redir, status));
 	}
 	status = add_newlst(&(cmd_ir->redir_lst), (void *)redir);
 	if (status != SUCCESS)
-	{
-		free_redir(redir);
-		return (status);
-	}
+		return (cleanup_redir_error(redir, status));
 	*tok_lst = (*tok_lst)->next;
 	return (SUCCESS);
 }

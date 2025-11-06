@@ -3,20 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 12:21:58 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 10:43:57 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static char	*get_token_str(t_tok_types type)
+{
+	if (type == TK_REDIR_IN)
+		return ("<");
+	else if (type == TK_REDIR_OUT)
+		return (">");
+	else if (type == TK_HEREDOC)
+		return ("<<");
+	else if (type == TK_APPEND)
+		return (">>");
+	else
+		return ("|");
+}
+
 void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
 		t_status status)
 {
 	t_token	*tok;
-	char	*token_str;
 
 	if (status == ERR_MALLOC)
 		minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
@@ -31,17 +44,8 @@ void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
 						free_cmd_ir_wrapper);
 			else
 			{
-				if (tok->type == TK_REDIR_IN)
-					token_str = "<";
-				else if (tok->type == TK_REDIR_OUT)
-					token_str = ">";
-				else if (tok->type == TK_HEREDOC)
-					token_str = "<<";
-				else if (tok->type == TK_APPEND)
-					token_str = ">>";
-				else
-					token_str = "|";
-				minishell->last_status = error_lst(head, token_str, ERR_SYNTAX,
+				minishell->last_status = error_lst(head,
+						get_token_str(tok->type), ERR_SYNTAX,
 						free_cmd_ir_wrapper);
 			}
 		}
