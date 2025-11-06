@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/06 13:44:10 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 15:22:23 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		builtin_env(t_minishell *minishell);
 int		builtin_unset(t_minishell *minishell, char **args);
 int		builtin_exit(t_minishell *minishell, char **args, int cmd_count);
 
-int		return_error(t_minishell *minishell, char *msg, t_status status);
+void	set_set_builtin_malloc_error(t_minishell *minishell);
 
 int		handle_args(t_minishell *minishell, char **args);
 int		handle_no_args(t_minishell *minishell);
