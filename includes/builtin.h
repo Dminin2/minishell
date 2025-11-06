@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/31 14:27:54 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:44:10 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ int		builtin_env(t_minishell *minishell);
 int		builtin_unset(t_minishell *minishell, char **args);
 int		builtin_exit(t_minishell *minishell, char **args, int cmd_count);
 
-int		return_error(char *msg, t_status status);
+int		return_error(t_minishell *minishell, char *msg, t_status status);
 
 int		handle_args(t_minishell *minishell, char **args);
 int		handle_no_args(t_minishell *minishell);
 int		strtouc_and_validate(char *str, unsigned char *last_status);
 
-char	*get_arg_path(t_list *env_lst, char *arg);
-int		update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd);
+char	*get_arg_path(t_minishell *minishell, char *arg);
+int		update_pwd_env(t_minishell *minishell, char *old_pwd, char *new_pwd);
 char	*build_absolute_path(t_minishell *minishell, char *arg);
 
 #endif
