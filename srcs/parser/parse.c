@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 12:23:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 18:40:09 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/07 00:34:05 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,20 @@ t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 	{
 		cmd_ir = ft_calloc(1, sizeof(t_cmd_ir));
 		if (!cmd_ir)
-		{
-			error_cmd_ir_lst(minishell, &head, "malloc", ERR_MALLOC);
-			return (NULL);
-		}
+			return (handle_error(minishell, NULL, &head, ERR_MALLOC));
 		status = get_simple_command(&tok_lst, cmd_ir);
 		if (status != SUCCESS)
 		{
 			free_cmd_ir(cmd_ir);
-			handle_error(minishell, tok_lst, &head, status);
-			return (NULL);
+			return (handle_error(minishell, tok_lst, &head, status));
 		}
-		status = add_newlst(&head, (void *)cmd_ir);
-		if (status == ERR_MALLOC)
+		if (add_newlst(&head, (void *)cmd_ir) == ERR_MALLOC)
 		{
 			free_cmd_ir(cmd_ir);
-			error_cmd_ir_lst(minishell, &head, "malloc", ERR_MALLOC);
-			return (NULL);
+			return (handle_error(minishell, NULL, &head, ERR_MALLOC));
 		}
-		if (tok_lst)
-		{
-			status = skip_pipe(&tok_lst);
-			if (status == ERR_SYNTAX)
-			{
-				error_cmd_ir_lst(minishell, &head, "newline", ERR_SYNTAX);
-				return (NULL);
-			}
-		}
+		if (tok_lst && skip_pipe(&tok_lst) == ERR_SYNTAX)
+			return (handle_error(minishell, NULL, &head, ERR_SYNTAX));
 	}
 	return (head);
 }
