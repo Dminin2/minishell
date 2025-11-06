@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:14:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 11:59:30 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:38:08 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ static t_list	*handle_cmd_error(t_minishell *minishell, t_list **head,
 {
 	if (cmd)
 		free_cmd(cmd);
-	minishell->last_status = error_lst(*head, "malloc", ERR_MALLOC,
-			free_cmd_wrapper);
+	error_cmd_lst(minishell, head, "malloc", ERR_MALLOC);
 	return (NULL);
 }
 
@@ -95,7 +94,7 @@ t_pipeline	*expand(t_minishell *minishell, t_pipeline_ir *pipeline_ir)
 	pipeline = ft_calloc(1, sizeof(t_pipeline));
 	if (!pipeline)
 	{
-		minishell->last_status = error_lst(NULL, "malloc", ERR_MALLOC, NULL);
+		error_cmd_lst(minishell, NULL, "malloc", ERR_MALLOC);
 		return (NULL);
 	}
 	pipeline->cmd_lst = get_cmd_lst(minishell, pipeline_ir->cmd_ir_lst);

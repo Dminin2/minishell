@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 10:43:57 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:39:46 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,26 @@ static char	*get_token_str(t_tok_types type)
 		return ("|");
 }
 
-void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
+void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list **head,
 		t_status status)
 {
 	t_token	*tok;
 
 	if (status == ERR_MALLOC)
-		minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
-				free_cmd_ir_wrapper);
+		error_cmd_ir_lst(minishell, head, "malloc", ERR_MALLOC);
 	else if (status == ERR_SYNTAX)
 	{
 		if (tok_lst)
 		{
 			tok = tok_lst->content;
 			if (tok->value)
-				minishell->last_status = error_lst(head, tok->value, ERR_SYNTAX,
-						free_cmd_ir_wrapper);
+				error_cmd_ir_lst(minishell, head, tok->value, ERR_SYNTAX);
 			else
-			{
-				minishell->last_status = error_lst(head,
-						get_token_str(tok->type), ERR_SYNTAX,
-						free_cmd_ir_wrapper);
-			}
+				error_cmd_ir_lst(minishell, head, get_token_str(tok->type),
+					ERR_SYNTAX);
 		}
 		else
-			minishell->last_status = error_lst(head, "newline", ERR_SYNTAX,
-					free_cmd_ir_wrapper);
+			error_cmd_ir_lst(minishell, head, "newline", ERR_SYNTAX);
 		if (!isatty(STDIN_FILENO))
 		{
 			minishell->should_exit = 1;
@@ -59,11 +53,10 @@ void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
 		}
 	}
 	else if (status == ERR_HD_FILE)
-		minishell->last_status = error_lst(head, HD_FILE_ERR, status,
-				free_cmd_ir_wrapper);
+		error_cmd_ir_lst(minishell, head, HD_FILE_ERR, status);
 	else if (status == RCV_SIGINT)
 	{
-		ft_lstclear(&head, free_cmd_ir_wrapper);
+		ft_lstclear(head, free_cmd_ir_wrapper);
 		minishell->last_status = 130;
 		g_sig = 0;
 	}

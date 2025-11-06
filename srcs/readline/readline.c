@@ -82,7 +82,8 @@ static t_status	read_interactive_input(t_minishell *minishell, t_input *input)
 static t_input	*handle_malloc_error(t_minishell *minishell)
 {
 	print_error_msg("malloc", ERR_MALLOC);
-	minishell->last_status = 1;
+	minishell->last_status = 2;
+  minishell->should_exit = 1;
 	return (NULL);
 }
 

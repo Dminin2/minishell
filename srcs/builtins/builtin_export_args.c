@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 12:30:00 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/12 16:30:09 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 15:25:05 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,10 @@ int	handle_args(t_minishell *minishell, char **args)
 	{
 		status = handle_arg(minishell, args[i], &last_status);
 		if (status == ERR_MALLOC)
-			return (return_error("malloc", ERR_MALLOC));
+		{
+			set_builtin_malloc_error(minishell);
+			return (2);
+		}
 		i++;
 	}
 	return (last_status);
