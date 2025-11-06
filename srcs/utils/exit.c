@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 14:42:57 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:03:15 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	get_exit_status(t_status status)
 {
 	if (status == SUCCESS)
 		return (0);
-	else if (status == ERR_SYNTAX || status == ERR_QUOTE)
+	else if (status == ERR_SYNTAX || status == ERR_QUOTE
+		|| status == ERR_MALLOC)
 		return (2);
 	else if (status == ERR_CMD_NOT_FOUND || status == ERR_NOT_VALID_PATH
 		|| status == ERR_ENOENT)
