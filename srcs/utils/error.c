@@ -20,14 +20,8 @@ void	print_error_msg(char *context, t_status status)
 		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context, VLD_ERR);
 	else if (status == ERR_SYNTAX)
 		ft_dprintf_buf(STDERR_FILENO, "minishell: %s `%s'\n", SYN_ERR, context);
-	else if (status == ERR_FILE)
-		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
-			strerror(errno));
 	else if (status == ERR_AMB_REDIR)
-		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", AMB_ERR, context);
-	else if (status == ERR_ERRNO)
-		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
-			strerror(errno));
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context, AMB_ERR);
 	else if (status == ERR_ISDIR)
 		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: Is a directory\n",
 			context);
@@ -61,12 +55,12 @@ void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
 			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", cmd,
 				strerror(errno));
 		else if (error == BLTERR_NO_SET_HOME)
-			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", HOME_ERR, cmd);
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", cmd, HOME_ERR);
 		else if (error == BLTERR_NO_SET_OLDPWD)
-			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", OLDPWD_ERR,
-				cmd);
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", cmd,
+				OLDPWD_ERR);
 		else if (error == BLTERR_MANY_ARG)
-			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", ARG_ERR, cmd);
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", cmd, ARG_ERR);
 	}
 }
 

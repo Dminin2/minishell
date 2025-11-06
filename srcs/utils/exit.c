@@ -35,6 +35,8 @@ void	exit_error(t_minishell *minishell, t_pipeline *pipeline, char *context,
 	free_pipeline(pipeline);
 	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
 	free(minishell->cwd);
+	if (!isatty(STDIN_FILENO))
+		get_next_line(-1);
 	exit(get_exit_status(status));
 }
 
@@ -43,5 +45,7 @@ void	exit_success(t_minishell *minishell, t_pipeline *pipeline)
 	free_pipeline(pipeline);
 	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
 	free(minishell->cwd);
+	if (!isatty(STDIN_FILENO))
+		get_next_line(-1);
 	exit(0);
 }
