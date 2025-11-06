@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/06 13:42:50 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 15:24:48 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ static int	update_cwd(t_minishell *minishell, char *target_path,
 	free(minishell->cwd);
 	minishell->cwd = ft_strdup(target_path);
 	if (!minishell->cwd)
-		return (return_error(minishell, "malloc", ERR_MALLOC));
+	{
+		set_builtin_malloc_error(minishell);
+		return (2);
+	}
 	return (0);
 }
 
@@ -42,7 +45,7 @@ static int	update_cwd_and_env(t_minishell *minishell, char *target_path,
 	char	*old_pwd;
 
 	if (update_cwd(minishell, target_path, normalize_failed) != 0)
-		return (1);
+		return (2);
 	old_pwd = search_env(minishell->env_lst, "PWD");
 	if (!old_pwd)
 		old_pwd = "";
@@ -75,16 +78,14 @@ static char	*build_target_path(t_minishell *minishell, char *arg,
 	abs_path = build_absolute_path(minishell, arg);
 	if (!abs_path)
 	{
-		print_error_msg("malloc", ERR_MALLOC);
-		minishell->should_exit = 1;
+		set_builtin_malloc_error(minishell);
 		return (NULL);
 	}
 	*normalize_status = normalize_path(abs_path, &target_path);
 	free(abs_path);
 	if (*normalize_status == NORMALIZE_MALLOC_ERROR)
 	{
-		print_error_msg("malloc", ERR_MALLOC);
-		minishell->should_exit = 1;
+		set_builtin_malloc_error(minishell);
 		return (NULL);
 	}
 	return (target_path);
@@ -104,12 +105,12 @@ int	builtin_cd(t_minishell *minishell, char **args)
 	}
 	arg = get_arg_path(minishell, args[1]);
 	if (!arg)
-		return (1);
+		return (minishell->last_status);
 	target_path = build_target_path(minishell, arg, &normalize_status);
 	if (!target_path)
 	{
 		free(arg);
-		return (1);
+		return (minishell->last_status);
 	}
 	exit_status = perform_chdir(minishell, target_path, arg, normalize_status);
 	free(target_path);
