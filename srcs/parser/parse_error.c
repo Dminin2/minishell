@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 20:01:20 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 10:43:57 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
 		t_status status)
 {
 	t_token	*tok;
-	char	*token_str;
 
 	if (status == ERR_MALLOC)
 		minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
@@ -45,8 +44,8 @@ void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
 						free_cmd_ir_wrapper);
 			else
 			{
-				token_str = get_token_str(tok->type);
-				minishell->last_status = error_lst(head, token_str, ERR_SYNTAX,
+				minishell->last_status = error_lst(head,
+						get_token_str(tok->type), ERR_SYNTAX,
 						free_cmd_ir_wrapper);
 			}
 		}
