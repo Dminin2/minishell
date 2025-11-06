@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:12:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/14 14:45:14 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 23:57:23 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,29 @@
 
 t_command_type	scan_command_type(t_cmd *cmd)
 {
-	t_command_type	type;
-
 	if (cmd->args)
 	{
 		if (!cmd->args[0])
-			type = NO_CMD;
+			return (NO_CMD);
 		else if (ft_strncmp(cmd->args[0], "echo", 5) == 0)
-			type = BLT_ECHO;
+			return (BLT_ECHO);
 		else if (ft_strncmp(cmd->args[0], "cd", 3) == 0)
-			type = BLT_CD;
+			return (BLT_CD);
 		else if (ft_strncmp(cmd->args[0], "pwd", 4) == 0)
-			type = BLT_PWD;
+			return (BLT_PWD);
 		else if (ft_strncmp(cmd->args[0], "export", 7) == 0)
-			type = BLT_EXPORT;
+			return (BLT_EXPORT);
 		else if (ft_strncmp(cmd->args[0], "unset", 6) == 0)
-			type = BLT_UNSET;
+			return (BLT_UNSET);
 		else if (ft_strncmp(cmd->args[0], "env", 4) == 0)
-			type = BLT_ENV;
+			return (BLT_ENV);
 		else if (ft_strncmp(cmd->args[0], "exit", 5) == 0)
-			type = BLT_EXIT;
+			return (BLT_EXIT);
 		else
-			type = EXTERNAL;
+			return (EXTERNAL);
 	}
 	else
-		type = NO_CMD;
-	return (type);
+		return (NO_CMD);
 }
 
 void	execute_builtin(t_minishell *minishell, t_cmd *cmd, t_command_type type,
