@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 11:33:17 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:43:05 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+
+# define CMD_ERR "command not found"
+# define VLD_ERR "No such file or directory"
+# define SYN_ERR "syntax error near unexpected token"
+# define HD_ERR "warning: here-document delimited by end-of-file (wanted"
+# define QUOTE_ERR "syntax error: unexpected"
+# define AMB_ERR "ambiguous redirect"
+
+# define HOME_ERR "HOME not set"
+# define OLDPWD_ERR "OLDPWD not set"
+# define ARG_ERR "too many arguments"
 
 typedef enum e_normalize_status
 {
@@ -58,9 +69,13 @@ void						exit_error(t_minishell *minishell,
 								t_status status);
 void						exit_success(t_minishell *minishell,
 								t_pipeline *pipeline);
+int							get_exit_status(t_status status);
 
 int							is_pwd_valid(char *pwd_path);
 
 t_normalize_status			normalize_path(const char *abs_path, char **result);
+
+void						remove_last_component(char *path);
+char						*append_component(char *path, char *component);
 
 #endif
