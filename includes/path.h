@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 13:30:36 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/06 13:36:12 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:49:15 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "common.h"
 # include <stdlib.h>
+# include <sys/stat.h>
 
 typedef enum e_normalize_status
 {
@@ -27,5 +28,8 @@ t_normalize_status	normalize_path(const char *abs_path, char **result);
 
 void				remove_last_component(char *path);
 char				*append_component(char *path, char *component);
+
+char				**split_path_value(char *path_value);
+t_status			resolve_command_path(t_cmd *cmd, t_list *env_lst);
 
 #endif
