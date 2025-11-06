@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 16:17:40 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:39:46 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*get_token_str(t_tok_types type)
 		return ("|");
 }
 
-void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
+void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list **head,
 		t_status status)
 {
 	t_token	*tok;
@@ -56,7 +56,7 @@ void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
 		error_cmd_ir_lst(minishell, head, HD_FILE_ERR, status);
 	else if (status == RCV_SIGINT)
 	{
-		ft_lstclear(&head, free_cmd_ir_wrapper);
+		ft_lstclear(head, free_cmd_ir_wrapper);
 		minishell->last_status = 130;
 		g_sig = 0;
 	}

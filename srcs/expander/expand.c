@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 22:14:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 16:12:32 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:38:08 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_list	*handle_cmd_error(t_minishell *minishell, t_list **head,
 {
 	if (cmd)
 		free_cmd(cmd);
-	error_cmd_lst(minishell, *head, "malloc", ERR_MALLOC);
+	error_cmd_lst(minishell, head, "malloc", ERR_MALLOC);
 	return (NULL);
 }
 
