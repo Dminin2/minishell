@@ -83,6 +83,18 @@ void	reader_loop(t_minishell *minishell)
 	}
 }
 
+void	minishell_cleanup(t_minishell *minishell)
+{
+	rl_clear_history();
+	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
+	free(minishell->cwd);
+  if (!isatty(STDIN_FILENO))
+		get_next_line(-1);
+#ifdef DEBUG
+	close(g_fd);
+#endif
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	minishell;
@@ -91,11 +103,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	minishell_init(&minishell, envp);
 	reader_loop(&minishell);
-	rl_clear_history();
-	ft_lstclear(&(minishell.env_lst), free_env_wrapper);
-	free(minishell.cwd);
-#ifdef DEBUG
-	close(g_fd);
-#endif
+	minishell_cleanup(&minishell);
 	return (minishell.last_status);
 }

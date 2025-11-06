@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:32:03 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/31 16:11:01 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 14:03:02 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	has_slash(char *cmd)
+static int	has_slash(char *cmd)
 {
 	int	i;
 
@@ -26,24 +26,32 @@ int	has_slash(char *cmd)
 	return (0);
 }
 
-t_status	search_path(t_cmd *cmd, char **paths)
+static char	*create_full_path(t_cmd *cmd, char *path)
+{
+	char	*tmp;
+	char	*full_path;
+
+	if (path[0] != '\0')
+		tmp = ft_strjoin(path, "/");
+	else
+		tmp = ft_strjoin("./", path);
+	if (!tmp)
+		return (NULL);
+	full_path = ft_strjoin(tmp, cmd->args[0]);
+	free(tmp);
+	return (full_path);
+}
+
+static t_status	search_path(t_cmd *cmd, char **paths)
 {
 	char		*full_path;
-	char		*tmp;
 	int			i;
 	struct stat	st_buf;
 
 	i = 0;
 	while (paths[i])
 	{
-		if (paths[i][0] != '\0')
-			tmp = ft_strjoin(paths[i], "/");
-		else
-			tmp = ft_strjoin("./", paths[i]);
-		if (!tmp)
-			return (ERR_MALLOC);
-		full_path = ft_strjoin(tmp, cmd->args[0]);
-		free(tmp);
+		full_path = create_full_path(cmd, paths[i]);
 		if (!full_path)
 			return (ERR_MALLOC);
 		if (stat(full_path, &st_buf) != -1 && !S_ISDIR(st_buf.st_mode))

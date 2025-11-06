@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:38:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 17:03:34 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 20:22:12 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,13 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	type = scan_command_type(cmd);
 	last_arg = get_last_arg(cmd, type);
 	if (!last_arg)
-	{
-		minishell->last_status = error_parent(pipeline, "malloc", ERR_MALLOC);
-		return ;
-	}
+		return (error_parent(minishell, pipeline, "malloc", ERR_MALLOC));
 	if (type != NO_CMD)
 		status = set_underscore_for_invocation(minishell, cmd, type);
 	if (status == ERR_MALLOC)
 	{
 		free(last_arg);
-		minishell->last_status = error_parent(pipeline, "malloc", ERR_MALLOC);
-		return ;
+		return (error_parent(minishell, pipeline, "malloc", ERR_MALLOC));
 	}
 	if (type == EXTERNAL)
 		child_process(minishell, pipeline, last_arg);
@@ -92,5 +88,5 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	status = process_env_key_value(&(minishell->env_lst), "_", last_arg);
 	free(last_arg);
 	if (status == ERR_MALLOC)
-		minishell->last_status = error_parent(NULL, "malloc", ERR_MALLOC);
+		error_parent(minishell, NULL, "malloc", ERR_MALLOC);
 }
