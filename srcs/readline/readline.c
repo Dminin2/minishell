@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:50:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 21:50:20 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/05 16:18:33 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,36 +54,37 @@ static char	*create_prompt(t_minishell *minishell)
 	return (prompt);
 }
 
+static t_status	read_interactive_input(t_minishell *minishell, t_input *input)
+{
+	char	*prompt;
+
+	if (isatty(STDERR_FILENO))
+	{
+		prompt = create_prompt(minishell);
+		if (!prompt)
+			return (ERR_MALLOC);
+		input->line = readline(prompt);
+		free(prompt);
+	}
+	else
+		input->line = readline("");
+	if (g_sig == SIGINT)
+	{
+		minishell->last_status = 130;
+		g_sig = 0;
+	}
+	if (input->line && input->line[0])
+		handle_working_history(input->line);
+	input->is_eof = 0;
+	return (SUCCESS);
+}
+
 t_status	get_command_line(t_minishell *minishell, t_input *input)
 {
 	t_status	status;
-	char		*prompt;
 
 	if (isatty(STDIN_FILENO))
-	{
-		if (isatty(STDERR_FILENO))
-		{
-			prompt = create_prompt(minishell);
-			if (!prompt)
-			{
-				print_error_msg("malloc", ERR_MALLOC);
-				return (ERR_MALLOC);
-			}
-			input->line = readline(prompt);
-			free(prompt);
-		}
-		else
-			input->line = readline("");
-		if (g_sig == SIGINT)
-		{
-			minishell->last_status = 130;
-			g_sig = 0;
-		}
-		if (input->line && input->line[0])
-			handle_working_history(input->line);
-		input->is_eof = 0;
-		status = SUCCESS;
-	}
+		status = read_interactive_input(minishell, input);
 	else
 		status = gnl_and_remove_new_line(input);
 	if (status != SUCCESS)
