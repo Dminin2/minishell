@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:32:59 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 12:21:36 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:06:28 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ static t_list	*handle_lexer_error(t_minishell *minishell, t_input *input,
 		t_status status, t_list **head)
 {
 	if (status == ERR_MALLOC)
+	{
 		minishell->last_status = error_lst(*head, "malloc", ERR_MALLOC,
 				free_token_wrapper);
+		minishell->should_exit = 1;
+	}
 	else
 	{
 		if (input->is_eof)

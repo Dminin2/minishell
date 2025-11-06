@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 10:43:57 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:08:47 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ void	handle_error(t_minishell *minishell, t_list *tok_lst, t_list *head,
 	t_token	*tok;
 
 	if (status == ERR_MALLOC)
+	{
 		minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
 				free_cmd_ir_wrapper);
+		minishell->should_exit = 1;
+	}
 	else if (status == ERR_SYNTAX)
 	{
 		if (tok_lst)

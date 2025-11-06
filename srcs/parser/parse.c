@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 12:23:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 23:20:13 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:08:20 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 		{
 			minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
 					free_cmd_ir_wrapper);
+			minishell->should_exit = 1;
 			return (NULL);
 		}
 		status = get_simple_command(&tok_lst, cmd_ir);
@@ -50,6 +51,7 @@ t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 			free_cmd_ir(cmd_ir);
 			minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
 					free_cmd_ir_wrapper);
+			minishell->should_exit = 1;
 			return (NULL);
 		}
 		if (tok_lst)
@@ -87,6 +89,7 @@ t_pipeline_ir	*parse(t_minishell *minishell, t_list *tok_lst)
 	if (!pipeline_ir)
 	{
 		minishell->last_status = error_lst(NULL, "malloc", ERR_MALLOC, NULL);
+		minishell->should_exit = 1;
 		return (NULL);
 	}
 	pipeline_ir->cmd_ir_lst = get_cmd_ir_lst(minishell, tok_lst);

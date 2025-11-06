@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_no_args.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 12:30:00 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/12 16:24:18 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:34:55 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	handle_no_args(t_minishell *minishell)
 		return (0);
 	env_array = ft_calloc(env_count, sizeof(t_list *));
 	if (!env_array)
-		return (return_error("malloc", ERR_MALLOC));
+		return (return_error(minishell, "malloc", ERR_MALLOC));
 	current_node = minishell->env_lst;
 	i = 0;
 	while (current_node)

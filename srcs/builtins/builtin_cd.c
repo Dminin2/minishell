@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:29:19 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/31 14:28:31 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:42:50 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	update_cwd(t_minishell *minishell, char *target_path,
 	free(minishell->cwd);
 	minishell->cwd = ft_strdup(target_path);
 	if (!minishell->cwd)
-		return (return_error("malloc", ERR_MALLOC));
+		return (return_error(minishell, "malloc", ERR_MALLOC));
 	return (0);
 }
 
@@ -46,7 +46,7 @@ static int	update_cwd_and_env(t_minishell *minishell, char *target_path,
 	old_pwd = search_env(minishell->env_lst, "PWD");
 	if (!old_pwd)
 		old_pwd = "";
-	return (update_pwd_env(&minishell->env_lst, old_pwd, minishell->cwd));
+	return (update_pwd_env(minishell, old_pwd, minishell->cwd));
 }
 
 static int	perform_chdir(t_minishell *minishell, char *target_path, char *arg,
@@ -76,6 +76,7 @@ static char	*build_target_path(t_minishell *minishell, char *arg,
 	if (!abs_path)
 	{
 		print_error_msg("malloc", ERR_MALLOC);
+		minishell->should_exit = 1;
 		return (NULL);
 	}
 	*normalize_status = normalize_path(abs_path, &target_path);
@@ -83,6 +84,7 @@ static char	*build_target_path(t_minishell *minishell, char *arg,
 	if (*normalize_status == NORMALIZE_MALLOC_ERROR)
 	{
 		print_error_msg("malloc", ERR_MALLOC);
+		minishell->should_exit = 1;
 		return (NULL);
 	}
 	return (target_path);
@@ -100,7 +102,7 @@ int	builtin_cd(t_minishell *minishell, char **args)
 		print_error_msg_builtin("cd", NULL, BLTERR_MANY_ARG);
 		return (1);
 	}
-	arg = get_arg_path(minishell->env_lst, args[1]);
+	arg = get_arg_path(minishell, args[1]);
 	if (!arg)
 		return (1);
 	target_path = build_target_path(minishell, arg, &normalize_status);

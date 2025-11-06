@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:50:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 16:18:33 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:05:34 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ t_status	get_command_line(t_minishell *minishell, t_input *input)
 	if (status != SUCCESS)
 	{
 		print_error_msg("malloc", status);
-		minishell->last_status = 1;
+		minishell->last_status = 2;
+		minishell->should_exit = 1;
 	}
 	return (status);
 }
