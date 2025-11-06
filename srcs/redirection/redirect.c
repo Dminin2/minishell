@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 18:44:15 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 11:02:38 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,19 @@ void	redir_heredoc(t_minishell *minishell, t_redir *redir, t_redir_err *err)
 }
 
 static void	expand_redir_value(t_minishell *minishell, t_redir *redir,
-		int *is_quoted, t_redir_err *err)
+		t_redir_err *err)
 {
 	char	*new_value;
+	int		is_quoted;
 
-	new_value = expand_string(minishell, redir->value, is_quoted);
+	is_quoted = 0;
+	new_value = expand_string(minishell, redir->value, &is_quoted);
 	if (!new_value)
 	{
 		err->status = ERR_MALLOC;
 		return ;
 	}
-	if (!*is_quoted && new_value[0] == '\0')
+	if (!is_quoted && new_value[0] == '\0')
 	{
 		free(new_value);
 		err->redir_err = redir;
@@ -97,18 +99,16 @@ static void	expand_redir_value(t_minishell *minishell, t_redir *redir,
 void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 {
 	t_redir	*redir;
-	int		is_quoted;
 
 #ifdef DEBUG
 	head = redir_lst;
 #endif
 	while (redir_lst)
 	{
-		is_quoted = 0;
 		redir = redir_lst->content;
 		if (redir->type != R_HEREDOC)
 		{
-			expand_redir_value(minishell, redir, &is_quoted, err);
+			expand_redir_value(minishell, redir, err);
 			if (err->status != SUCCESS)
 				break ;
 		}
