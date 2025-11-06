@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:50:28 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 11:12:52 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:44:43 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static t_status	read_interactive_input(t_minishell *minishell, t_input *input)
 	return (SUCCESS);
 }
 
-t_input	*handle_malloc_error(t_minishell *minishell)
+static t_input	*handle_malloc_error(t_minishell *minishell)
 {
 	print_error_msg("malloc", ERR_MALLOC);
 	minishell->last_status = 1;
