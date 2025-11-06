@@ -93,6 +93,8 @@ void	minishell_cleanup(t_minishell *minishell)
 	rl_clear_history();
 	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
 	free(minishell->cwd);
+  if (!isatty(STDIN_FILENO))
+		get_next_line(-1);
 #ifdef DEBUG
 	close(g_fd);
 #endif
