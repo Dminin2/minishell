@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:38:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/07 00:43:06 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/07 01:00:20 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	if (status == ERR_MALLOC)
 	{
 		free(last_arg);
-		return (error_parent(minishell, pipeline, "malloc", ERR_MALLOC));
+		return (error_pipeline(minishell, pipeline, "malloc", ERR_MALLOC));
 	}
 	if (type == EXTERNAL)
 		child_process(minishell, pipeline, last_arg);
@@ -94,5 +94,5 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	status = process_env_key_value(&(minishell->env_lst), "_", last_arg);
 	free(last_arg);
 	if (status == ERR_MALLOC)
-		error_parent(minishell, NULL, "malloc", ERR_MALLOC);
+		error_pipeline(minishell, NULL, "malloc", ERR_MALLOC);
 }

@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_utils.c                                    :+:      :+:    :+:   */
+/*   free_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/08 18:41:27 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/06 15:25:22 by hmaruyam         ###   ########.fr       */
+/*   Created: 2025/11/06 10:59:05 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/11/06 10:59:51 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_builtin_malloc_error(t_minishell *minishell)
+void	free_input(t_input *input)
 {
-	print_error_msg("malloc", ERR_MALLOC);
-	minishell->should_exit = 1;
-	minishell->last_status = 2;
+	if (input)
+	{
+		if (input->line)
+			free(input->line);
+		free(input);
+	}
 }

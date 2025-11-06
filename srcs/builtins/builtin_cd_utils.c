@@ -6,57 +6,61 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 22:00:00 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/10/31 14:28:44 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 15:23:06 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	update_pwd_env(t_list **env_lst, char *old_pwd, char *new_pwd)
+int	update_pwd_env(t_minishell *minishell, char *old_pwd, char *new_pwd)
 {
 	t_status	status;
 
-	status = process_env_key_value(env_lst, "OLDPWD", old_pwd);
+	status = process_env_key_value(&(minishell->env_lst), "OLDPWD", old_pwd);
 	if (status == ERR_MALLOC)
-		return (return_error("malloc", ERR_MALLOC));
-	status = process_env_key_value(env_lst, "PWD", new_pwd);
+	{
+		set_builtin_malloc_error(minishell);
+		return (2);
+	}
+	status = process_env_key_value(&(minishell->env_lst), "PWD", new_pwd);
 	if (status == ERR_MALLOC)
-		return (return_error("malloc", ERR_MALLOC));
+	{
+		set_builtin_malloc_error(minishell);
+		return (2);
+	}
 	return (0);
 }
 
-static char	*cd_env_error(t_blt_error error)
+static char	*cd_env_error(t_minishell *minishell, t_blt_error error)
 {
 	print_error_msg_builtin("cd", NULL, error);
+	minishell->last_status = 1;
 	return (NULL);
 }
 
-char	*get_arg_path(t_list *env_lst, char *arg)
+char	*get_arg_path(t_minishell *minishell, char *arg)
 {
 	char	*env_value;
 	char	*result;
 
 	if (!arg)
 	{
-		env_value = search_env(env_lst, "HOME");
+		env_value = search_env(minishell->env_lst, "HOME");
 		if (!env_value)
-			return (cd_env_error(BLTERR_NO_SET_HOME));
+			return (cd_env_error(minishell, BLTERR_NO_SET_HOME));
 		result = ft_strdup(env_value);
 	}
 	else if (ft_strncmp(arg, "-", 2) == 0)
 	{
-		env_value = search_env(env_lst, "OLDPWD");
+		env_value = search_env(minishell->env_lst, "OLDPWD");
 		if (!env_value)
-			return (cd_env_error(BLTERR_NO_SET_OLDPWD));
+			return (cd_env_error(minishell, BLTERR_NO_SET_OLDPWD));
 		result = ft_strdup(env_value);
 	}
 	else
 		result = ft_strdup(arg);
 	if (!result)
-	{
-		print_error_msg("malloc", ERR_MALLOC);
-		return (NULL);
-	}
+		set_builtin_malloc_error(minishell);
 	return (result);
 }
 

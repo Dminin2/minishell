@@ -16,7 +16,8 @@ SIGNALS_DIR = signals
 PATH_DIR = path
 
 SRCS_MAIN = main.c
-SRCS_READLINE = $(READLINE_DIR)/readline.c
+SRCS_READLINE = $(READLINE_DIR)/readline.c \
+	$(READLINE_DIR)/free_input.c
 SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/child_process.c \
 	$(EXECUTOR_DIR)/child_error.c \
@@ -59,6 +60,7 @@ SRCS_ENV = $(ENV_DIR)/env_init.c \
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c \
 	$(UTILS_DIR)/error.c \
+	$(UTILS_DIR)/error_msg.c \
 	$(UTILS_DIR)/close.c \
 	$(UTILS_DIR)/list.c \
 	$(UTILS_DIR)/string.c \

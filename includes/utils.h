@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 13:35:06 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/07 00:12:22 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,15 @@ t_status					gnl_and_remove_new_line(t_input *input);
 void						print_error_msg(char *context, t_status status);
 void						print_error_msg_builtin(char *cmd, char *context,
 								t_blt_error error);
-int							error_lst(t_list *lst, char *context,
-								t_status status, void (*del)(void *));
-void						error_parent(t_minishell *minishell,
+void						error_env_lst(t_minishell *minishell, t_list **lst,
+								char *context, t_status status);
+void						error_cmd_lst(t_minishell *minishell, t_list **lst,
+								char *context, t_status status);
+void						error_token_lst(t_minishell *minishell,
+								t_list **lst, char *context, t_status status);
+void						error_cmd_ir_lst(t_minishell *minishell,
+								t_list **lst, char *context, t_status status);
+void						error_pipeline(t_minishell *minishell,
 								t_pipeline *pipeline, char *context,
 								t_status status);
 void						exit_error(t_minishell *minishell,
