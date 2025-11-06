@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:45:13 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/31 15:56:57 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:09:48 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void	exit_error(t_minishell *minishell, t_pipeline *pipeline, char *context,
 	free_pipeline(pipeline);
 	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
 	free(minishell->cwd);
+	if (!isatty(STDIN_FILENO))
+		get_next_line(-1);
 	exit(get_exit_status(status));
 }
 
@@ -121,5 +123,7 @@ void	exit_success(t_minishell *minishell, t_pipeline *pipeline)
 	free_pipeline(pipeline);
 	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
 	free(minishell->cwd);
+	if (!isatty(STDIN_FILENO))
+		get_next_line(-1);
 	exit(0);
 }

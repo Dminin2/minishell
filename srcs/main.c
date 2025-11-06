@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 23:31:25 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:08:49 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ int	main(int argc, char **argv, char **envp)
 	rl_clear_history();
 	ft_lstclear(&(minishell.env_lst), free_env_wrapper);
 	free(minishell.cwd);
+	if (!isatty(STDIN_FILENO))
+		get_next_line(-1);
 #ifdef DEBUG
 	close(g_fd);
 #endif

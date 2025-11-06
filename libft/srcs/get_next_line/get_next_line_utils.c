@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:06:54 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/01 09:27:37 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:44:55 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,18 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	res[i] = '\0';
 	free(s1);
 	return (res);
+}
+
+char	*save_cleanup(char **save)
+{
+	int	i;
+
+	i = 0;
+	while (save[i])
+	{
+		free(save[i]);
+		save[i] = NULL;
+		i++;
+	}
+	return (NULL);
 }
