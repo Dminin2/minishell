@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 12:33:02 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 15:09:50 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 11:33:33 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char		*expand_parameter(t_minishell *minishell, char *args, int *i);
 
 t_status	convert_list_to_array(t_list *args_lst, t_cmd *cmd);
 
-char		*ft_strjoin_and_free(char *s1, char *s2);
 int			is_to_expand(char c);
 char		*create_new_value(char *new_value, char *word);
 
