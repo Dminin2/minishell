@@ -58,12 +58,14 @@ SRCS_ENV = $(ENV_DIR)/env_init.c \
 	$(ENV_DIR)/env_operation.c
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c \
+	$(UTILS_DIR)/error.c \
 	$(UTILS_DIR)/close.c \
 	$(UTILS_DIR)/list.c \
 	$(UTILS_DIR)/string.c \
 	$(UTILS_DIR)/gnl.c \
 	$(UTILS_DIR)/pwd_utils.c \
-	$(UTILS_DIR)/normalize_path.c
+	$(UTILS_DIR)/normalize_path.c \
+	$(UTILS_DIR)/normalize_path_utils.c
 SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_echo.c \
 	$(BUILTINS_DIR)/builtin_cd.c \

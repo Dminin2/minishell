@@ -45,7 +45,6 @@ char		*expand_parameter(t_minishell *minishell, char *args, int *i);
 
 t_status	convert_list_to_array(t_list *args_lst, t_cmd *cmd);
 
-char		*ft_strjoin_and_free(char *s1, char *s2);
 int			is_to_expand(char c);
 char		*create_new_value(char *new_value, char *word);
 

@@ -14,7 +14,7 @@
 
 t_status	add_newlst(t_list **head, void *content)
 {
-	t_list *new;
+	t_list	*new;
 
 	new = ft_lstnew(content);
 	if (!new)
