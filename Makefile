@@ -13,14 +13,13 @@ ENV_DIR = env
 UTILS_DIR = utils
 BUILTINS_DIR = builtins
 SIGNALS_DIR = signals
+PATH_DIR = path
 
 SRCS_MAIN = main.c
 SRCS_READLINE = $(READLINE_DIR)/readline.c
 SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/process.c \
-	$(EXECUTOR_DIR)/path.c \
 	$(EXECUTOR_DIR)/pipe.c \
-	$(EXECUTOR_DIR)/path_utils.c \
 	$(EXECUTOR_DIR)/run_in_child.c \
 	$(EXECUTOR_DIR)/run_in_parent.c \
 	$(EXECUTOR_DIR)/execute_builtin.c \
@@ -43,9 +42,11 @@ SRCS_EXPANDER = $(EXPANDER_DIR)/expand.c \
 	$(EXPANDER_DIR)/expand_utils.c \
 	$(EXPANDER_DIR)/free_pipeline.c
 SRCS_REDIRECTION = $(REDIRECTION_DIR)/redirect.c \
+	$(REDIRECTION_DIR)/redirect_file.c \
 	$(REDIRECTION_DIR)/heredoc.c \
 	$(REDIRECTION_DIR)/heredoc_file.c \
-	$(REDIRECTION_DIR)/expand_delimiter.c
+	$(REDIRECTION_DIR)/expand_delimiter.c \
+	$(REDIRECTION_DIR)/expand_heredoc.c
 SRCS_ENV = $(ENV_DIR)/env_init.c \
   $(ENV_DIR)/env_init_utils.c \
 	$(ENV_DIR)/env_utils.c \
@@ -56,12 +57,12 @@ SRCS_ENV = $(ENV_DIR)/env_init.c \
 	$(ENV_DIR)/env_operation.c
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c \
+	$(UTILS_DIR)/error.c \
 	$(UTILS_DIR)/close.c \
 	$(UTILS_DIR)/list.c \
 	$(UTILS_DIR)/string.c \
 	$(UTILS_DIR)/gnl.c \
-	$(UTILS_DIR)/pwd_utils.c \
-	$(UTILS_DIR)/normalize_path.c
+	$(UTILS_DIR)/pwd_utils.c
 SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_echo.c \
 	$(BUILTINS_DIR)/builtin_cd.c \
@@ -76,7 +77,10 @@ SRCS_BUILTINS = $(BUILTINS_DIR)/builtin_pwd.c \
 	$(BUILTINS_DIR)/builtin_unset.c
 SRCS_SIGNALS = $(SIGNALS_DIR)/signal_setup.c \
   $(SIGNALS_DIR)/signal_modes.c
-
+SRCS_PATH = $(PATH_DIR)/normalize_path.c \
+	$(PATH_DIR)/normalize_path_utils.c \
+	$(PATH_DIR)/path.c \
+	$(PATH_DIR)/path_utils.c
 
 # debug用
 DEBUG_DIR = debug
@@ -101,7 +105,8 @@ $(SRCS_ENV) \
 $(SRCS_UTILS) \
 $(SRCS_DEBUG) \
 $(SRCS_BUILTINS) \
-$(SRCS_SIGNALS)
+$(SRCS_SIGNALS) \
+$(SRCS_PATH)
 
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
@@ -142,6 +147,7 @@ $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)/$(DEBUG_DIR)
 	@mkdir -p $(OBJS_DIR)/$(BUILTINS_DIR)
 	@mkdir -p $(OBJS_DIR)/$(SIGNALS_DIR)
+	@mkdir -p $(OBJS_DIR)/$(PATH_DIR)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJS_DIR)
 	@$(CC) $(CFLAGS) -I$(INCLUDES) -I$(LIBFT_INCLUDES) -c $< -o $@

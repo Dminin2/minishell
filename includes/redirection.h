@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:03:44 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 10:57:44 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 18:35:15 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ typedef struct s_redir_err
 void						redirect(t_minishell *minishell, t_list *redir_lst,
 								t_redir_err *err);
 t_status					create_hd_filename(char **fname_hd);
+
+void						redir_append(t_redir *redir, t_redir_err *err);
+void						redir_in(t_redir *redir, t_redir_err *err);
+void						redir_out(t_redir *redir, t_redir_err *err);
 
 t_status					read_heredoc(t_redir *redir);
 t_status					expand_heredoc(t_minishell *minishell, int old_fd,

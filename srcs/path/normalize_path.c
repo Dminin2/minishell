@@ -6,48 +6,35 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 23:57:34 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/04 12:39:57 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:31:46 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	remove_last_component(char *path)
+static char	*add_validated_component(char *old_path, char *component,
+		int *stat_failed)
 {
-	char	*last_slash;
+	char		*new_path;
+	struct stat	st;
 
-	if (ft_strcmp(path, "/") == 0)
-		return ;
-	last_slash = ft_strrchr(path, '/');
-	if (last_slash && last_slash != path)
-		*last_slash = '\0';
-	else if (last_slash == path)
-		*(last_slash + 1) = '\0';
-}
-
-static char	*append_component(char *path, char *component)
-{
-	char	*tmp;
-	char	*result;
-
-	if (ft_strlen(path) > 1)
+	new_path = append_component(old_path, component);
+	free(old_path);
+	if (!new_path)
+		return (NULL);
+	if (stat(new_path, &st) != 0 || !S_ISDIR(st.st_mode))
 	{
-		tmp = ft_strjoin(path, "/");
-		if (!tmp)
-			return (NULL);
-		result = ft_strjoin(tmp, component);
-		free(tmp);
-		return (result);
+		*stat_failed = 1;
+		free(new_path);
+		return (NULL);
 	}
-	return (ft_strjoin(path, component));
+	return (new_path);
 }
 
 static char	*reconstruct_path(char **split_path, int *stat_failed)
 {
-	char		*path;
-	char		*tmp;
-	int			i;
-	struct stat	st;
+	char	*path;
+	int		i;
 
 	path = ft_strdup("/");
 	if (!path)
@@ -64,21 +51,29 @@ static char	*reconstruct_path(char **split_path, int *stat_failed)
 			remove_last_component(path);
 		else
 		{
-			tmp = append_component(path, split_path[i]);
-			free(path);
-			if (!tmp)
+			path = add_validated_component(path, split_path[i], stat_failed);
+			if (!path)
 				return (NULL);
-			path = tmp;
-			if (stat(path, &st) != 0 || !S_ISDIR(st.st_mode))
-			{
-				*stat_failed = 1;
-				free(path);
-				return (NULL);
-			}
 		}
 		i++;
 	}
 	return (path);
+}
+
+static t_normalize_status	handle_relative_path(const char *abs_path,
+		char **result)
+{
+	if (!abs_path || abs_path[0] == '\0')
+	{
+		*result = ft_strdup(".");
+		if (!*result)
+			return (NORMALIZE_MALLOC_ERROR);
+		return (NORMALIZE_SUCCESS);
+	}
+	*result = ft_strdup(abs_path);
+	if (!*result)
+		return (NORMALIZE_MALLOC_ERROR);
+	return (NORMALIZE_SUCCESS);
 }
 
 t_normalize_status	normalize_path(const char *abs_path, char **result)
@@ -87,20 +82,8 @@ t_normalize_status	normalize_path(const char *abs_path, char **result)
 	int		stat_failed;
 
 	*result = NULL;
-	if (!abs_path || abs_path[0] == '\0')
-	{
-		*result = ft_strdup(".");
-		if (!*result)
-			return (NORMALIZE_MALLOC_ERROR);
-		return (NORMALIZE_SUCCESS);
-	}
-	if (abs_path[0] != '/')
-	{
-		*result = ft_strdup(abs_path);
-		if (!*result)
-			return (NORMALIZE_MALLOC_ERROR);
-		return (NORMALIZE_SUCCESS);
-	}
+	if (!abs_path || abs_path[0] == '\0' || abs_path[0] != '/')
+		return (handle_relative_path(abs_path, result));
 	split_path = ft_split(abs_path, '/');
 	if (!split_path)
 		return (NORMALIZE_MALLOC_ERROR);

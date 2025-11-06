@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 17:02:36 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:49:11 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,6 @@ void			execute_builtin(t_minishell *minishell, t_cmd *cmd,
 
 t_status		set_underscore_for_invocation(t_minishell *minishell,
 					t_cmd *cmd, t_command_type type);
-
-char			**split_path_value(char *path_value);
-t_status		resolve_command_path(t_cmd *cmd, t_list *env_lst);
 
 t_status		create_pipes(t_pipeline *pipeline);
 t_status		pipe_pipes(int **pipes, int n);

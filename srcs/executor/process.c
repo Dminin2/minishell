@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/04 17:03:15 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 20:25:54 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,28 +98,18 @@ void	child_process(t_minishell *minishell, t_pipeline *pipeline,
 
 	status = create_pipes(pipeline);
 	if (status != SUCCESS)
-	{
-		minishell->last_status = error_parent(pipeline, "malloc", ERR_MALLOC);
-		return ;
-	}
+		return (error_parent(minishell, pipeline, "malloc", ERR_MALLOC));
 	status = pipe_pipes(pipeline->pipes, pipeline->n - 1);
 	if (status != SUCCESS)
-	{
-		minishell->last_status = error_parent(pipeline, "pipe", ERR_PIPE);
-		return ;
-	}
+		return (error_parent(minishell, pipeline, "pipe", ERR_PIPE));
 	pids = ft_calloc(pipeline->n, sizeof(pid_t));
 	if (!pids)
-	{
-		minishell->last_status = error_parent(pipeline, "malloc", ERR_MALLOC);
-		return ;
-	}
+		return (error_parent(minishell, pipeline, "malloc", ERR_MALLOC));
 	fork_pos = fork_all_children(minishell, pipeline, pids, last_arg);
 	if (fork_pos != pipeline->n)
 	{
 		wait_child(minishell, pipeline, pids, fork_pos);
-		minishell->last_status = error_parent(pipeline, "fork", ERR_FORK);
-		return ;
+		return (error_parent(minishell, pipeline, "fork", ERR_FORK));
 	}
 	wait_child(minishell, pipeline, pids, pipeline->n);
 	free_pipeline(pipeline);
