@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 20:21:06 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:35:06 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,6 @@
 # define HOME_ERR "HOME not set"
 # define OLDPWD_ERR "OLDPWD not set"
 # define ARG_ERR "too many arguments"
-
-typedef enum e_normalize_status
-{
-	NORMALIZE_SUCCESS,
-	NORMALIZE_STAT_FAILED,
-	NORMALIZE_MALLOC_ERROR
-}							t_normalize_status;
 
 typedef enum e_blt_error	t_blt_error;
 typedef struct s_pipeline	t_pipeline;
@@ -73,10 +66,5 @@ void						exit_success(t_minishell *minishell,
 int							get_exit_status(t_status status);
 
 int							is_pwd_valid(char *pwd_path);
-
-t_normalize_status			normalize_path(const char *abs_path, char **result);
-
-void						remove_last_component(char *path);
-char						*append_component(char *path, char *component);
 
 #endif

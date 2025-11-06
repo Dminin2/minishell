@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   path.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 13:31:41 by hmaruyam         ###   ########.fr       */
+/*   Created: 2025/11/06 13:30:36 by hmaruyam          #+#    #+#             */
+/*   Updated: 2025/11/06 13:36:12 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PATH_H
+# define PATH_H
 
-# include "builtin.h"
 # include "common.h"
-# include "debug.h"
-# include "env.h"
-# include "execute.h"
-# include "expander.h"
-# include "lexer.h"
-# include "libft.h"
-# include "parser.h"
-# include "path.h"
-# include "readline.h"
-# include "redirection.h"
-# include "signals.h"
-# include "utils.h"
+# include <stdlib.h>
 
-# ifdef DEBUG
-extern int	g_fd;
-# endif
+typedef enum e_normalize_status
+{
+	NORMALIZE_SUCCESS,
+	NORMALIZE_STAT_FAILED,
+	NORMALIZE_MALLOC_ERROR
+}					t_normalize_status;
+
+t_normalize_status	normalize_path(const char *abs_path, char **result);
+
+void				remove_last_component(char *path);
+char				*append_component(char *path, char *component);
 
 #endif
