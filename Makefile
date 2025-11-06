@@ -19,6 +19,7 @@ SRCS_MAIN = main.c
 SRCS_READLINE = $(READLINE_DIR)/readline.c
 SRCS_EXECUTOR = $(EXECUTOR_DIR)/execute.c \
 	$(EXECUTOR_DIR)/child_process.c \
+	$(EXECUTOR_DIR)/child_error.c \
 	$(EXECUTOR_DIR)/pipe.c \
 	$(EXECUTOR_DIR)/run_in_child.c \
 	$(EXECUTOR_DIR)/run_in_parent.c \
