@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:38:36 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 20:22:12 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/07 00:43:06 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,21 @@ static char	*get_last_arg(t_cmd *cmd, t_command_type type)
 	return (last_arg);
 }
 
+static t_status	prepare_execution(t_minishell *minishell, t_command_type *type,
+		t_cmd *cmd, char **last_arg)
+{
+	t_status	status;
+
+	status = SUCCESS;
+	*type = scan_command_type(cmd);
+	*last_arg = get_last_arg(cmd, *type);
+	if (!*last_arg)
+		return (ERR_MALLOC);
+	if (*type != NO_CMD)
+		status = set_underscore_for_invocation(minishell, cmd, *type);
+	return (status);
+}
+
 void	execute(t_minishell *minishell, t_pipeline *pipeline)
 {
 	t_command_type	type;
@@ -63,19 +78,10 @@ void	execute(t_minishell *minishell, t_pipeline *pipeline)
 	t_status		status;
 	char			*last_arg;
 
-	status = SUCCESS;
 	if (pipeline->n != 1)
-	{
-		child_process(minishell, pipeline, NULL);
-		return ;
-	}
+		return (child_process(minishell, pipeline, NULL));
 	cmd = pipeline->cmd_lst->content;
-	type = scan_command_type(cmd);
-	last_arg = get_last_arg(cmd, type);
-	if (!last_arg)
-		return (error_parent(minishell, pipeline, "malloc", ERR_MALLOC));
-	if (type != NO_CMD)
-		status = set_underscore_for_invocation(minishell, cmd, type);
+	status = prepare_execution(minishell, &type, cmd, &last_arg);
 	if (status == ERR_MALLOC)
 	{
 		free(last_arg);
