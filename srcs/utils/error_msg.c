@@ -1,0 +1,65 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_msg.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/06 16:06:32 by aomatsud          #+#    #+#             */
+/*   Updated: 2025/11/06 16:06:52 by aomatsud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+void	print_error_msg(char *context, t_status status)
+{
+	if (status == ERR_CMD_NOT_FOUND)
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context, CMD_ERR);
+	else if (status == ERR_NOT_VALID_PATH)
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context, VLD_ERR);
+	else if (status == ERR_SYNTAX)
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s `%s'\n", SYN_ERR, context);
+	else if (status == ERR_AMB_REDIR)
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context, AMB_ERR);
+	else if (status == ERR_ISDIR)
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: Is a directory\n",
+			context);
+	else if (status == ERR_HEREDOC)
+		ft_dprintf_buf(STDERR_FILENO, "\nminishell: %s `%s')\n", HD_ERR,
+			context);
+	else if (status == ERR_QUOTE)
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s %s\n", QUOTE_ERR, context);
+	else
+		ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", context,
+			strerror(errno));
+}
+
+void	print_error_msg_builtin(char *cmd, char *context, t_blt_error error)
+{
+	if (context)
+	{
+		if (error == BLTERR_ERRNO)
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s: %s\n", cmd,
+				context, strerror(errno));
+		else if (error == BLTERR_NUM_ARG)
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s: %s\n", cmd,
+				context, NUMARG_ERR);
+		else if (error == BLTERR_NOT_VALID)
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: `%s': %s\n", cmd,
+				context, ENV_ERR);
+	}
+	else
+	{
+		if (error == BLTERR_ERRNO)
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", cmd,
+				strerror(errno));
+		else if (error == BLTERR_NO_SET_HOME)
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", cmd, HOME_ERR);
+		else if (error == BLTERR_NO_SET_OLDPWD)
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", cmd,
+				OLDPWD_ERR);
+		else if (error == BLTERR_MANY_ARG)
+			ft_dprintf_buf(STDERR_FILENO, "minishell: %s: %s\n", cmd, ARG_ERR);
+	}
+}

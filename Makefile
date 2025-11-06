@@ -58,6 +58,7 @@ SRCS_ENV = $(ENV_DIR)/env_init.c \
 SRCS_UTILS = $(UTILS_DIR)/free.c \
 	$(UTILS_DIR)/exit.c \
 	$(UTILS_DIR)/error.c \
+	$(UTILS_DIR)/error_msg.c \
 	$(UTILS_DIR)/close.c \
 	$(UTILS_DIR)/list.c \
 	$(UTILS_DIR)/string.c \

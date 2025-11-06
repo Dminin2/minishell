@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 12:23:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/15 23:20:13 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:40:09 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,21 @@ t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 		cmd_ir = ft_calloc(1, sizeof(t_cmd_ir));
 		if (!cmd_ir)
 		{
-			minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
-					free_cmd_ir_wrapper);
+			error_cmd_ir_lst(minishell, &head, "malloc", ERR_MALLOC);
 			return (NULL);
 		}
 		status = get_simple_command(&tok_lst, cmd_ir);
 		if (status != SUCCESS)
 		{
 			free_cmd_ir(cmd_ir);
-			handle_error(minishell, tok_lst, head, status);
+			handle_error(minishell, tok_lst, &head, status);
 			return (NULL);
 		}
 		status = add_newlst(&head, (void *)cmd_ir);
 		if (status == ERR_MALLOC)
 		{
 			free_cmd_ir(cmd_ir);
-			minishell->last_status = error_lst(head, "malloc", ERR_MALLOC,
-					free_cmd_ir_wrapper);
+			error_cmd_ir_lst(minishell, &head, "malloc", ERR_MALLOC);
 			return (NULL);
 		}
 		if (tok_lst)
@@ -57,8 +55,7 @@ t_list	*get_cmd_ir_lst(t_minishell *minishell, t_list *tok_lst)
 			status = skip_pipe(&tok_lst);
 			if (status == ERR_SYNTAX)
 			{
-				minishell->last_status = error_lst(head, "newline", ERR_SYNTAX,
-						free_cmd_ir_wrapper);
+				error_cmd_ir_lst(minishell, &head, "newline", ERR_SYNTAX);
 				return (NULL);
 			}
 		}
@@ -86,7 +83,7 @@ t_pipeline_ir	*parse(t_minishell *minishell, t_list *tok_lst)
 	pipeline_ir = ft_calloc(1, sizeof(t_pipeline_ir));
 	if (!pipeline_ir)
 	{
-		minishell->last_status = error_lst(NULL, "malloc", ERR_MALLOC, NULL);
+		error_cmd_ir_lst(minishell, NULL, "malloc", ERR_MALLOC);
 		return (NULL);
 	}
 	pipeline_ir->cmd_ir_lst = get_cmd_ir_lst(minishell, tok_lst);
