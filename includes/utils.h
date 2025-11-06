@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/30 21:51:11 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/06 11:33:17 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_status					add_newlst(t_list **head, void *content);
 int							ft_strcmp(char *s1, char *s2);
 int							is_blank(char c);
 int							is_whitespace(char c);
+char						*ft_strjoin_and_free(char *s1, char *s2);
 
 t_status					gnl_and_remove_new_line(t_input *input);
 
