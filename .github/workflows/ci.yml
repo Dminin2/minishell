@@ -28,6 +28,7 @@ jobs:
                   --trace-children=yes \
                   --track-fds=yes \
                   --error-exitcode=$valgrind_error_code \
+                  --suppressions=./readline.supp \
                   ./minishell
               status=$?
               if [ $status -eq $valgrind_error_code ]; then
