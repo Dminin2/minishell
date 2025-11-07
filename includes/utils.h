@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 16:18:32 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 18:35:35 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/07 00:12:22 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void						error_token_lst(t_minishell *minishell,
 								t_list **lst, char *context, t_status status);
 void						error_cmd_ir_lst(t_minishell *minishell,
 								t_list **lst, char *context, t_status status);
-void						error_parent(t_minishell *minishell,
+void						error_pipeline(t_minishell *minishell,
 								t_pipeline *pipeline, char *context,
 								t_status status);
 void						exit_error(t_minishell *minishell,
