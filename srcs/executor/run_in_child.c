@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:08:34 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/07 01:08:10 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:44:34 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static void	execute_builtin_in_child(t_minishell *minishell, t_cmd *cmd,
 	free_pipeline(pipeline);
 	ft_lstclear(&(minishell->env_lst), free_env_wrapper);
 	free(minishell->cwd);
+	if (!isatty(STDIN_FILENO))
+		get_next_line(-1);
 	exit(minishell->last_status);
 }
 
