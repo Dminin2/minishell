@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 20:04:37 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/10/03 20:05:11 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/05 20:15:57 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_pipes(int **pipes, int n)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (pipes)

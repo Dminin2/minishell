@@ -5,49 +5,90 @@
 "    "
 '    '
 ""''
+./minishell
 "
+./minishell
 '
+
 no_such_cmd
 /no_such_path
+
 /bin/ls -l
 ls -l
 ls -z
 /bin/echo hello
+
 pwd
 pwd arguments
 pwd -option
+
 cat < playground/in > playground/out >> playground/out
 cat < no_such_file
+unset A
 cat < $A
 cat < "$A"
 cat < '$A'
 cat << $A
+$USER
+$A
 cat << "$A"
+$USER
+$A
 cat << '$A'
+$USER
+$A
 cat < ""
 cat < ''
 cat << ""
+$USER
+
 cat << ''
+$USER
+
 pwd | cat -e
 echo "hello world" | cat
+
+./minishell
 ls |
+./minishell
 ls >
+./minishell
 ls >>
+./minishell
 ls >>> playground/in
+./minishell
 ls || ls
+./minishell
 | ls
+./minishell
 |
+./minishell
 <
+./minishell
 <<
+./minishell
 >
+./minishell
 >>
+./minishell
 >>>
+./minishell
 ||
+./minishell
+>|
+./minishell
+> |
+./minishell
+> "" |
+./minishell
 "unclosed quote
+./minishell
 'unclosed quote
-> no_such_file
+
+< no_such_file
 < playground/in
 < playground/in | < playground/in
+
 echo hello world
 echo
 echo -n hello world
@@ -58,8 +99,116 @@ echo hello -n
 echo hello "" world
 echo -n -nnn
 echo -n -
+echo $PATH
+echo $?
+echo $SHLVL
+echo $_
+
+./minishell
 cd
 cd ./
 cd ../
 cd -
 cd /
+exit
+
+./minishell
+exit
+./minishell
+exit 1
+./minishell
+exit 9223372036854775807
+./minishell
+exit 9223372036854775808
+./minishell
+exit -9223372036854775808
+./minishell
+exit -9223372036854775809
+./minishell
+exit A
+exit | exit
+exit 1 | exit A
+exit 1 2
+
+./minishell
+mkdir testdir
+cd testdir
+rm -rf ../testdir
+unset PWD
+../minishell
+echo $PWD
+pwd
+cd ../
+exit
+cd ../
+exit
+
+./minishell
+unset HOME
+cd
+exit
+
+./minishell
+unset OLDPWD
+cd -
+exit
+
+cd playground/ls/../../
+chmod 000 playground/a
+cd playground/a
+pwd
+cd -
+chmod 644 playground/a
+
+./minishell
+unset PATH
+ls
+/bin/ls
+export PATH=""
+ls
+/bin/ls
+export PATH=":"
+cd playground
+ls
+export PATH=":/bin"
+ls
+export PATH="/bin:"
+exit
+
+env
+env a
+env -option
+env | grep "_="
+env | cat -e
+
+export
+export =value
+export key = value
+export ?=value
+export 1a=value
+export a1=value
+export key=value=value
+export novalue
+env | grep "novalue"
+export | grep "novalue"
+
+unset A
+unset =
+unset ?
+
+./minishell
+export SHLVL=1000
+./minishell
+echo $SHLVL
+exit
+exit
+
+ls | sleep 5
+
+./minishell < /dev/urandom
+./minishell < playground/in
+./minishell > playground/out
+ls
+exit
+
+echo $SHLVL

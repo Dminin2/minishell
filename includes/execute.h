@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 01:11:45 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 13:49:11 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/07 00:57:41 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ typedef enum e_command_type
 
 void			execute(t_minishell *minishell, t_pipeline *pipeline);
 
-void			handle_redir_err(t_minishell *minishell, t_pipeline *pipeline,
+void			handle_redir_error(t_minishell *minishell, t_pipeline *pipeline,
 					t_redir_err err);
+void			handle_execve_error(t_minishell *minishell,
+					t_pipeline *pipeline, t_cmd *cmd);
 void			run_in_child(t_minishell *minishell, t_pipeline *pipeline,
 					int pos);
 void			child_process(t_minishell *minishell, t_pipeline *pipeline,

@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 11:07:29 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 12:20:54 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/08 00:30:24 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 32
+#  define BUFFER_SIZE 1
 # endif
 
 # define GNL_FD_MAX 4096
