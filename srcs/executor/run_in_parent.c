@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_in_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 00:35:35 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 20:25:46 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/07 11:00:20 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	handle_redir_err_in_parent(t_minishell *minishell, t_pipeline *pipeline,
 	else if (err.status == ERR_MALLOC)
 		error_parent(minishell, pipeline, "malloc", ERR_MALLOC);
 	else if (err.status == ERR_HD_FILE)
-		error_parent(minishell, pipeline, HD_FILE_ERR, ERR_HD_FILE);
+		error_parent(minishell, pipeline, TMP_FD_ERR, ERR_HD_FILE);
 }
 
 t_status	save_fd_and_redirect(t_minishell *minishell, t_pipeline *pipeline,
