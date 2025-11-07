@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 00:13:14 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/07 00:57:44 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:50:27 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handle_redir_error(t_minishell *minishell, t_pipeline *pipeline,
 	else if (err.status == ERR_AMB_REDIR)
 		exit_error(minishell, pipeline, err.redir_err->value, ERR_AMB_REDIR);
 	else if (err.status == ERR_HD_FILE)
-		exit_error(minishell, pipeline, HD_FILE_ERR, ERR_HD_FILE);
+		exit_error(minishell, pipeline, TMP_FD_ERR, ERR_HD_FILE);
 	else if (err.status == ERR_MALLOC)
 		exit_error(minishell, pipeline, "malloc", ERR_MALLOC);
 }
