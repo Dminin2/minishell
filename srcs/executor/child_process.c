@@ -6,7 +6,7 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/07 01:00:37 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:45:39 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static void	finalize_wait(t_minishell *minishell, int err, int status)
 	}
 	else
 		minishell->last_status = 1;
-	if (isatty(STDIN_FILENO))
-		set_signal_interactive();
 }
 
 static int	wait_all_pids(int pids_count, int *status, pid_t *pids)
@@ -74,6 +72,8 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
 		set_signal_wait_child();
 	err = wait_all_pids(pids_count, &status, pids);
 	finalize_wait(minishell, err, status);
+	if (isatty(STDIN_FILENO))
+		set_signal_interactive();
 	free(pids);
 }
 
