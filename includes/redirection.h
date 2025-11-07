@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:03:44 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/05 18:35:15 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:57:09 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>
 typedef struct s_pipeline	t_pipeline;
 
-# define HD_FILE_ERR "cannot create temp file for here-document"
+# define TMP_FD_ERR "cannot create temp file for here-document"
 
 typedef enum e_redir_type
 {

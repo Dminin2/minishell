@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:23:01 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/07 00:30:10 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:57:02 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*handle_error(t_minishell *minishell, t_list *tok_lst, t_list **head,
 	else if (status == ERR_SYNTAX)
 		handle_syntax_error(minishell, tok_lst, head);
 	else if (status == ERR_HD_FILE)
-		error_cmd_ir_lst(minishell, head, HD_FILE_ERR, ERR_HD_FILE);
+		error_cmd_ir_lst(minishell, head, TMP_FD_ERR, ERR_HD_FILE);
 	else if (status == RCV_SIGINT)
 	{
 		ft_lstclear(head, free_cmd_ir_wrapper);
