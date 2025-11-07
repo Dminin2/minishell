@@ -1,49 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process.c                                          :+:      :+:    :+:   */
+/*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:42:22 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/07 00:12:22 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:45:39 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
-		int pids_count)
+static void	finalize_wait(t_minishell *minishell, int err, int status)
 {
-	int	i;
-	int	status;
-	int	err;
-
-	i = 0;
-	err = 0;
-	close_pipes(pipeline->pipes, pipeline->n - 1);
-	close_heredoc(pipeline->cmd_lst);
-	if (pids_count <= 0)
-	{
-		free(pids);
-		return ;
-	}
-	if (isatty(STDIN_FILENO))
-		set_signal_wait_child();
-	while (i < pids_count)
-	{
-		if (waitpid(pids[i], &status, 0) == -1)
-		{
-			if (errno == EINTR)
-				continue ;
-			print_error_msg("waitpid", ERR_WAITPID);
-			if (i == pids_count - 1)
-				err = 1;
-		}
-		else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-			g_sig = SIGINT;
-		i++;
-	}
 	if (g_sig == SIGINT)
 	{
 		ft_dprintf_buf(STDERR_FILENO, "\n");
@@ -61,6 +31,47 @@ void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
 	}
 	else
 		minishell->last_status = 1;
+}
+
+static int	wait_all_pids(int pids_count, int *status, pid_t *pids)
+{
+	int	i;
+
+	i = 0;
+	while (i < pids_count)
+	{
+		if (waitpid(pids[i], status, 0) == -1)
+		{
+			if (errno == EINTR)
+				continue ;
+			print_error_msg("waitpid", ERR_WAITPID);
+			if (i == pids_count - 1)
+				return (1);
+		}
+		else if (WIFSIGNALED(*status) && WTERMSIG(*status) == SIGINT)
+			g_sig = SIGINT;
+		i++;
+	}
+	return (0);
+}
+
+void	wait_child(t_minishell *minishell, t_pipeline *pipeline, pid_t *pids,
+		int pids_count)
+{
+	int	status;
+	int	err;
+
+	close_pipes(pipeline->pipes, pipeline->n - 1);
+	close_heredoc(pipeline->cmd_lst);
+	if (pids_count <= 0)
+	{
+		free(pids);
+		return ;
+	}
+	if (isatty(STDIN_FILENO))
+		set_signal_wait_child();
+	err = wait_all_pids(pids_count, &status, pids);
+	finalize_wait(minishell, err, status);
 	if (isatty(STDIN_FILENO))
 		set_signal_interactive();
 	free(pids);
