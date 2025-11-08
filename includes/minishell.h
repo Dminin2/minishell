@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 16:54:21 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 13:31:41 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:48:36 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "builtin.h"
 # include "common.h"
-# include "debug.h"
 # include "env.h"
 # include "execute.h"
 # include "expander.h"
@@ -27,9 +26,5 @@
 # include "redirection.h"
 # include "signals.h"
 # include "utils.h"
-
-# ifdef DEBUG
-extern int	g_fd;
-# endif
 
 #endif

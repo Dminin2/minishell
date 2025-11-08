@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:28:07 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/06 11:02:38 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:47:35 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,6 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 {
 	t_redir	*redir;
 
-#ifdef DEBUG
-	head = redir_lst;
-#endif
 	while (redir_lst)
 	{
 		redir = redir_lst->content;
@@ -124,8 +121,4 @@ void	redirect(t_minishell *minishell, t_list *redir_lst, t_redir_err *err)
 			break ;
 		redir_lst = redir_lst->next;
 	}
-#ifdef DEBUG
-	ft_dprintf_buf(g_fd, "=== after expand ===\n");
-	print_redir_lst(head, g_fd);
-#endif
 }
