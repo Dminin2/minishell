@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:54:35 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/06 15:29:22 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/08 14:55:46 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define GETCWD_ERR "error retrieving current directory: getcwd: cannot access parent directories"
+# define GETCWD_ERR "error retrieving current directory: \
+getcwd: cannot access parent directories"
 # define NUMARG_ERR "numeric argument required"
 # define ENV_ERR "not a valid identifier"
 
