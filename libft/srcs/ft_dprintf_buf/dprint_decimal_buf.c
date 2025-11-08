@@ -6,13 +6,13 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 10:32:59 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/08 01:02:01 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:15:22 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_dprintf_buf.h"
 
-static void	buf_putnbr_unsigned(t_dprintf_buf *buffer, unsigned int n)
+void	buf_putnbr_unsigned(t_dprintf_buf *buffer, unsigned int n)
 {
 	char	c;
 

@@ -6,21 +6,11 @@
 /*   By: hmaruyam <hmaruyam@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 01:00:51 by hmaruyam          #+#    #+#             */
-/*   Updated: 2025/11/08 01:01:59 by hmaruyam         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:15:19 by hmaruyam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_dprintf_buf.h"
-
-static void	buf_putnbr_unsigned(t_dprintf_buf *buffer, unsigned int n)
-{
-	char	c;
-
-	if (n >= 10)
-		buf_putnbr_unsigned(buffer, n / 10);
-	c = n % 10 + '0';
-	buf_putchar(buffer, c);
-}
 
 static int	count_unsigned_decimal_digits(unsigned int n)
 {
