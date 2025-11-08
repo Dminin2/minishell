@@ -85,18 +85,6 @@ SRCS_PATH = $(PATH_DIR)/normalize_path.c \
 	$(PATH_DIR)/path.c \
 	$(PATH_DIR)/path_utils.c
 
-# debug用
-DEBUG_DIR = debug
-SRCS_DEBUG = $(DEBUG_DIR)/print_pipeline_ir.c \
-	$(DEBUG_DIR)/print_token.c \
-	$(DEBUG_DIR)/print_pipeline.c \
-	$(DEBUG_DIR)/print_redir_lst.c \
-	$(DEBUG_DIR)/print_env_lst.c \
-	$(DEBUG_DIR)/print_status.c \
-	$(DEBUG_DIR)/print_input.c \
-	$(DEBUG_DIR)/malloc.c
-
-
 SRCS = $(SRCS_MAIN) \
 $(SRCS_READLINE) \
 $(SRCS_LEXER) \
@@ -106,7 +94,6 @@ $(SRCS_REDIRECTION) \
 $(SRCS_EXECUTOR) \
 $(SRCS_ENV) \
 $(SRCS_UTILS) \
-$(SRCS_DEBUG) \
 $(SRCS_BUILTINS) \
 $(SRCS_SIGNALS) \
 $(SRCS_PATH)
@@ -147,7 +134,6 @@ $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)/$(REDIRECTION_DIR)
 	@mkdir -p $(OBJS_DIR)/$(ENV_DIR)
 	@mkdir -p $(OBJS_DIR)/$(UTILS_DIR)
-	@mkdir -p $(OBJS_DIR)/$(DEBUG_DIR)
 	@mkdir -p $(OBJS_DIR)/$(BUILTINS_DIR)
 	@mkdir -p $(OBJS_DIR)/$(SIGNALS_DIR)
 	@mkdir -p $(OBJS_DIR)/$(PATH_DIR)
@@ -168,11 +154,4 @@ fclean: clean
 
 re: fclean all
 
-debug:
-	$(MAKE) all CFLAGS="$(CFLAGS) -DDEBUG"
-
-N ?= 50
-debug_malloc:
-	$(MAKE) all CFLAGS="$(CFLAGS) -DDEBUG_MALLOC -DMALLOC_FAILED=$(N)"
-
-.PHONY: all clean fclean re debug debug_malloc
+.PHONY: all clean fclean re

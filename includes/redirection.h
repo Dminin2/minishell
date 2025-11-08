@@ -6,7 +6,7 @@
 /*   By: aomatsud <aomatsud@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:03:44 by aomatsud          #+#    #+#             */
-/*   Updated: 2025/11/07 10:57:09 by aomatsud         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:49:33 by aomatsud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
+
 typedef struct s_pipeline	t_pipeline;
 
 # define TMP_FD_ERR "cannot create temp file for here-document"
