@@ -81,6 +81,7 @@ FT_DPRINTF_BUF_SRCS = ft_dprintf_buf.c \
 dprintf_buffer.c \
 dprint_char_string_percent_buf.c \
 dprint_decimal_buf.c \
+dprint_unsigned_buf.c \
 dprint_hexadecimal_buf.c
 FT_DPRINTF_BUF_OBJS = $(addprefix $(OBJS_DIR)/$(FT_DPRINTF_BUF_DIR)/, $(FT_DPRINTF_BUF_SRCS:.c=.o))
 
